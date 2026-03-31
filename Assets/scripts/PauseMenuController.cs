@@ -1,23 +1,26 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PauseMenuController : MonoBehaviour
 {
     [Header("Main Pause Panel (container)")]
-    [SerializeField] private GameObject pauseMenuPanel;   // общий контейнер паузы (НЕ выключаем при переключении)
+    [SerializeField] private GameObject pauseMenuPanel;
 
     [Header("Root content inside pause menu (buttons)")]
-    [SerializeField] private GameObject pauseRootContent; // контейнер с Continue/Save/Load/Settings/Exit (его скрываем)
+    [SerializeField] private GameObject pauseRootContent;
 
-    [Header("Sub-panels (often children of pauseMenuPanel)")]
+    [Header("Sub-panels")]
     [SerializeField] private GameObject settingsPanel;
     [SerializeField] private GameObject savePanel;
     [SerializeField] private GameObject loadPanel;
     [SerializeField] private GameObject exitConfirmPanel;
 
+    [Header("Loading Screen")]
+    [SerializeField] private GameObject loadingScreenPanel;
 
-    [Header("Optional: lock cursor while playing")]
-    [SerializeField] private bool lockCursorWhenUnpaused = true;
+    [Header("Save / Load Logic")]
+    [SerializeField] private PauseMenuSaveLoadController saveLoadController;
 
     [Header("Exit -> Main Menu Scene")]
     [SerializeField] private string mainMenuSceneName = "SampleScene";
@@ -30,17 +33,24 @@ public class PauseMenuController : MonoBehaviour
 
     private void Start()
     {
-        // старт: меню скрыто
         HideAllInPause();
-        pauseMenuPanel?.SetActive(false);
+
+        if (pauseMenuPanel != null)
+            pauseMenuPanel.SetActive(false);
+
+        if (loadingScreenPanel != null)
+            loadingScreenPanel.SetActive(false);
+
         SetPaused(false);
     }
 
     private void Update()
     {
-        if (Time.unscaledTime < escBlockUntil) return;
+        if (Time.unscaledTime < escBlockUntil)
+            return;
 
-        if (!Input.GetKeyDown(KeyCode.Escape)) return;
+        if (!Input.GetKeyDown(KeyCode.Escape))
+            return;
 
         if (!isPaused)
         {
@@ -48,21 +58,24 @@ public class PauseMenuController : MonoBehaviour
             return;
         }
 
-        // В паузе: если открыт подпункт -> назад в корень, иначе продолжить
         if (IsAnySubPanelOpen())
+        {
             BackToPauseRoot();
+        }
         else
+        {
             ResumeGame();
+        }
     }
-
-    // ---------------- Buttons ----------------
 
     public void OpenPauseMenu()
     {
         BlockEscShort();
         SetPaused(true);
 
-        if (pauseMenuPanel) pauseMenuPanel.SetActive(true);
+        if (pauseMenuPanel != null)
+            pauseMenuPanel.SetActive(true);
+
         ShowRootOnly();
     }
 
@@ -70,7 +83,10 @@ public class PauseMenuController : MonoBehaviour
     {
         BlockEscShort();
         HideAllInPause();
-        if (pauseMenuPanel) pauseMenuPanel.SetActive(false);
+
+        if (pauseMenuPanel != null)
+            pauseMenuPanel.SetActive(false);
+
         SetPaused(false);
     }
 
@@ -88,6 +104,9 @@ public class PauseMenuController : MonoBehaviour
         SetPaused(true);
         EnsurePauseVisible();
         ShowSubPanel(savePanel);
+
+        if (saveLoadController != null)
+            saveLoadController.OnSavePanelOpened();
     }
 
     public void OpenLoad()
@@ -96,6 +115,9 @@ public class PauseMenuController : MonoBehaviour
         SetPaused(true);
         EnsurePauseVisible();
         ShowSubPanel(loadPanel);
+
+        if (saveLoadController != null)
+            saveLoadController.OnLoadPanelOpened();
     }
 
     public void OpenExitConfirm()
@@ -117,14 +139,7 @@ public class PauseMenuController : MonoBehaviour
     public void ExitConfirmYes()
     {
         BlockEscShort();
-
-        Time.timeScale = 1f;
-        isPaused = false;
-
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
-        SceneManager.LoadScene(mainMenuSceneName);
+        StartCoroutine(ExitToMainMenuRoutine());
     }
 
     public void ExitConfirmNo()
@@ -133,54 +148,101 @@ public class PauseMenuController : MonoBehaviour
         BackToPauseRoot();
     }
 
-    // ---------------- Internals ----------------
+    private IEnumerator ExitToMainMenuRoutine()
+    {
+        Time.timeScale = 1f;
+        isPaused = false;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        HideAllInPause();
+
+        if (pauseMenuPanel != null)
+            pauseMenuPanel.SetActive(false);
+
+        if (loadingScreenPanel != null)
+            loadingScreenPanel.SetActive(true);
+
+        yield return null;
+        yield return new WaitForSecondsRealtime(1f);
+
+        AsyncOperation operation = SceneManager.LoadSceneAsync(mainMenuSceneName);
+
+        while (!operation.isDone)
+            yield return null;
+    }
+
 
     private void EnsurePauseVisible()
     {
-        if (pauseMenuPanel && !pauseMenuPanel.activeSelf)
+        if (pauseMenuPanel != null && !pauseMenuPanel.activeSelf)
             pauseMenuPanel.SetActive(true);
     }
 
     private void ShowRootOnly()
     {
-        // показываем кнопки, скрываем все подпункты
-        if (pauseRootContent) pauseRootContent.SetActive(true);
+        if (pauseRootContent != null)
+            pauseRootContent.SetActive(true);
 
-        if (settingsPanel) settingsPanel.SetActive(false);
-        if (savePanel) savePanel.SetActive(false);
-        if (loadPanel) loadPanel.SetActive(false);
-        if (exitConfirmPanel) exitConfirmPanel.SetActive(false);
+        if (settingsPanel != null)
+            settingsPanel.SetActive(false);
+
+        if (savePanel != null)
+            savePanel.SetActive(false);
+
+        if (loadPanel != null)
+            loadPanel.SetActive(false);
+
+        if (exitConfirmPanel != null)
+            exitConfirmPanel.SetActive(false);
     }
 
-    private void ShowSubPanel(GameObject panel)
+    private void ShowSubPanel(GameObject panelToOpen)
     {
-        // скрыть кнопки, показать конкретный подпункт
-        if (pauseRootContent) pauseRootContent.SetActive(false);
+        if (pauseRootContent != null)
+            pauseRootContent.SetActive(false);
 
-        if (settingsPanel) settingsPanel.SetActive(false);
-        if (savePanel) savePanel.SetActive(false);
-        if (loadPanel) loadPanel.SetActive(false);
-        if (exitConfirmPanel) exitConfirmPanel.SetActive(false);
+        if (settingsPanel != null)
+            settingsPanel.SetActive(false);
 
-        if (panel) panel.SetActive(true);
+        if (savePanel != null)
+            savePanel.SetActive(false);
+
+        if (loadPanel != null)
+            loadPanel.SetActive(false);
+
+        if (exitConfirmPanel != null)
+            exitConfirmPanel.SetActive(false);
+
+        if (panelToOpen != null)
+            panelToOpen.SetActive(true);
     }
 
     private void HideAllInPause()
     {
-        if (pauseRootContent) pauseRootContent.SetActive(false);
+        if (pauseRootContent != null)
+            pauseRootContent.SetActive(false);
 
-        if (settingsPanel) settingsPanel.SetActive(false);
-        if (savePanel) savePanel.SetActive(false);
-        if (loadPanel) loadPanel.SetActive(false);
-        if (exitConfirmPanel) exitConfirmPanel.SetActive(false);
+        if (settingsPanel != null)
+            settingsPanel.SetActive(false);
+
+        if (savePanel != null)
+            savePanel.SetActive(false);
+
+        if (loadPanel != null)
+            loadPanel.SetActive(false);
+
+        if (exitConfirmPanel != null)
+            exitConfirmPanel.SetActive(false);
     }
 
     private bool IsAnySubPanelOpen()
     {
-        return (settingsPanel && settingsPanel.activeSelf)
-            || (savePanel && savePanel.activeSelf)
-            || (loadPanel && loadPanel.activeSelf)
-            || (exitConfirmPanel && exitConfirmPanel.activeSelf);
+        return (settingsPanel != null && settingsPanel.activeSelf)
+            || (savePanel != null && savePanel.activeSelf)
+            || (loadPanel != null && loadPanel.activeSelf)
+            || (exitConfirmPanel != null && exitConfirmPanel.activeSelf);
     }
 
     private void BlockEscShort()
@@ -192,13 +254,13 @@ public class PauseMenuController : MonoBehaviour
     {
         isPaused = paused;
 
-        // курсор + Time.timeScale будет управлять Bootstrap
         if (Poker.PokerBootstrap.Instance != null)
         {
             Poker.PokerBootstrap.Instance.SetPaused(paused);
         }
         else
+        {
             Time.timeScale = paused ? 0f : 1f;
+        }
     }
 }
-
