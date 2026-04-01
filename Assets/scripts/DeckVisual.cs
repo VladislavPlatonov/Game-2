@@ -18,17 +18,6 @@ public class DeckVisual : MonoBehaviour
     [SerializeField] private float randomX = 0.002f;
     [SerializeField] private float randomZ = 0.002f;
 
-    [Header("Visual Scale")]
-    [SerializeField] private float visualScaleMultiplier = 0.03f;
-
-    private Vector3 prefabBaseScale = Vector3.one;
-
-    private void Awake()
-    {
-        if (cardPrefab != null)
-            prefabBaseScale = cardPrefab.transform.localScale;
-    }
-
     private void Start()
     {
         if (cardPrefab == null)
@@ -55,18 +44,19 @@ public class DeckVisual : MonoBehaviour
             visualRoot = transform;
         }
 
-        RebuildDeckVisual();
+        ClearOldCards();
+        BuildDeck();
     }
 
-    [ContextMenu("Rebuild Deck Visual")]
-    public void RebuildDeckVisual()
+    [ContextMenu("Rebuild Deck")]
+    public void BuildDeck()
     {
-        ClearDeckVisual();
+        ClearOldCards();
 
         for (int i = 0; i < stackCount; i++)
         {
-            Vector3 pos =
-                deckSpawn.position +
+            Vector3 localPos =
+                deckSpawn.localPosition +
                 Vector3.up * (i * yStep) +
                 new Vector3(
                     Random.Range(-randomX, randomX),
@@ -74,13 +64,13 @@ public class DeckVisual : MonoBehaviour
                     Random.Range(-randomZ, randomZ)
                 );
 
-            Quaternion rot =
-                deckSpawn.rotation *
+            Quaternion localRot =
+                deckSpawn.localRotation *
                 Quaternion.Euler(0f, Random.Range(-randomYaw, randomYaw), 0f);
 
-            GameObject go = Instantiate(cardPrefab, pos, rot, visualRoot);
-
-            ApplyWorldScale(go.transform, prefabBaseScale * visualScaleMultiplier);
+            GameObject go = Instantiate(cardPrefab, visualRoot);
+            go.transform.localPosition = localPos;
+            go.transform.localRotation = localRot;
 
             CardView3DMesh meshView = go.GetComponent<CardView3DMesh>();
             if (meshView != null)
@@ -100,33 +90,19 @@ public class DeckVisual : MonoBehaviour
 
             Debug.LogWarning("[DeckVisual] prefab has no CardView3DMesh or CardView3D");
         }
-
-        Debug.Log("[DeckVisual] Deck stack spawned.");
     }
 
-    private void ApplyWorldScale(Transform target, Vector3 desiredWorldScale)
-    {
-        if (target == null) return;
-
-        Vector3 parentLossy = Vector3.one;
-        if (target.parent != null)
-            parentLossy = target.parent.lossyScale;
-
-        float x = parentLossy.x != 0f ? desiredWorldScale.x / parentLossy.x : desiredWorldScale.x;
-        float y = parentLossy.y != 0f ? desiredWorldScale.y / parentLossy.y : desiredWorldScale.y;
-        float z = parentLossy.z != 0f ? desiredWorldScale.z / parentLossy.z : desiredWorldScale.z;
-
-        target.localScale = new Vector3(x, y, z);
-    }
-
-    [ContextMenu("Clear Deck Visual")]
-    public void ClearDeckVisual()
+    [ContextMenu("Clear Deck")]
+    public void ClearOldCards()
     {
         if (visualRoot == null) return;
 
         for (int i = visualRoot.childCount - 1; i >= 0; i--)
         {
             Transform child = visualRoot.GetChild(i);
+
+            if (child == deckSpawn)
+                continue;
 
             if (Application.isPlaying)
                 Destroy(child.gameObject);

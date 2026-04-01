@@ -2509,7 +2509,7 @@ Transform:
   m_GameObject: {fileID: 297388026}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -52, y: 2.16, z: 19.6}
+  m_LocalPosition: {x: 0, y: 0.5, z: -0.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -3918,7 +3918,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &443326045
 Transform:
   m_ObjectHideFlags: 0
@@ -3955,7 +3955,6 @@ MonoBehaviour:
   randomYaw: 1.5
   randomX: 0.002
   randomZ: 0.002
-  visualScaleMultiplier: 1
 --- !u!1 &445188578
 GameObject:
   m_ObjectHideFlags: 0
@@ -8887,6 +8886,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 947613140}
   m_CullTransparentMesh: 1
+--- !u!1 &982748856 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7434295055404660371, guid: c24d6573d8e1f9045b5127bf9f67b5da, type: 3}
+  m_PrefabInstance: {fileID: 2224814036040156618}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &986565917
 GameObject:
   m_ObjectHideFlags: 0
@@ -14865,8 +14869,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1630127960}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -52, y: 2.16, z: 19.6}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -51.99951, y: 2.1599998, z: 19.60022}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17303,16 +17307,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c4ec5e14fa9ce46b6f1bf65e103b6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeckVisual
-  cardPrefab: {fileID: 500206102}
+  cardPrefab: {fileID: 982748856}
   spriteDb: {fileID: 11400000, guid: 8a26a4e8744d44f4da7a1bed2d6e103b, type: 2}
   deckSpawn: {fileID: 1630127961}
   visualRoot: {fileID: 297388027}
-  stackCount: 12
-  yStep: 0.002
-  randomYaw: 1.5
-  randomX: 0.002
-  randomZ: 0.002
-  visualScaleMultiplier: 0.003
+  stackCount: 20
+  yStep: 0.01
+  randomYaw: 8
+  randomX: 0.1
+  randomZ: 0.1
 --- !u!114 &1819886183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21065,6 +21068,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4840535195032228071, guid: c24d6573d8e1f9045b5127bf9f67b5da, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 32.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 4840535195032228071, guid: c24d6573d8e1f9045b5127bf9f67b5da, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 32.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 4840535195032228071, guid: c24d6573d8e1f9045b5127bf9f67b5da, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 32.65
+      objectReference: {fileID: 0}
     - target: {fileID: 4840535195032228071, guid: c24d6573d8e1f9045b5127bf9f67b5da, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2253
