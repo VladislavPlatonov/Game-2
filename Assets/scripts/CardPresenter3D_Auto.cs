@@ -162,7 +162,7 @@ public class CardPresenter3DMesh_NoDuplicates : MonoBehaviour
             animateGroup: animateAICards,
             groupDelayOffset: 0.05f,
             version: refreshVersion,
-            attachToSlotsAfterDeal: false
+            attachToSlotsAfterDeal: true
         );
 
         HandleGroup(
