@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|c:\\users\\vladp\\onedrive\\\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\github\\game-2\\assets\\scripts\\animation\\ai head anim\\enemycalmanimation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animation\\ai head anim\\enemycalmanimation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EnemyCalmAnimation.cs",
+              "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\animation\\ai head anim\\EnemyCalmAnimation.cs",
+              "RelativeDocumentMoniker": "Assets\\scripts\\animation\\ai head anim\\EnemyCalmAnimation.cs",
+              "ToolTip": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\animation\\ai head anim\\EnemyCalmAnimation.cs",
+              "RelativeToolTip": "Assets\\scripts\\animation\\ai head anim\\EnemyCalmAnimation.cs",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAQwG0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-05T07:17:31.081Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
