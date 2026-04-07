@@ -22198,7 +22198,7 @@ MonoBehaviour:
   calmMoveSpeed: 0.55
   calmRotAmountZ: 1.5
   calmRotSpeed: 0.45
-  calmEyeSpinSpeed: 30
+  calmEyeSpinSpeed: 45
   leftEyeAxis: 2
   rightEyeAxis: 2
   leftEyeClockwise: 1
