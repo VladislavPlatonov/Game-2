@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|c:\\users\\vladp\\onedrive\\\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\github\\game-2\\assets\\scripts\\animation\\ai head anim\\enemycalmanimation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animation\\ai head anim\\enemycalmanimation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|c:\\users\\vladp\\onedrive\\\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\github\\game-2\\assets\\scripts\\mm\\3d_menu\\resolutionoption3dnocollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mm\\3d_menu\\resolutionoption3dnocollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|c:\\users\\vladp\\onedrive\\\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\github\\game-2\\assets\\scripts\\mm\\3d_menu\\resolutiondropdown3d.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mm\\3d_menu\\resolutiondropdown3d.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\animation\\ai head anim\\EnemyCalmAnimation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\scripts\\animation\\ai head anim\\EnemyCalmAnimation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,15 +27,39 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "ResolutionOption3DNoCollider.cs",
+              "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\mm\\3D_Menu\\ResolutionOption3DNoCollider.cs",
+              "RelativeDocumentMoniker": "Assets\\scripts\\mm\\3D_Menu\\ResolutionOption3DNoCollider.cs",
+              "ToolTip": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\mm\\3D_Menu\\ResolutionOption3DNoCollider.cs",
+              "RelativeToolTip": "Assets\\scripts\\mm\\3D_Menu\\ResolutionOption3DNoCollider.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAQwF8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T11:39:32.396Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ResolutionDropdown3D.cs",
+              "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\mm\\3D_Menu\\ResolutionDropdown3D.cs",
+              "RelativeDocumentMoniker": "Assets\\scripts\\mm\\3D_Menu\\ResolutionDropdown3D.cs",
+              "ToolTip": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\mm\\3D_Menu\\ResolutionDropdown3D.cs",
+              "RelativeToolTip": "Assets\\scripts\\mm\\3D_Menu\\ResolutionDropdown3D.cs",
+              "ViewState": "AgIAAMwAAAAAAAAAAAAQwAoBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T11:38:29.129Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "EnemyCalmAnimation.cs",
               "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\animation\\ai head anim\\EnemyCalmAnimation.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\animation\\ai head anim\\EnemyCalmAnimation.cs",
               "ToolTip": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\animation\\ai head anim\\EnemyCalmAnimation.cs",
               "RelativeToolTip": "Assets\\scripts\\animation\\ai head anim\\EnemyCalmAnimation.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAQwG0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-05T07:17:31.081Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-05T07:17:31.081Z"
             }
           ]
         }

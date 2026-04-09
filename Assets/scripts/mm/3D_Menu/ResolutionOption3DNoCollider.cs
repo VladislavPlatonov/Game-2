@@ -9,14 +9,13 @@ public class ResolutionOption3DNoCollider : MonoBehaviour
 
     [Header("Hover")]
     [SerializeField] private float normalScale = 1f;
-    [SerializeField] private float hoverScale = 1.04f;
+    [SerializeField] private float hoverScale = 1.03f;
     [SerializeField] private float scaleSpeed = 10f;
-
     [SerializeField] private Color normalColor = Color.white;
     [SerializeField] private Color hoverColor = new Color(0.75f, 0.95f, 1f);
 
     [Header("Hover Padding")]
-    [SerializeField] private float screenPaddingX = 14f;
+    [SerializeField] private float screenPaddingX = 16f;
     [SerializeField] private float screenPaddingY = 8f;
 
     private ResolutionDropdown3D dropdown;
