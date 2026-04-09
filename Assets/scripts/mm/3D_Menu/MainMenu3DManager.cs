@@ -1,32 +1,51 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
 
 public class MainMenu3DManager : MonoBehaviour
 {
-    [Header("Refs")]
+    [Header("Main Buttons Root")]
     [SerializeField] private Transform mainButtonsRoot;
+
+    [Header("Panels")]
     [SerializeField] private Transform settingsPanel;
     [SerializeField] private Transform loadPanel;
-    [SerializeField] private Transform exitPanel;
+    [SerializeField] private Transform exitConfirmPanel;
+
+    [Header("Loading Overlay")]
     [SerializeField] private GameObject loadingOverlay;
 
-    [Header("Scene")]
-    [SerializeField] private string gameSceneName = "bckup";
+    [Header("Scene Loading")]
+    [SerializeField] private string gameSceneName = "GameScene";
 
-    [Header("Main buttons positions")]
-    [SerializeField] private Vector3 mainButtonsShownPos = new Vector3(-3.5f, 0f, 6f);
-    [SerializeField] private Vector3 mainButtonsShiftedLeftPos = new Vector3(-7.5f, 0f, 6f);
-
-    [Header("Panel positions")]
-    [SerializeField] private Vector3 panelShownPos = new Vector3(2.5f, 0f, 6f);
-    [SerializeField] private Vector3 panelHiddenPos = new Vector3(8.5f, 0f, 6f);
-
-    [Header("Animation")]
+    [Header("Panel Animation")]
     [SerializeField] private float moveDuration = 0.35f;
+    [SerializeField] private Vector3 mainButtonsShownPos = new Vector3(0f, 0f, 0f);
+    [SerializeField] private Vector3 mainButtonsShiftedLeftPos = new Vector3(-3.5f, 0f, 0f);
+    [SerializeField] private Vector3 panelHiddenPos = new Vector3(6f, 0f, 0f);
+    [SerializeField] private Vector3 panelShownPos = new Vector3(0f, 0f, 0f);
 
-    private Coroutine animationRoutine;
+    [Header("Volume UI")]
+    [SerializeField] private TextMeshPro volumePercentText;
+    [SerializeField] private Transform volumeBarFill;
+
+    [Header("Volume Values")]
+    [SerializeField][Range(0f, 1f)] private float currentVolume = 1f;
+    [SerializeField] private float volumeStep = 0.1f;
+
+    [Header("Volume Bar Geometry")]
+    [SerializeField] private float minFillScaleX = 0.2f;
+    [SerializeField] private float maxFillScaleX = 9f;
+    [SerializeField] private float leftAnchorX = 3.45f;
+
+    [Header("Volume Animation")]
+    [SerializeField] private float fillSmoothSpeed = 10f;
+
+    private float displayedVolume = 1f;
+
     private Transform currentPanel;
+    private Coroutine animationRoutine;
 
     private void Start()
     {
@@ -35,10 +54,20 @@ public class MainMenu3DManager : MonoBehaviour
 
         HidePanelImmediate(settingsPanel);
         HidePanelImmediate(loadPanel);
-        HidePanelImmediate(exitPanel);
+        HidePanelImmediate(exitConfirmPanel);
+
+        currentVolume = Mathf.Clamp01(AudioListener.volume);
+        displayedVolume = currentVolume;
+        RefreshVolumeText();
+        RefreshVolumeBarImmediate();
 
         if (loadingOverlay != null)
             loadingOverlay.SetActive(false);
+    }
+
+    private void Update()
+    {
+        AnimateVolumeBar();
     }
 
     public void ExecuteAction(Menu3DActionType actionType)
@@ -68,23 +97,30 @@ public class MainMenu3DManager : MonoBehaviour
             case Menu3DActionType.QuitGame:
                 QuitGame();
                 break;
+
+            case Menu3DActionType.VolumeDown:
+                VolumeDown();
+                break;
+
+            case Menu3DActionType.VolumeUp:
+                VolumeUp();
+                break;
         }
     }
 
-
     public void OpenSettingsPanel()
     {
-        OpenPanel(settingsPanel);
+        ShowPanel(settingsPanel);
     }
 
     public void OpenLoadPanel()
     {
-        OpenPanel(loadPanel);
+        ShowPanel(loadPanel);
     }
 
     public void OpenExitPanel()
     {
-        OpenPanel(exitPanel);
+        ShowPanel(exitConfirmPanel);
     }
 
     public void BackToMain()
@@ -105,39 +141,97 @@ public class MainMenu3DManager : MonoBehaviour
 
     public void QuitGame()
     {
-        Application.Quit();
-
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
 #endif
     }
 
-    private void OpenPanel(Transform panel)
+    public void VolumeDown()
+    {
+        currentVolume = Mathf.Clamp01(currentVolume - volumeStep);
+        AudioListener.volume = currentVolume;
+        RefreshVolumeText();
+    }
+
+    public void VolumeUp()
+    {
+        currentVolume = Mathf.Clamp01(currentVolume + volumeStep);
+        AudioListener.volume = currentVolume;
+        RefreshVolumeText();
+    }
+
+    public void SetVolumeNormalized(float value)
+    {
+        currentVolume = Mathf.Clamp01(value);
+        AudioListener.volume = currentVolume;
+        RefreshVolumeText();
+    }
+
+    private void RefreshVolumeText()
+    {
+        if (volumePercentText != null)
+        {
+            int percent = Mathf.RoundToInt(currentVolume * 100f);
+            volumePercentText.text = percent + "%";
+        }
+    }
+
+    private void RefreshVolumeBarImmediate()
+    {
+        if (volumeBarFill == null) return;
+
+        float scaleX = Mathf.Lerp(minFillScaleX, maxFillScaleX, currentVolume);
+
+        Vector3 scale = volumeBarFill.localScale;
+        scale.x = scaleX;
+        volumeBarFill.localScale = scale;
+
+        Vector3 pos = volumeBarFill.localPosition;
+        pos.x = leftAnchorX + (scaleX * 0.5f);
+        volumeBarFill.localPosition = pos;
+    }
+
+    private void AnimateVolumeBar()
+    {
+        displayedVolume = Mathf.Lerp(displayedVolume, currentVolume, Time.deltaTime * fillSmoothSpeed);
+
+        if (volumeBarFill == null) return;
+
+        float scaleX = Mathf.Lerp(minFillScaleX, maxFillScaleX, displayedVolume);
+
+        Vector3 scale = volumeBarFill.localScale;
+        scale.x = scaleX;
+        volumeBarFill.localScale = scale;
+
+        Vector3 pos = volumeBarFill.localPosition;
+        pos.x = leftAnchorX + (scaleX * 0.5f);
+        volumeBarFill.localPosition = pos;
+    }
+
+    private void ShowPanel(Transform panel)
     {
         if (panel == null) return;
 
         if (animationRoutine != null)
             StopCoroutine(animationRoutine);
 
-        animationRoutine = StartCoroutine(OpenPanelRoutine(panel));
+        animationRoutine = StartCoroutine(ShowPanelRoutine(panel));
     }
 
-    private IEnumerator OpenPanelRoutine(Transform panelToOpen)
+    private IEnumerator ShowPanelRoutine(Transform panel)
     {
-        if (currentPanel != null && currentPanel != panelToOpen)
-        {
-            currentPanel.localPosition = panelHiddenPos;
-            currentPanel.gameObject.SetActive(false);
-        }
+        if (currentPanel != null && currentPanel != panel)
+            HidePanelImmediate(currentPanel);
 
-        currentPanel = panelToOpen;
+        currentPanel = panel;
         currentPanel.gameObject.SetActive(true);
-        currentPanel.localPosition = panelHiddenPos;
 
         float time = 0f;
 
-        Vector3 mainStart = mainButtonsRoot.localPosition;
-        Vector3 panelStart = currentPanel.localPosition;
+        Vector3 mainStart = mainButtonsRoot != null ? mainButtonsRoot.localPosition : mainButtonsShownPos;
+        Vector3 panelStart = panel.localPosition;
 
         while (time < moveDuration)
         {
@@ -169,7 +263,7 @@ public class MainMenu3DManager : MonoBehaviour
 
         float time = 0f;
 
-        Vector3 mainStart = mainButtonsRoot.localPosition;
+        Vector3 mainStart = mainButtonsRoot != null ? mainButtonsRoot.localPosition : mainButtonsShiftedLeftPos;
         Vector3 panelStart = panelToHide != null ? panelToHide.localPosition : panelShownPos;
 
         while (time < moveDuration)

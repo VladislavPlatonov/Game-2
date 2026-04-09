@@ -6,5 +6,8 @@ public enum Menu3DActionType
     Settings,
     Exit,
     BackToMain,
-    QuitGame
+    QuitGame,
+
+    VolumeDown,
+    VolumeUp
 }
