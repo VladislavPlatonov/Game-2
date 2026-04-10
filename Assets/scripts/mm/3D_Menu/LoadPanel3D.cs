@@ -20,8 +20,8 @@ public class LoadPanel3D : MonoBehaviour
     [Header("Slot Hover")]
     [SerializeField] private float slotHoverScale = 1.03f;
     [SerializeField] private float slotScaleSpeed = 8f;
-    [SerializeField] private float slotHoverPaddingX = 16f;
-    [SerializeField] private float slotHoverPaddingY = 12f;
+    [SerializeField] private float slotHoverPaddingX = 0f;
+    [SerializeField] private float slotHoverPaddingY = 0f;
 
     [Header("Button Hover")]
     [SerializeField] private float buttonHoverScale = 1.06f;
@@ -229,6 +229,8 @@ public class LoadPanel3D : MonoBehaviour
             );
         }
     }
+
+ 
 
     private void UpdateButtonsHoverAndClick()
     {
