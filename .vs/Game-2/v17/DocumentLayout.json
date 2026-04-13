@@ -3,11 +3,19 @@
   "WorkspaceRootPath": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|c:\\users\\vladp\\onedrive\\\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\github\\game-2\\assets\\scripts\\mm\\3d_menu\\resolutionoption3dnocollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|c:\\users\\vladp\\onedrive\\\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\github\\game-2\\assets\\scripts\\m\\pausemenuglowbuttonfx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\m\\pausemenuglowbuttonfx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|c:\\users\\vladp\\onedrive\\\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\github\\game-2\\assets\\scripts\\pausemenucontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\pausemenucontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\assets\\scripts\\mm\\3d_menu\\resolutionoption3dnocollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mm\\3d_menu\\resolutionoption3dnocollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|c:\\users\\vladp\\onedrive\\\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\github\\game-2\\assets\\scripts\\mm\\3d_menu\\resolutiondropdown3d.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\assets\\scripts\\mm\\3d_menu\\resolutiondropdown3d.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mm\\3d_menu\\resolutiondropdown3d.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -27,6 +35,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "PauseMenuGlowButtonFX.cs",
+              "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\m\\PauseMenuGlowButtonFX.cs",
+              "RelativeDocumentMoniker": "Assets\\scripts\\m\\PauseMenuGlowButtonFX.cs",
+              "ToolTip": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\m\\PauseMenuGlowButtonFX.cs",
+              "RelativeToolTip": "Assets\\scripts\\m\\PauseMenuGlowButtonFX.cs",
+              "ViewState": "AgIAAFAAAAAAAAAAAAAQwI4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-13T13:57:21.936Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PauseMenuController.cs",
+              "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\PauseMenuController.cs",
+              "RelativeDocumentMoniker": "Assets\\scripts\\PauseMenuController.cs",
+              "ToolTip": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\PauseMenuController.cs",
+              "RelativeToolTip": "Assets\\scripts\\PauseMenuController.cs",
+              "ViewState": "AgIAACEBAAAAAAAAAAAQwF8BAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-13T13:24:40.247Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "ResolutionOption3DNoCollider.cs",
               "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\mm\\3D_Menu\\ResolutionOption3DNoCollider.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\mm\\3D_Menu\\ResolutionOption3DNoCollider.cs",
@@ -34,12 +68,11 @@
               "RelativeToolTip": "Assets\\scripts\\mm\\3D_Menu\\ResolutionOption3DNoCollider.cs",
               "ViewState": "AgIAAE0AAAAAAAAAAAAQwF8AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-09T11:39:32.396Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-09T11:39:32.396Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "ResolutionDropdown3D.cs",
               "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\mm\\3D_Menu\\ResolutionDropdown3D.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\mm\\3D_Menu\\ResolutionDropdown3D.cs",
@@ -47,12 +80,11 @@
               "RelativeToolTip": "Assets\\scripts\\mm\\3D_Menu\\ResolutionDropdown3D.cs",
               "ViewState": "AgIAAMwAAAAAAAAAAAAQwAoBAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-09T11:38:29.129Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-09T11:38:29.129Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "EnemyCalmAnimation.cs",
               "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\animation\\ai head anim\\EnemyCalmAnimation.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\animation\\ai head anim\\EnemyCalmAnimation.cs",

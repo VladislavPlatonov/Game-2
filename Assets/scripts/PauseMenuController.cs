@@ -16,6 +16,9 @@ public class PauseMenuController : MonoBehaviour
     [SerializeField] private GameObject loadPanel;
     [SerializeField] private GameObject exitConfirmPanel;
 
+    [Header("Gameplay UI")]
+    [SerializeField] private GameObject gameplayButtonsPanel;
+
     [Header("Loading Screen")]
     [SerializeField] private GameObject loadingScreenPanel;
 
@@ -25,13 +28,14 @@ public class PauseMenuController : MonoBehaviour
     [Header("Exit -> Main Menu Scene")]
     [SerializeField] private string mainMenuSceneName = "SampleScene";
 
-    [Header("Anti double input")]
-    [SerializeField] private float escBlockSeconds = 0.15f;
+    [Header("Input")]
+    [SerializeField] private float escBlockSeconds = 0.18f;
 
-    [Header("Panel Animation")]
-    [SerializeField] private float panelHideDelay = 0.18f;
+    [Header("Animation")]
+    [SerializeField] private float panelHideDelay = 0.20f;
 
     private bool isPaused;
+    private bool isTransitioning;
     private float escBlockUntil;
 
     private void Start()
@@ -44,11 +48,15 @@ public class PauseMenuController : MonoBehaviour
         if (loadingScreenPanel != null)
             loadingScreenPanel.SetActive(false);
 
+        SetGameplayButtonsVisible(true);
         SetPaused(false);
     }
 
     private void Update()
     {
+        if (isTransitioning)
+            return;
+
         if (Time.unscaledTime < escBlockUntil)
             return;
 
@@ -62,35 +70,33 @@ public class PauseMenuController : MonoBehaviour
         }
 
         if (IsAnySubPanelOpen())
-        {
             BackToPauseRoot();
-        }
         else
-        {
             ResumeGame();
-        }
     }
 
     public void OpenPauseMenu()
     {
-        BlockEscShort();
-        SetPaused(true);
+        if (isTransitioning) return;
 
-        ShowPanel(pauseMenuPanel);
-        ShowRootOnly();
+        StartCoroutine(OpenPauseMenuRoutine());
     }
 
     public void ResumeGame()
     {
-        BlockEscShort();
+        if (isTransitioning) return;
+
         StartCoroutine(ResumeGameRoutine());
     }
 
     public void OpenSettings()
     {
+        if (isTransitioning) return;
+
         BlockEscShort();
         SetPaused(true);
         EnsurePauseVisible();
+        SetGameplayButtonsVisible(false);
 
         HidePanel(pauseRootContent);
         HidePanel(savePanel);
@@ -102,9 +108,12 @@ public class PauseMenuController : MonoBehaviour
 
     public void OpenSave()
     {
+        if (isTransitioning) return;
+
         BlockEscShort();
         SetPaused(true);
         EnsurePauseVisible();
+        SetGameplayButtonsVisible(false);
 
         HidePanel(pauseRootContent);
         HidePanel(settingsPanel);
@@ -119,9 +128,12 @@ public class PauseMenuController : MonoBehaviour
 
     public void OpenLoad()
     {
+        if (isTransitioning) return;
+
         BlockEscShort();
         SetPaused(true);
         EnsurePauseVisible();
+        SetGameplayButtonsVisible(false);
 
         HidePanel(pauseRootContent);
         HidePanel(settingsPanel);
@@ -136,9 +148,12 @@ public class PauseMenuController : MonoBehaviour
 
     public void OpenExitConfirm()
     {
+        if (isTransitioning) return;
+
         BlockEscShort();
         SetPaused(true);
         EnsurePauseVisible();
+        SetGameplayButtonsVisible(false);
 
         HidePanel(pauseRootContent);
         HidePanel(settingsPanel);
@@ -150,9 +165,12 @@ public class PauseMenuController : MonoBehaviour
 
     public void BackToPauseRoot()
     {
+        if (isTransitioning) return;
+
         BlockEscShort();
         SetPaused(true);
         EnsurePauseVisible();
+        SetGameplayButtonsVisible(false);
 
         HidePanel(settingsPanel);
         HidePanel(savePanel);
@@ -164,18 +182,39 @@ public class PauseMenuController : MonoBehaviour
 
     public void ExitConfirmYes()
     {
-        BlockEscShort();
+        if (isTransitioning) return;
+
         StartCoroutine(ExitToMainMenuRoutine());
     }
 
     public void ExitConfirmNo()
     {
-        BlockEscShort();
+        if (isTransitioning) return;
+
         BackToPauseRoot();
+    }
+
+    private IEnumerator OpenPauseMenuRoutine()
+    {
+        isTransitioning = true;
+        BlockEscShort();
+
+        SetPaused(true);
+        SetGameplayButtonsVisible(false);
+
+        EnsurePauseVisible();
+        ShowRootOnly();
+
+        yield return null;
+
+        isTransitioning = false;
     }
 
     private IEnumerator ResumeGameRoutine()
     {
+        isTransitioning = true;
+        BlockEscShort();
+
         HidePanel(pauseRootContent);
         HidePanel(settingsPanel);
         HidePanel(savePanel);
@@ -188,15 +227,23 @@ public class PauseMenuController : MonoBehaviour
         yield return new WaitForSecondsRealtime(panelHideDelay);
 
         SetPaused(false);
+        SetGameplayButtonsVisible(true);
+
+        isTransitioning = false;
     }
 
     private IEnumerator ExitToMainMenuRoutine()
     {
+        isTransitioning = true;
+        BlockEscShort();
+
         Time.timeScale = 1f;
         isPaused = false;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        SetGameplayButtonsVisible(false);
 
         HidePanel(pauseRootContent);
         HidePanel(settingsPanel);
@@ -268,13 +315,9 @@ public class PauseMenuController : MonoBehaviour
 
         PauseMenuPanelFX fx = panel.GetComponent<PauseMenuPanelFX>();
         if (fx != null && panel.activeSelf)
-        {
             fx.HideAnimated();
-        }
         else
-        {
             panel.SetActive(false);
-        }
     }
 
     private void SetPanelImmediate(GameObject panel, bool state)
@@ -283,6 +326,12 @@ public class PauseMenuController : MonoBehaviour
             return;
 
         panel.SetActive(state);
+    }
+
+    private void SetGameplayButtonsVisible(bool visible)
+    {
+        if (gameplayButtonsPanel != null)
+            gameplayButtonsPanel.SetActive(visible);
     }
 
     private void BlockEscShort()
@@ -295,12 +344,8 @@ public class PauseMenuController : MonoBehaviour
         isPaused = paused;
 
         if (Poker.PokerBootstrap.Instance != null)
-        {
             Poker.PokerBootstrap.Instance.SetPaused(paused);
-        }
         else
-        {
             Time.timeScale = paused ? 0f : 1f;
-        }
     }
 }
