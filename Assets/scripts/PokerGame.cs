@@ -20,7 +20,6 @@ namespace Poker
         public event Action OnGameStateChanged;
         public event Action OnPotUpdated;
 
-        // Новые события для UI
         public event Action<string> OnActionLog;
         public event Action<bool> OnTurnChanged;
 
@@ -44,19 +43,21 @@ namespace Poker
 
         private GameState state = GameState.None;
 
-        private PokerSimpleSaveData pendingLoadedSave;
+        private PokerUnifiedSaveData pendingLoadedSave;
 
         private void Awake()
         {
             deck = new PokerDeck();
-            if (ai == null) ai = FindFirstObjectByType<BasicPokerAI>();
+
+            if (ai == null)
+                ai = FindFirstObjectByType<BasicPokerAI>();
         }
 
         private void Start()
         {
             if (pendingLoadedSave != null)
             {
-                LoadSimpleSave(pendingLoadedSave);
+                LoadUnifiedSave(pendingLoadedSave);
                 pendingLoadedSave = null;
                 return;
             }
@@ -64,11 +65,10 @@ namespace Poker
             StartNewHand();
         }
 
-        public void PreparePendingLoad(PokerSimpleSaveData data)
+        public void PreparePendingLoad(PokerUnifiedSaveData data)
         {
             pendingLoadedSave = data;
         }
-
 
         // =========================
         // PUBLIC API
@@ -89,8 +89,7 @@ namespace Poker
 
         public int GetPlayerHP() => SoulManager.Instance != null ? SoulManager.Instance.GetPlayerSouls() : 0;
         public int GetAIHP() => SoulManager.Instance != null ? SoulManager.Instance.GetAISouls() : 0;
-
-
+        public bool GetPlayerIsDealer() => playerIsDealer;
 
         // =========================
         // PLAYER ACTIONS
@@ -144,7 +143,6 @@ namespace Poker
             StartCoroutine(AITurnThenAdvance());
         }
 
-        // amount = желаемая итоговая ставка игрока в этом раунде
         public void PlayerRaise(int amount)
         {
             if (!CanPlayerAct()) return;
@@ -237,13 +235,11 @@ namespace Poker
             handInProgress = true;
             state = GameState.Preflop;
 
-            // Раздача
             playerHand.Add(deck.Draw());
             aiHand.Add(deck.Draw());
             playerHand.Add(deck.Draw());
             aiHand.Add(deck.Draw());
 
-            // Блайнды — только если это обычная новая раздача, а не загрузка сейва
             if (postBlinds)
             {
                 PostBlinds();
@@ -270,7 +266,6 @@ namespace Poker
 
             LogPlayerResponseHint();
         }
-
 
         private void PostBlinds()
         {
@@ -542,11 +537,24 @@ namespace Poker
             else
                 LogAction($"Ваш ход: нужно уравнять {toCall} HP");
         }
-        public bool GetPlayerIsDealer() => playerIsDealer;
 
-        public void LoadSimpleSave(PokerSimpleSaveData data)
+        // =========================
+        // SAVE / LOAD
+        // =========================
+
+        public void LoadUnifiedSave(PokerUnifiedSaveData data)
         {
-            if (data == null || SoulManager.Instance == null) return;
+            if (data == null)
+            {
+                Debug.LogWarning("[PokerGame] LoadUnifiedSave: data is null");
+                return;
+            }
+
+            if (SoulManager.Instance == null)
+            {
+                Debug.LogWarning("[PokerGame] LoadUnifiedSave: SoulManager is null");
+                return;
+            }
 
             StopAllCoroutines();
 
@@ -555,10 +563,37 @@ namespace Poker
 
             playerIsDealer = data.playerIsDealer;
 
-            StartNewHand(false);
+            deck.ResetAndShuffle();
+
+            playerHand.Clear();
+            aiHand.Clear();
+            community.Clear();
+
+            playerHand.Add(deck.Draw());
+            aiHand.Add(deck.Draw());
+            playerHand.Add(deck.Draw());
+            aiHand.Add(deck.Draw());
+
+            pot = data.potHp;
+            currentBet = 0;
+            playerBetThisRound = 0;
+            aiBetThisRound = 0;
+
+            playerFolded = false;
+            aiFolded = false;
+
+            handInProgress = true;
+            waitingForPlayer = true;
+            state = GameState.Preflop;
+
+            OnCardsChanged?.Invoke();
+            OnPotUpdated?.Invoke();
+            OnGameStateChanged?.Invoke();
+            OnTurnChanged?.Invoke(true);
+
+            LogAction("Сейв загружен");
+            LogPlayerResponseHint();
         }
 
-
     }
-
 }

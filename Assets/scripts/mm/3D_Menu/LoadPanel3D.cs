@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LoadPanel3D : MonoBehaviour
 {
@@ -8,9 +11,6 @@ public class LoadPanel3D : MonoBehaviour
     [SerializeField] private Camera targetCamera;
     [SerializeField] private Transform savesListRoot;
     [SerializeField] private GameObject saveSlotTemplate;
-
-    [Header("Data")]
-    [SerializeField] private int maxSlots = 10;
 
     [Header("Visible List")]
     [SerializeField] private int visibleSlotCount = 3;
@@ -31,12 +31,23 @@ public class LoadPanel3D : MonoBehaviour
     [SerializeField] private float hoverPaddingX = 16f;
     [SerializeField] private float hoverPaddingY = 10f;
 
-    private readonly List<SlotUI> spawnedSlots = new List<SlotUI>();
-    private int topVisibleSlotIndex = 1;
+    private readonly List<SlotUI> spawnedSlots = new();
+    private readonly List<SaveFileEntry> loadedSaves = new();
+
+    private int topVisibleIndex = 0;
+
+    private string SaveFolderPath => Path.Combine(Application.persistentDataPath, "saves");
+
+    private class SaveFileEntry
+    {
+        public string jsonPath;
+        public PokerUnifiedSaveData data;
+        public Texture2D screenshot;
+    }
 
     private class SlotUI
     {
-        public int slotIndex;
+        public int saveListIndex;
         public GameObject root;
         public Transform rootTransform;
         public Vector3 rootBaseScale;
@@ -61,12 +72,7 @@ public class LoadPanel3D : MonoBehaviour
 
     private void OnEnable()
     {
-        topVisibleSlotIndex = Mathf.Clamp(
-            topVisibleSlotIndex,
-            1,
-            GetMaxTopIndex()
-        );
-
+        ReloadSaveFiles();
         RebuildList();
     }
 
@@ -77,72 +83,89 @@ public class LoadPanel3D : MonoBehaviour
         UpdateButtonsHoverAndClick();
     }
 
+    public void ReloadSaveFiles()
+    {
+        loadedSaves.Clear();
+
+        if (!Directory.Exists(SaveFolderPath))
+            Directory.CreateDirectory(SaveFolderPath);
+
+        string[] files = Directory.GetFiles(SaveFolderPath, "*.json");
+        Array.Sort(files, (a, b) => File.GetLastWriteTime(b).CompareTo(File.GetLastWriteTime(a)));
+
+        for (int i = 0; i < files.Length; i++)
+        {
+            string path = files[i];
+
+            try
+            {
+                string json = File.ReadAllText(path);
+                PokerUnifiedSaveData data = JsonUtility.FromJson<PokerUnifiedSaveData>(json);
+
+                if (data == null)
+                    continue;
+
+                Texture2D screenshot = LoadScreenshot(data.screenshotFileName);
+
+                loadedSaves.Add(new SaveFileEntry
+                {
+                    jsonPath = path,
+                    data = data,
+                    screenshot = screenshot
+                });
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"[LoadPanel3D] Не удалось прочитать сейв {path}: {e}");
+            }
+        }
+
+        topVisibleIndex = Mathf.Clamp(topVisibleIndex, 0, GetMaxTopIndex());
+    }
+
     public void RebuildList()
     {
         ClearSpawnedSlots();
 
-        if (savesListRoot == null ||
-            saveSlotTemplate == null ||
-            LoadMenuSaveSystem.Instance == null)
+        if (savesListRoot == null || saveSlotTemplate == null)
             return;
 
         saveSlotTemplate.SetActive(false);
 
-        int countToShow = Mathf.Min(visibleSlotCount, maxSlots);
+        int countToShow = Mathf.Min(visibleSlotCount, loadedSaves.Count);
 
         for (int i = 0; i < countToShow; i++)
         {
-            int slotIndex = topVisibleSlotIndex + i;
-
-            if (slotIndex > maxSlots)
+            int saveListIndex = topVisibleIndex + i;
+            if (saveListIndex >= loadedSaves.Count)
                 break;
 
+            SaveFileEntry entry = loadedSaves[saveListIndex];
+
             GameObject go = Instantiate(saveSlotTemplate, savesListRoot);
-            go.name = "SaveSlot_" + slotIndex;
+            go.name = "SaveSlot_" + saveListIndex;
             go.SetActive(true);
 
-            go.transform.localPosition = new Vector3(
-                0f,
-                -i * slotSpacingY,
-                0f
-            );
-
+            go.transform.localPosition = new Vector3(0f, -i * slotSpacingY, 0f);
             go.transform.localRotation = Quaternion.identity;
             go.transform.localScale = Vector3.one;
 
-            SaveMetadata meta =
-                LoadMenuSaveSystem.Instance.LoadMetadata(slotIndex);
+            ApplySlotVisuals(go.transform, saveListIndex, entry);
 
-            Texture2D screenshot = null;
-
-            if (meta != null)
-                screenshot = LoadMenuSaveSystem.Instance
-                    .LoadScreenshot(meta.screenshotFileName);
-
-            ApplySlotVisuals(
-                go.transform,
-                slotIndex,
-                meta,
-                screenshot
-            );
-
-            SlotUI slot = new SlotUI();
-
-            slot.slotIndex = slotIndex;
-            slot.root = go;
-            slot.rootTransform = go.transform;
-            slot.rootBaseScale = go.transform.localScale;
+            SlotUI slot = new SlotUI
+            {
+                saveListIndex = saveListIndex,
+                root = go,
+                rootTransform = go.transform,
+                rootBaseScale = go.transform.localScale
+            };
 
             Transform slotBack = FindDeepChild(go.transform, "Slot_Back");
-
             if (slotBack != null)
                 slot.slotBackRenderer = slotBack.GetComponent<Renderer>();
 
-            slot.loadButtonRoot =
-                FindDeepChild(go.transform, "Load_Button_Group");
-
-            slot.deleteButtonRoot =
-                FindDeepChild(go.transform, "Delete_Button_Group");
+            slot.loadButtonRoot = FindDeepChild(go.transform, "Load_Button_Group");
+            slot.deleteButtonRoot = FindDeepChild(go.transform, "Delete_Button_Group");
 
             slot.loadButtonText = GetTMPFromGroup(slot.loadButtonRoot);
             slot.deleteButtonText = GetTMPFromGroup(slot.deleteButtonRoot);
@@ -157,12 +180,7 @@ public class LoadPanel3D : MonoBehaviour
         }
     }
 
-    private void ApplySlotVisuals(
-        Transform slotRoot,
-        int slotIndex,
-        SaveMetadata meta,
-        Texture2D screenshot
-    )
+    private void ApplySlotVisuals(Transform slotRoot, int saveIndex, SaveFileEntry entry)
     {
         TextMeshPro saveIndexText =
             GetTMPFromGroup(FindDeepChild(slotRoot, "SaveIndex_Text"));
@@ -170,27 +188,38 @@ public class LoadPanel3D : MonoBehaviour
         TextMeshPro saveDateText =
             GetTMPFromGroup(FindDeepChild(slotRoot, "Save_Date_Text"));
 
+        TextMeshPro saveSceneText =
+            GetTMPFromGroup(FindDeepChild(slotRoot, "Save_Scene_Text"));
+
         MeshRenderer screenshotRenderer =
-            FindDeepChild(slotRoot, "Screenshot_Plane")
-            ?.GetComponent<MeshRenderer>();
+            FindDeepChild(slotRoot, "Screenshot_Plane")?.GetComponent<MeshRenderer>();
+
+        // Номер сейва считаем по позиции в общем списке
+        string saveTitle = $"СЕЙВ {saveIndex + 1}";
+
+        string saveDate = entry.data != null && !string.IsNullOrWhiteSpace(entry.data.createdAt)
+            ? entry.data.createdAt
+            : "ПУСТО";
+
+        string saveScene = entry.data != null && !string.IsNullOrWhiteSpace(entry.data.sceneName)
+            ? entry.data.sceneName
+            : "";
 
         if (saveIndexText != null)
-            saveIndexText.text = meta != null
-                ? meta.saveTitle
-                : "СЕЙВ " + slotIndex;
+            saveIndexText.text = saveTitle;
 
         if (saveDateText != null)
-            saveDateText.text = meta != null
-                ? meta.saveDate
-                : "ПУСТО";
+            saveDateText.text = saveDate;
+
+        if (saveSceneText != null)
+            saveSceneText.text = saveScene;
 
         if (screenshotRenderer != null)
         {
-            Material mat =
-                new Material(screenshotRenderer.sharedMaterial);
+            Material mat = new Material(screenshotRenderer.sharedMaterial);
 
-            if (screenshot != null)
-                mat.mainTexture = screenshot;
+            if (entry.screenshot != null)
+                mat.mainTexture = entry.screenshot;
             else
                 mat.mainTexture = null;
 
@@ -198,12 +227,12 @@ public class LoadPanel3D : MonoBehaviour
         }
     }
 
+
     private void UpdateSlotHover()
     {
         for (int i = 0; i < spawnedSlots.Count; i++)
         {
             SlotUI slot = spawnedSlots[i];
-
             if (slot.rootTransform == null)
                 continue;
 
@@ -230,8 +259,6 @@ public class LoadPanel3D : MonoBehaviour
         }
     }
 
- 
-
     private void UpdateButtonsHoverAndClick()
     {
         for (int i = 0; i < spawnedSlots.Count; i++)
@@ -239,7 +266,7 @@ public class LoadPanel3D : MonoBehaviour
             SlotUI slot = spawnedSlots[i];
 
             HandleButton(
-                slot.slotIndex,
+                slot.saveListIndex,
                 slot.loadButtonRoot,
                 slot.loadButtonText,
                 slot.loadBaseScale,
@@ -247,7 +274,7 @@ public class LoadPanel3D : MonoBehaviour
             );
 
             HandleButton(
-                slot.slotIndex,
+                slot.saveListIndex,
                 slot.deleteButtonRoot,
                 slot.deleteButtonText,
                 slot.deleteBaseScale,
@@ -257,27 +284,19 @@ public class LoadPanel3D : MonoBehaviour
     }
 
     private void HandleButton(
-        int slotIndex,
+        int saveListIndex,
         Transform buttonRoot,
         TextMeshPro buttonText,
         Vector3 baseScale,
         bool isLoadButton
     )
     {
-        if (buttonRoot == null ||
-            buttonText == null ||
-            targetCamera == null)
+        if (buttonRoot == null || buttonText == null || targetCamera == null)
             return;
 
-        bool hovered = IsMouseOverTMP(
-            buttonText,
-            hoverPaddingX,
-            hoverPaddingY
-        );
+        bool hovered = IsMouseOverTMP(buttonText, hoverPaddingX, hoverPaddingY);
 
-        Vector3 targetScale = hovered
-            ? baseScale * buttonHoverScale
-            : baseScale;
+        Vector3 targetScale = hovered ? baseScale * buttonHoverScale : baseScale;
 
         buttonRoot.localScale = Vector3.Lerp(
             buttonRoot.localScale,
@@ -285,9 +304,7 @@ public class LoadPanel3D : MonoBehaviour
             Time.deltaTime * buttonScaleSpeed
         );
 
-        Color targetColor = hovered
-            ? hoverColor
-            : normalColor;
+        Color targetColor = hovered ? hoverColor : normalColor;
 
         buttonText.color = Color.Lerp(
             buttonText.color,
@@ -297,15 +314,75 @@ public class LoadPanel3D : MonoBehaviour
 
         if (hovered && Input.GetMouseButtonDown(0))
         {
+            if (saveListIndex < 0 || saveListIndex >= loadedSaves.Count)
+                return;
+
             if (isLoadButton)
             {
-                LoadMenuSaveSystem.Instance.LoadSlot(slotIndex);
+                LoadSaveFromEntry(loadedSaves[saveListIndex]);
             }
             else
             {
-                LoadMenuSaveSystem.Instance.DeleteSave(slotIndex);
-                RebuildList();
+                DeleteSaveEntry(loadedSaves[saveListIndex]);
             }
+        }
+    }
+
+    private void LoadSaveFromEntry(SaveFileEntry entry)
+    {
+        if (entry == null || entry.data == null || string.IsNullOrEmpty(entry.jsonPath))
+            return;
+
+        MainMenuLoadController.PendingLoadSavePath = entry.jsonPath;
+        SceneManager.LoadScene(entry.data.sceneName);
+    }
+
+    private void DeleteSaveEntry(SaveFileEntry entry)
+    {
+        if (entry == null)
+            return;
+
+        try
+        {
+            if (!string.IsNullOrEmpty(entry.jsonPath) && File.Exists(entry.jsonPath))
+                File.Delete(entry.jsonPath);
+
+            if (entry.data != null && !string.IsNullOrEmpty(entry.data.screenshotFileName))
+            {
+                string screenshotPath = Path.Combine(SaveFolderPath, entry.data.screenshotFileName);
+                if (File.Exists(screenshotPath))
+                    File.Delete(screenshotPath);
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[LoadPanel3D] Delete error: {e}");
+        }
+
+        ReloadSaveFiles();
+        RebuildList();
+    }
+
+    private Texture2D LoadScreenshot(string screenshotFileName)
+    {
+        if (string.IsNullOrEmpty(screenshotFileName))
+            return null;
+
+        string path = Path.Combine(SaveFolderPath, screenshotFileName);
+        if (!File.Exists(path))
+            return null;
+
+        try
+        {
+            byte[] bytes = File.ReadAllBytes(path);
+            Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+            texture.LoadImage(bytes);
+            return texture;
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"[LoadPanel3D] Screenshot load error: {e}");
+            return null;
         }
     }
 
@@ -315,71 +392,43 @@ public class LoadPanel3D : MonoBehaviour
             return;
 
         float wheel = Input.mouseScrollDelta.y;
-
         if (Mathf.Abs(wheel) < 0.01f)
             return;
 
         if (wheel < 0f)
-            topVisibleSlotIndex += scrollStep;
+            topVisibleIndex += scrollStep;
         else if (wheel > 0f)
-            topVisibleSlotIndex -= scrollStep;
+            topVisibleIndex -= scrollStep;
 
-        topVisibleSlotIndex = Mathf.Clamp(
-            topVisibleSlotIndex,
-            1,
-            GetMaxTopIndex()
-        );
-
+        topVisibleIndex = Mathf.Clamp(topVisibleIndex, 0, GetMaxTopIndex());
         RebuildList();
     }
 
     private int GetMaxTopIndex()
     {
-        return Mathf.Max(
-            1,
-            maxSlots - visibleSlotCount + 1
-        );
+        if (loadedSaves.Count <= visibleSlotCount)
+            return 0;
+
+        return loadedSaves.Count - visibleSlotCount;
     }
 
-    private bool IsMouseOverTMP(
-        TextMeshPro tmp,
-        float paddingX,
-        float paddingY
-    )
+    private bool IsMouseOverTMP(TextMeshPro tmp, float paddingX, float paddingY)
     {
-        if (tmp == null ||
-            tmp.renderer == null ||
-            targetCamera == null)
+        if (tmp == null || tmp.renderer == null || targetCamera == null)
             return false;
 
-        return IsMouseOverBounds(
-            tmp.renderer.bounds,
-            paddingX,
-            paddingY
-        );
+        return IsMouseOverBounds(tmp.renderer.bounds, paddingX, paddingY);
     }
 
-    private bool IsMouseOverRenderer(
-        Renderer rendererRef,
-        float paddingX,
-        float paddingY
-    )
+    private bool IsMouseOverRenderer(Renderer rendererRef, float paddingX, float paddingY)
     {
         if (rendererRef == null || targetCamera == null)
             return false;
 
-        return IsMouseOverBounds(
-            rendererRef.bounds,
-            paddingX,
-            paddingY
-        );
+        return IsMouseOverBounds(rendererRef.bounds, paddingX, paddingY);
     }
 
-    private bool IsMouseOverBounds(
-        Bounds b,
-        float paddingX,
-        float paddingY
-    )
+    private bool IsMouseOverBounds(Bounds b, float paddingX, float paddingY)
     {
         Vector3[] corners = new Vector3[8];
 
@@ -404,8 +453,7 @@ public class LoadPanel3D : MonoBehaviour
 
         for (int i = 0; i < corners.Length; i++)
         {
-            Vector3 screen =
-                targetCamera.WorldToScreenPoint(corners[i]);
+            Vector3 screen = targetCamera.WorldToScreenPoint(corners[i]);
 
             if (screen.z > 0f)
             {
@@ -442,7 +490,6 @@ public class LoadPanel3D : MonoBehaviour
                 return child;
 
             Transform found = FindDeepChild(child, childName);
-
             if (found != null)
                 return found;
         }
@@ -462,8 +509,7 @@ public class LoadPanel3D : MonoBehaviour
     {
         for (int i = 0; i < spawnedSlots.Count; i++)
         {
-            if (spawnedSlots[i] != null &&
-                spawnedSlots[i].root != null)
+            if (spawnedSlots[i] != null && spawnedSlots[i].root != null)
                 Destroy(spawnedSlots[i].root);
         }
 

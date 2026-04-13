@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Poker;
 
 public class PauseMenuSaveLoadController : MonoBehaviour
@@ -12,10 +14,10 @@ public class PauseMenuSaveLoadController : MonoBehaviour
     [SerializeField] private PokerGame game;
     [SerializeField] private PauseMenuController pauseMenuController;
 
-    [Header("Save UI")]
+    [Header("Save Panel")]
     [SerializeField] private TextMeshProUGUI saveStatusText;
 
-    [Header("Load UI")]
+    [Header("Load Panel")]
     [SerializeField] private Transform contentRoot;
     [SerializeField] private PauseSaveSlotUI saveSlotPrefab;
     [SerializeField] private Button loadSelectedButton;
@@ -34,6 +36,9 @@ public class PauseMenuSaveLoadController : MonoBehaviour
 
         if (pauseMenuController == null)
             pauseMenuController = FindFirstObjectByType<PauseMenuController>();
+
+        if (!Directory.Exists(SaveFolderPath))
+            Directory.CreateDirectory(SaveFolderPath);
     }
 
     private void Start()
@@ -54,44 +59,71 @@ public class PauseMenuSaveLoadController : MonoBehaviour
 
     public void SaveNow()
     {
+        StartCoroutine(SaveNowRoutine());
+    }
+
+    private IEnumerator SaveNowRoutine()
+    {
         if (game == null)
         {
             if (saveStatusText != null)
                 saveStatusText.text = "Ошибка: PokerGame не найден";
-            return;
+            yield break;
         }
+
+        string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+        string jsonFileName = $"save_{timestamp}.json";
+        string pngFileName = $"save_{timestamp}.png";
+
+        string jsonPath = Path.Combine(SaveFolderPath, jsonFileName);
+        string pngPath = Path.Combine(SaveFolderPath, pngFileName);
+
+        PokerUnifiedSaveData data = new PokerUnifiedSaveData
+        {
+            saveId = Guid.NewGuid().ToString(),
+            saveName = "СЕЙВ",
+            sceneName = SceneManager.GetActiveScene().name,
+            createdAt = DateTime.Now.ToString("dd.MM.yyyy HH:mm"),
+            screenshotFileName = pngFileName,
+
+            playerHp = game.GetPlayerHP(),
+            aiHp = game.GetAIHP(),
+            potHp = game.GetCurrentPot(),
+            playerIsDealer = game.GetPlayerIsDealer()
+        };
 
         try
         {
-            if (!Directory.Exists(SaveFolderPath))
-                Directory.CreateDirectory(SaveFolderPath);
-
-            PokerSimpleSaveData data = new PokerSimpleSaveData
-            {
-                saveId = Guid.NewGuid().ToString(),
-                saveName = "Сейв " + DateTime.Now.ToString("HH:mm:ss"),
-                sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,
-                createdAt = DateTime.Now.ToString("dd.MM.yyyy HH:mm"),
-                playerHp = game.GetPlayerHP(),
-                aiHp = game.GetAIHP(),
-                playerIsDealer = game.GetPlayerIsDealer()
-            };
-
-            string fileName = "save_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".json";
-            string filePath = Path.Combine(SaveFolderPath, fileName);
-
             string json = JsonUtility.ToJson(data, true);
-            File.WriteAllText(filePath, json);
+            File.WriteAllText(jsonPath, json);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[PauseMenuSaveLoadController] Save json error: {e}");
+
+            if (saveStatusText != null)
+                saveStatusText.text = "Ошибка при сохранении";
+            yield break;
+        }
+
+        yield return new WaitForEndOfFrame();
+
+        try
+        {
+            Texture2D shot = ScreenCapture.CaptureScreenshotAsTexture();
+            byte[] pngBytes = shot.EncodeToPNG();
+            File.WriteAllBytes(pngPath, pngBytes);
+            Destroy(shot);
 
             if (saveStatusText != null)
                 saveStatusText.text = "Игра успешно сохранена";
         }
         catch (Exception e)
         {
-            Debug.LogError($"SaveNow error: {e}");
+            Debug.LogError($"[PauseMenuSaveLoadController] Screenshot save error: {e}");
 
             if (saveStatusText != null)
-                saveStatusText.text = "Ошибка при сохранении";
+                saveStatusText.text = "Ошибка при сохранении скриншота";
         }
     }
 
@@ -103,7 +135,7 @@ public class PauseMenuSaveLoadController : MonoBehaviour
 
         if (contentRoot == null || saveSlotPrefab == null)
         {
-            Debug.LogWarning("PauseMenuSaveLoadController: contentRoot или saveSlotPrefab не назначены.");
+            Debug.LogWarning("[PauseMenuSaveLoadController] contentRoot или saveSlotPrefab не назначены.");
             ShowEmptyText(true);
             return;
         }
@@ -122,7 +154,8 @@ public class PauseMenuSaveLoadController : MonoBehaviour
             return;
         }
 
-        Array.Sort(files, (a, b) => File.GetLastWriteTime(b).CompareTo(File.GetLastWriteTime(a)));
+        // Старые сверху, новые снизу
+        Array.Sort(files, (a, b) => File.GetLastWriteTime(a).CompareTo(File.GetLastWriteTime(b)));
 
         int validCount = 0;
 
@@ -131,13 +164,13 @@ public class PauseMenuSaveLoadController : MonoBehaviour
             try
             {
                 string json = File.ReadAllText(file);
-                PokerSimpleSaveData data = JsonUtility.FromJson<PokerSimpleSaveData>(json);
+                PokerUnifiedSaveData data = JsonUtility.FromJson<PokerUnifiedSaveData>(json);
 
                 if (data == null)
                     continue;
 
                 PauseSaveSlotUI slot = Instantiate(saveSlotPrefab, contentRoot);
-                slot.Setup(data, file, this);
+                slot.Setup(data, file, this, validCount + 1);
                 slot.SetSelected(false);
 
                 spawnedSlots.Add(slot);
@@ -145,7 +178,7 @@ public class PauseMenuSaveLoadController : MonoBehaviour
             }
             catch (Exception e)
             {
-                Debug.LogWarning($"Не удалось прочитать сейв {file}: {e}");
+                Debug.LogWarning($"[PauseMenuSaveLoadController] Не удалось прочитать сейв {file}: {e}");
             }
         }
 
@@ -179,26 +212,26 @@ public class PauseMenuSaveLoadController : MonoBehaviour
 
         if (game == null)
         {
-            Debug.LogWarning("PauseMenuSaveLoadController: PokerGame не найден.");
+            Debug.LogWarning("[PauseMenuSaveLoadController] PokerGame не найден.");
             return;
         }
 
         try
         {
             string json = File.ReadAllText(selectedSavePath);
-            PokerSimpleSaveData data = JsonUtility.FromJson<PokerSimpleSaveData>(json);
+            PokerUnifiedSaveData data = JsonUtility.FromJson<PokerUnifiedSaveData>(json);
 
             if (data == null)
                 return;
 
-            game.LoadSimpleSave(data);
+            game.LoadUnifiedSave(data);
 
             if (pauseMenuController != null)
-                pauseMenuController.BackToPauseRoot();
+                pauseMenuController.ResumeGame();
         }
         catch (Exception e)
         {
-            Debug.LogError($"LoadSelectedSave error: {e}");
+            Debug.LogError($"[PauseMenuSaveLoadController] Load error: {e}");
         }
     }
 
@@ -212,13 +245,24 @@ public class PauseMenuSaveLoadController : MonoBehaviour
 
         try
         {
+            string json = File.ReadAllText(selectedSavePath);
+            PokerUnifiedSaveData data = JsonUtility.FromJson<PokerUnifiedSaveData>(json);
+
             File.Delete(selectedSavePath);
+
+            if (data != null && !string.IsNullOrEmpty(data.screenshotFileName))
+            {
+                string screenshotPath = Path.Combine(SaveFolderPath, data.screenshotFileName);
+                if (File.Exists(screenshotPath))
+                    File.Delete(screenshotPath);
+            }
+
             selectedSavePath = null;
             RefreshSaveList();
         }
         catch (Exception e)
         {
-            Debug.LogError($"DeleteSelectedSave error: {e}");
+            Debug.LogError($"[PauseMenuSaveLoadController] Delete error: {e}");
         }
     }
 

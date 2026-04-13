@@ -19,7 +19,7 @@ public class PendingSaveLoader : MonoBehaviour
         }
 
         string json = File.ReadAllText(path);
-        PokerSimpleSaveData data = JsonUtility.FromJson<PokerSimpleSaveData>(json);
+        PokerUnifiedSaveData data = JsonUtility.FromJson<PokerUnifiedSaveData>(json);
 
         PokerGame game = FindFirstObjectByType<PokerGame>();
         if (game == null)
@@ -34,3 +34,4 @@ public class PendingSaveLoader : MonoBehaviour
         MainMenuLoadController.PendingLoadSavePath = null;
     }
 }
+

@@ -28,12 +28,15 @@ public class PauseMenuController : MonoBehaviour
     [Header("Anti double input")]
     [SerializeField] private float escBlockSeconds = 0.15f;
 
+    [Header("Panel Animation")]
+    [SerializeField] private float panelHideDelay = 0.18f;
+
     private bool isPaused;
     private float escBlockUntil;
 
     private void Start()
     {
-        HideAllInPause();
+        HideAllInPauseImmediate();
 
         if (pauseMenuPanel != null)
             pauseMenuPanel.SetActive(false);
@@ -73,21 +76,14 @@ public class PauseMenuController : MonoBehaviour
         BlockEscShort();
         SetPaused(true);
 
-        if (pauseMenuPanel != null)
-            pauseMenuPanel.SetActive(true);
-
+        ShowPanel(pauseMenuPanel);
         ShowRootOnly();
     }
 
     public void ResumeGame()
     {
         BlockEscShort();
-        HideAllInPause();
-
-        if (pauseMenuPanel != null)
-            pauseMenuPanel.SetActive(false);
-
-        SetPaused(false);
+        StartCoroutine(ResumeGameRoutine());
     }
 
     public void OpenSettings()
@@ -95,7 +91,13 @@ public class PauseMenuController : MonoBehaviour
         BlockEscShort();
         SetPaused(true);
         EnsurePauseVisible();
-        ShowSubPanel(settingsPanel);
+
+        HidePanel(pauseRootContent);
+        HidePanel(savePanel);
+        HidePanel(loadPanel);
+        HidePanel(exitConfirmPanel);
+
+        ShowPanel(settingsPanel);
     }
 
     public void OpenSave()
@@ -103,7 +105,13 @@ public class PauseMenuController : MonoBehaviour
         BlockEscShort();
         SetPaused(true);
         EnsurePauseVisible();
-        ShowSubPanel(savePanel);
+
+        HidePanel(pauseRootContent);
+        HidePanel(settingsPanel);
+        HidePanel(loadPanel);
+        HidePanel(exitConfirmPanel);
+
+        ShowPanel(savePanel);
 
         if (saveLoadController != null)
             saveLoadController.OnSavePanelOpened();
@@ -114,7 +122,13 @@ public class PauseMenuController : MonoBehaviour
         BlockEscShort();
         SetPaused(true);
         EnsurePauseVisible();
-        ShowSubPanel(loadPanel);
+
+        HidePanel(pauseRootContent);
+        HidePanel(settingsPanel);
+        HidePanel(savePanel);
+        HidePanel(exitConfirmPanel);
+
+        ShowPanel(loadPanel);
 
         if (saveLoadController != null)
             saveLoadController.OnLoadPanelOpened();
@@ -125,7 +139,13 @@ public class PauseMenuController : MonoBehaviour
         BlockEscShort();
         SetPaused(true);
         EnsurePauseVisible();
-        ShowSubPanel(exitConfirmPanel);
+
+        HidePanel(pauseRootContent);
+        HidePanel(settingsPanel);
+        HidePanel(savePanel);
+        HidePanel(loadPanel);
+
+        ShowPanel(exitConfirmPanel);
     }
 
     public void BackToPauseRoot()
@@ -133,7 +153,13 @@ public class PauseMenuController : MonoBehaviour
         BlockEscShort();
         SetPaused(true);
         EnsurePauseVisible();
-        ShowRootOnly();
+
+        HidePanel(settingsPanel);
+        HidePanel(savePanel);
+        HidePanel(loadPanel);
+        HidePanel(exitConfirmPanel);
+
+        ShowPanel(pauseRootContent);
     }
 
     public void ExitConfirmYes()
@@ -148,6 +174,22 @@ public class PauseMenuController : MonoBehaviour
         BackToPauseRoot();
     }
 
+    private IEnumerator ResumeGameRoutine()
+    {
+        HidePanel(pauseRootContent);
+        HidePanel(settingsPanel);
+        HidePanel(savePanel);
+        HidePanel(loadPanel);
+        HidePanel(exitConfirmPanel);
+
+        if (pauseMenuPanel != null)
+            HidePanel(pauseMenuPanel);
+
+        yield return new WaitForSecondsRealtime(panelHideDelay);
+
+        SetPaused(false);
+    }
+
     private IEnumerator ExitToMainMenuRoutine()
     {
         Time.timeScale = 1f;
@@ -156,23 +198,26 @@ public class PauseMenuController : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        HideAllInPause();
+        HidePanel(pauseRootContent);
+        HidePanel(settingsPanel);
+        HidePanel(savePanel);
+        HidePanel(loadPanel);
+        HidePanel(exitConfirmPanel);
 
         if (pauseMenuPanel != null)
-            pauseMenuPanel.SetActive(false);
+            HidePanel(pauseMenuPanel);
 
         if (loadingScreenPanel != null)
             loadingScreenPanel.SetActive(true);
 
-        yield return null;
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(panelHideDelay);
+        yield return new WaitForSecondsRealtime(0.5f);
 
         AsyncOperation operation = SceneManager.LoadSceneAsync(mainMenuSceneName);
 
         while (!operation.isDone)
             yield return null;
     }
-
 
     private void EnsurePauseVisible()
     {
@@ -182,59 +227,21 @@ public class PauseMenuController : MonoBehaviour
 
     private void ShowRootOnly()
     {
-        if (pauseRootContent != null)
-            pauseRootContent.SetActive(true);
+        HidePanel(settingsPanel);
+        HidePanel(savePanel);
+        HidePanel(loadPanel);
+        HidePanel(exitConfirmPanel);
 
-        if (settingsPanel != null)
-            settingsPanel.SetActive(false);
-
-        if (savePanel != null)
-            savePanel.SetActive(false);
-
-        if (loadPanel != null)
-            loadPanel.SetActive(false);
-
-        if (exitConfirmPanel != null)
-            exitConfirmPanel.SetActive(false);
+        ShowPanel(pauseRootContent);
     }
 
-    private void ShowSubPanel(GameObject panelToOpen)
+    private void HideAllInPauseImmediate()
     {
-        if (pauseRootContent != null)
-            pauseRootContent.SetActive(false);
-
-        if (settingsPanel != null)
-            settingsPanel.SetActive(false);
-
-        if (savePanel != null)
-            savePanel.SetActive(false);
-
-        if (loadPanel != null)
-            loadPanel.SetActive(false);
-
-        if (exitConfirmPanel != null)
-            exitConfirmPanel.SetActive(false);
-
-        if (panelToOpen != null)
-            panelToOpen.SetActive(true);
-    }
-
-    private void HideAllInPause()
-    {
-        if (pauseRootContent != null)
-            pauseRootContent.SetActive(false);
-
-        if (settingsPanel != null)
-            settingsPanel.SetActive(false);
-
-        if (savePanel != null)
-            savePanel.SetActive(false);
-
-        if (loadPanel != null)
-            loadPanel.SetActive(false);
-
-        if (exitConfirmPanel != null)
-            exitConfirmPanel.SetActive(false);
+        SetPanelImmediate(pauseRootContent, false);
+        SetPanelImmediate(settingsPanel, false);
+        SetPanelImmediate(savePanel, false);
+        SetPanelImmediate(loadPanel, false);
+        SetPanelImmediate(exitConfirmPanel, false);
     }
 
     private bool IsAnySubPanelOpen()
@@ -243,6 +250,39 @@ public class PauseMenuController : MonoBehaviour
             || (savePanel != null && savePanel.activeSelf)
             || (loadPanel != null && loadPanel.activeSelf)
             || (exitConfirmPanel != null && exitConfirmPanel.activeSelf);
+    }
+
+    private void ShowPanel(GameObject panel)
+    {
+        if (panel == null)
+            return;
+
+        if (!panel.activeSelf)
+            panel.SetActive(true);
+    }
+
+    private void HidePanel(GameObject panel)
+    {
+        if (panel == null)
+            return;
+
+        PauseMenuPanelFX fx = panel.GetComponent<PauseMenuPanelFX>();
+        if (fx != null && panel.activeSelf)
+        {
+            fx.HideAnimated();
+        }
+        else
+        {
+            panel.SetActive(false);
+        }
+    }
+
+    private void SetPanelImmediate(GameObject panel, bool state)
+    {
+        if (panel == null)
+            return;
+
+        panel.SetActive(state);
     }
 
     private void BlockEscShort()
