@@ -149,7 +149,7 @@ public class AnimatedHpText : MonoBehaviour
     {
         if (textMesh == null) return;
 
-        textMesh.text = $"HP: {hp}";
+        textMesh.text = $"’œ: {hp}";
         textMesh.color = EvaluateColor(hp);
     }
 
