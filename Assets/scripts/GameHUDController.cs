@@ -31,7 +31,6 @@ namespace Poker
         [Header("Right Info Panel")]
         [SerializeField] private TextMeshProUGUI turnText;
         [SerializeField] private TextMeshProUGUI needToCallText;
-        [SerializeField] private TextMeshProUGUI actionLogText;
 
         [Header("Pot Animation")]
         [SerializeField] private int yellowThreshold = 20;
@@ -51,7 +50,7 @@ namespace Poker
         [SerializeField] private float stateScaleTo = 1.08f;
 
         [Header("Right Panel Animation")]
-        [SerializeField] private float rightFadeDuration = 0.08f;
+        [SerializeField] private float rightFadeDuration = 0.12f;
         [SerializeField] private float rightScaleFrom = 0.94f;
         [SerializeField] private float rightScaleTo = 1.04f;
 
@@ -59,29 +58,24 @@ namespace Poker
 
         private int lastPot = -1;
         private string lastStateLabel = string.Empty;
-
         private string lastTurnLabel = string.Empty;
         private string lastNeedToCallLabel = string.Empty;
-        private string lastActionLogLabel = string.Empty;
 
         private RectTransform potRect;
         private RectTransform stateRect;
         private RectTransform turnRect;
         private RectTransform needToCallRect;
-        private RectTransform actionLogRect;
 
         private Vector3 potBaseScale;
         private Vector2 potBaseAnchoredPos;
         private Vector3 stateBaseScale;
         private Vector3 turnBaseScale;
         private Vector3 needToCallBaseScale;
-        private Vector3 actionLogBaseScale;
 
         private Coroutine potAnimCoroutine;
         private Coroutine stateAnimCoroutine;
         private Coroutine turnAnimCoroutine;
         private Coroutine needToCallAnimCoroutine;
-        private Coroutine actionLogAnimCoroutine;
 
         private void Awake()
         {
@@ -110,12 +104,6 @@ namespace Poker
             {
                 needToCallRect = needToCallText.rectTransform;
                 needToCallBaseScale = needToCallRect.localScale;
-            }
-
-            if (actionLogText != null)
-            {
-                actionLogRect = actionLogText.rectTransform;
-                actionLogBaseScale = actionLogRect.localScale;
             }
         }
 
@@ -197,6 +185,10 @@ namespace Poker
             btnAllIn.interactable = myTurn && hp > 0;
         }
 
+        // =========================
+        // TOP PANEL
+        // =========================
+
         private void UpdatePot(int pot)
         {
             if (potText == null)
@@ -236,18 +228,14 @@ namespace Poker
             stateAnimCoroutine = StartCoroutine(AnimateStateChange(newLabel));
         }
 
+        // =========================
+        // RIGHT PANEL
+        // =========================
+
         private void UpdateRightPanel(bool myTurn, int toCall)
         {
             string newTurnLabel = myTurn ? "“¬Œ… ’Œƒ" : "’Œƒ œ–Œ“»¬Õ» ¿";
             string newNeedToCallLabel = $"Õ”∆ÕŒ ”–¿¬Õﬂ“‹: {toCall} ’œ";
-
-            string newActionLogLabel;
-            if (!myTurn)
-                newActionLogLabel = "Œ∆»ƒ¿Õ»≈ ’Œƒ¿ œ–Œ“»¬Õ» ¿";
-            else if (toCall > 0)
-                newActionLogLabel = "¬€¡≈–» ƒ≈…—“¬»≈";
-            else
-                newActionLogLabel = "ÃŒ∆ÕŒ ◊≈  »À» —“¿¬ ”";
 
             if (turnText != null && newTurnLabel != lastTurnLabel)
             {
@@ -278,132 +266,11 @@ namespace Poker
                     newNeedToCallLabel
                 ));
             }
-
-            if (actionLogText != null && newActionLogLabel != lastActionLogLabel)
-            {
-                lastActionLogLabel = newActionLogLabel;
-
-                if (actionLogAnimCoroutine != null)
-                    StopCoroutine(actionLogAnimCoroutine);
-
-                actionLogAnimCoroutine = StartCoroutine(AnimateRightTextChange(
-                    actionLogText,
-                    actionLogRect,
-                    actionLogBaseScale,
-                    newActionLogLabel
-                ));
-            }
         }
 
-        private Color EvaluatePotColor(int pot)
-        {
-            if (pot <= yellowThreshold)
-            {
-                float t = yellowThreshold <= 0 ? 1f : Mathf.Clamp01((float)pot / yellowThreshold);
-                return Color.Lerp(lowPotColor, midPotColor, t);
-            }
-
-            if (pot <= redThreshold)
-            {
-                float range = Mathf.Max(1, redThreshold - yellowThreshold);
-                float t = Mathf.Clamp01((pot - yellowThreshold) / range);
-                return Color.Lerp(midPotColor, highPotColor, t);
-            }
-
-            return highPotColor;
-        }
-
-        private float EvaluateShakeAmount(int pot)
-        {
-            if (pot >= redThreshold)
-                return redShakeAmount;
-
-            if (pot >= yellowThreshold)
-                return yellowShakeAmount;
-
-            return 0f;
-        }
-
-        private IEnumerator AnimatePotChange(Color targetColor, float shakeAmount)
-        {
-            if (potRect == null)
-                yield break;
-
-            float duration = potShakeDuration;
-            float elapsed = 0f;
-
-            while (elapsed < duration)
-            {
-                elapsed += Time.unscaledDeltaTime;
-                float t = Mathf.Clamp01(elapsed / duration);
-
-                float pulse = 1f + Mathf.Sin(t * Mathf.PI) * (potPulseScale - 1f);
-                potRect.localScale = potBaseScale * pulse;
-
-                if (shakeAmount > 0.01f)
-                {
-                    float wave = Mathf.Sin(t * Mathf.PI * potPulseSpeed);
-                    potRect.anchoredPosition = potBaseAnchoredPos + new Vector2(wave * shakeAmount, 0f);
-                }
-                else
-                {
-                    potRect.anchoredPosition = potBaseAnchoredPos;
-                }
-
-                potText.color = targetColor;
-                yield return null;
-            }
-
-            potRect.localScale = potBaseScale;
-            potRect.anchoredPosition = potBaseAnchoredPos;
-            potText.color = targetColor;
-            potAnimCoroutine = null;
-        }
-
-        private IEnumerator AnimateStateChange(string newLabel)
-        {
-            if (stateRect == null)
-            {
-                stateText.text = newLabel;
-                yield break;
-            }
-
-            Color baseColor = stateText.color;
-            float half = Mathf.Max(0.01f, stateFadeDuration);
-
-            float t = 0f;
-            while (t < half)
-            {
-                t += Time.unscaledDeltaTime;
-                float k = Mathf.Clamp01(t / half);
-
-                stateText.alpha = 1f - k;
-                stateRect.localScale = Vector3.Lerp(stateBaseScale, stateBaseScale * stateScaleFrom, k);
-                yield return null;
-            }
-
-            stateText.text = newLabel;
-
-            t = 0f;
-            while (t < half)
-            {
-                t += Time.unscaledDeltaTime;
-                float k = Mathf.Clamp01(t / half);
-
-                stateText.alpha = k;
-                stateRect.localScale = Vector3.Lerp(
-                    stateBaseScale * stateScaleTo,
-                    stateBaseScale,
-                    k
-                );
-                yield return null;
-            }
-
-            stateText.alpha = 1f;
-            stateText.color = baseColor;
-            stateRect.localScale = stateBaseScale;
-            stateAnimCoroutine = null;
-        }
+        // =========================
+        // ANIMATION
+        // =========================
 
         private IEnumerator AnimateRightTextChange(
             TextMeshProUGUI text,
@@ -450,6 +317,97 @@ namespace Poker
             rect.localScale = baseScale;
         }
 
+        private IEnumerator AnimateStateChange(string newLabel)
+        {
+            if (stateRect == null)
+            {
+                stateText.text = newLabel;
+                yield break;
+            }
+
+            float half = Mathf.Max(0.01f, stateFadeDuration);
+
+            float t = 0f;
+            while (t < half)
+            {
+                t += Time.unscaledDeltaTime;
+                float k = Mathf.Clamp01(t / half);
+
+                stateText.alpha = 1f - k;
+                stateRect.localScale = Vector3.Lerp(stateBaseScale, stateBaseScale * stateScaleFrom, k);
+                yield return null;
+            }
+
+            stateText.text = newLabel;
+
+            t = 0f;
+            while (t < half)
+            {
+                t += Time.unscaledDeltaTime;
+                float k = Mathf.Clamp01(t / half);
+
+                stateText.alpha = k;
+                stateRect.localScale = Vector3.Lerp(stateBaseScale * stateScaleTo, stateBaseScale, k);
+                yield return null;
+            }
+
+            stateText.alpha = 1f;
+            stateRect.localScale = stateBaseScale;
+        }
+
+        private IEnumerator AnimatePotChange(Color targetColor, float shakeAmount)
+        {
+            if (potRect == null)
+                yield break;
+
+            float duration = potShakeDuration;
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                float t = Mathf.Clamp01(elapsed / duration);
+
+                float pulse = 1f + Mathf.Sin(t * Mathf.PI) * (potPulseScale - 1f);
+                potRect.localScale = potBaseScale * pulse;
+
+                if (shakeAmount > 0.01f)
+                {
+                    float wave = Mathf.Sin(t * Mathf.PI * potPulseSpeed);
+                    potRect.anchoredPosition = potBaseAnchoredPos + new Vector2(wave * shakeAmount, 0f);
+                }
+                else
+                {
+                    potRect.anchoredPosition = potBaseAnchoredPos;
+                }
+
+                potText.color = targetColor;
+                yield return null;
+            }
+
+            potRect.localScale = potBaseScale;
+            potRect.anchoredPosition = potBaseAnchoredPos;
+            potText.color = targetColor;
+        }
+
+        private Color EvaluatePotColor(int pot)
+        {
+            if (pot <= yellowThreshold)
+                return Color.Lerp(lowPotColor, midPotColor, pot / (float)yellowThreshold);
+
+            if (pot <= redThreshold)
+                return Color.Lerp(midPotColor, highPotColor, (pot - yellowThreshold) / (float)(redThreshold - yellowThreshold));
+
+            return highPotColor;
+        }
+
+        private float EvaluateShakeAmount(int pot)
+        {
+            if (pot >= redThreshold) return redShakeAmount;
+            if (pot >= yellowThreshold) return yellowShakeAmount;
+            return 0f;
+        }
+
         private string GetStateLabel(GameState state)
         {
             return state switch
@@ -493,7 +451,6 @@ namespace Poker
 
             int raiseBy = Mathf.RoundToInt(raiseSlider.value);
             game.PlayerRaise(raiseBy);
-
             raisePanel.SetActive(false);
         }
     }

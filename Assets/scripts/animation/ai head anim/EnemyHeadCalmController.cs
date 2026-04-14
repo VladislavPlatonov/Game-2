@@ -41,9 +41,23 @@ public class EnemyHeadCalmController : MonoBehaviour
     [SerializeField] private bool leftEyeClockwise = true;
     [SerializeField] private bool rightEyeClockwise = true;
 
-    [Header("Future States Placeholder")]
-    [SerializeField] private float nervousMultiplier = 1.35f;
-    [SerializeField] private float panicMultiplier = 1.8f;
+    [Header("Nervous Multipliers")]
+    [SerializeField] private float nervousMotionMultiplier = 1.35f;
+    [SerializeField] private float nervousEyeMultiplier = 1.35f;
+
+    [Header("Panic Head Motion")]
+    [SerializeField] private float panicMoveAmountX = 0.02f;
+    [SerializeField] private float panicMoveAmountY = 0.03f;
+    [SerializeField] private float panicMoveSpeed = 8f;
+    [SerializeField] private float panicRotAmountZ = 4f;
+    [SerializeField] private float panicRotSpeed = 10f;
+    [SerializeField] private float panicNoiseSpeed = 18f;
+    [SerializeField] private float panicNoiseAmountX = 0.015f;
+    [SerializeField] private float panicNoiseAmountY = 0.012f;
+    [SerializeField] private float panicNoiseRotZ = 2.5f;
+
+    [Header("Panic Eye Spin")]
+    [SerializeField] private float panicEyeSpinSpeed = 75f;
 
     [Header("Smoothing")]
     [SerializeField] private float eyeRotationLerpSpeed = 12f;
@@ -92,24 +106,74 @@ public class EnemyHeadCalmController : MonoBehaviour
         calmWeight = Mathf.Lerp(calmWeight, targetCalm, Time.deltaTime * stateBlendSpeed);
         nervousWeight = Mathf.Lerp(nervousWeight, targetNervous, Time.deltaTime * stateBlendSpeed);
         panicWeight = Mathf.Lerp(panicWeight, targetPanic, Time.deltaTime * stateBlendSpeed);
+
+        float total = calmWeight + nervousWeight + panicWeight;
+        if (total > 0.0001f)
+        {
+            calmWeight /= total;
+            nervousWeight /= total;
+            panicWeight /= total;
+        }
     }
 
     private void AnimateHead()
     {
         float t = Time.time;
 
-        float stateMultiplier =
+        // -----------------------------
+        // CALM / NERVOUS BASE
+        // -----------------------------
+        float calmStateMultiplier =
             1f +
-            nervousWeight * (nervousMultiplier - 1f) +
-            panicWeight * (panicMultiplier - 1f);
+            nervousWeight * (nervousMotionMultiplier - 1f);
 
-        float moveY = Mathf.Sin(t * calmMoveSpeed * stateMultiplier) * calmMoveAmountY * stateMultiplier;
-        float moveX = Mathf.Sin(t * calmMoveSpeed * 0.7f * stateMultiplier) * calmMoveAmountX * stateMultiplier;
+        float calmMoveY =
+            Mathf.Sin(t * calmMoveSpeed * calmStateMultiplier) *
+            calmMoveAmountY *
+            calmStateMultiplier;
 
-        float rotZ = Mathf.Sin(t * calmRotSpeed * stateMultiplier) * calmRotAmountZ * stateMultiplier;
+        float calmMoveX =
+            Mathf.Sin(t * calmMoveSpeed * 0.7f * calmStateMultiplier) *
+            calmMoveAmountX *
+            calmStateMultiplier;
 
-        headMotionPivot.localPosition = headBaseLocalPos + new Vector3(moveX, moveY, 0f);
-        headMotionPivot.localRotation = headBaseLocalRot * Quaternion.Euler(0f, 0f, rotZ);
+        float calmRotZ =
+            Mathf.Sin(t * calmRotSpeed * calmStateMultiplier) *
+            calmRotAmountZ *
+            calmStateMultiplier;
+
+        // -----------------------------
+        // PANIC = PURE VIBRATION
+        // -----------------------------
+        float panicVibeX =
+            (Mathf.PerlinNoise(t * panicNoiseSpeed, 0.17f) - 0.5f) * 2f * panicNoiseAmountX;
+
+        float panicVibeY =
+            (Mathf.PerlinNoise(0.41f, t * panicNoiseSpeed * 1.11f) - 0.5f) * 2f * panicNoiseAmountY;
+
+        // Никакого rotation по Z в panic
+        float panicRotZ = 0f;
+
+        // -----------------------------
+        // BLEND
+        // -----------------------------
+        float finalMoveX =
+            calmMoveX * calmWeight +
+            calmMoveX * nervousWeight +
+            panicVibeX * panicWeight;
+
+        float finalMoveY =
+            calmMoveY * calmWeight +
+            calmMoveY * nervousWeight +
+            panicVibeY * panicWeight;
+
+        float finalRotZ =
+            calmRotZ * calmWeight +
+            calmRotZ * nervousWeight +
+            panicRotZ * panicWeight;
+
+        headMotionPivot.localPosition = headBaseLocalPos + new Vector3(finalMoveX, finalMoveY, 0f);
+        headMotionPivot.localRotation = headBaseLocalRot * Quaternion.Euler(0f, 0f, finalRotZ);
     }
 
     private void AnimateEyes()
@@ -151,13 +215,10 @@ public class EnemyHeadCalmController : MonoBehaviour
 
     private float GetCurrentEyeSpeed()
     {
-        float speed = calmEyeSpinSpeed;
-
-        if (nervousWeight > 0.001f)
-            speed *= Mathf.Lerp(1f, nervousMultiplier, nervousWeight);
-
-        if (panicWeight > 0.001f)
-            speed *= Mathf.Lerp(1f, panicMultiplier, panicWeight);
+        float speed =
+            calmEyeSpinSpeed * calmWeight +
+            (calmEyeSpinSpeed * nervousEyeMultiplier) * nervousWeight +
+            panicEyeSpinSpeed * panicWeight;
 
         return speed;
     }
@@ -175,7 +236,7 @@ public class EnemyHeadCalmController : MonoBehaviour
         }
     }
 
-    // ---- Public API for future AI / neural logic ----
+    // ---- Public API for AI / neural logic ----
 
     public void SetCalm()
     {
