@@ -21170,7 +21170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AIHandEmotionController
   headController: {fileID: 919132148488708840}
   handVisual: {fileID: 0}
-  currentState: 0
+  currentState: 3
   syncStateFromHead: 1
   calmFollowAmountY: 3.5
   calmFollowAmountX: 0.0025
@@ -21187,6 +21187,16 @@ MonoBehaviour:
   focusOffsetZ: -60
   focusRotation: {x: 0, y: 0, z: -9}
   focusLerpSpeed: 7
+  suspiciousBaseOffsetX: 0.015
+  suspiciousBaseOffsetY: 0.008
+  suspiciousMoveAmountX: 0.014
+  suspiciousMoveAmountY: 0.01
+  suspiciousMoveSpeed: 0.95
+  suspiciousNoiseSpeed: 1.6
+  suspiciousNoiseAmountX: 0.007
+  suspiciousNoiseAmountY: 0.005
+  suspiciousRotation: {x: 0, y: 0, z: -4}
+  suspiciousLerpSpeed: 5.5
   hiddenLocalOffset: {x: 0, y: -0.7, z: 0}
   dealPushOffset: {x: 0.02, y: -0.03, z: 0.01}
   appearDuration: 0.18
@@ -21958,7 +21968,7 @@ MonoBehaviour:
   rightEye: {fileID: 1537359021886673234}
   focusTableTarget: {fileID: 1299945647}
   focusCardsTarget: {fileID: 1344280796}
-  currentState: 0
+  currentState: 3
   stateBlendSpeed: 3
   calmMoveAmountY: 0.2
   calmMoveAmountX: 0.006
@@ -21993,6 +22003,22 @@ MonoBehaviour:
   focusEyeScaleLerpSpeed: 8
   focusEyeYawMultiplier: 1
   focusEyePitchMultiplier: 1
+  suspiciousOffsetX: 0.018
+  suspiciousOffsetY: 0.012
+  suspiciousHeadMoveAmountX: 0.01
+  suspiciousHeadMoveAmountY: 0.006
+  suspiciousHeadMoveSpeed: 0.85
+  suspiciousTiltAmountZ: 5.5
+  suspiciousTiltSpeed: 0.7
+  suspiciousYaw: 10
+  suspiciousPitch: -8
+  suspiciousHeadLerpSpeed: 5
+  suspiciousEyeYaw: 12
+  suspiciousEyePitch: -8
+  suspiciousEyeSpinSpeed: 8
+  suspiciousEyeVerticalScale: 0.92
+  suspiciousEyeHorizontalScale: 1
+  suspiciousEyeLerpSpeed: 7
   eyeRotationLerpSpeed: 12
 --- !u!4 &942106402581890228
 Transform:

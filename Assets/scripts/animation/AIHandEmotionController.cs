@@ -43,12 +43,15 @@ public class AIHandEmotionController : MonoBehaviour
     [Header("Suspicious Motion")]
     [SerializeField] private float suspiciousBaseOffsetX = 0.015f;
     [SerializeField] private float suspiciousBaseOffsetY = 0.008f;
+    [SerializeField] private float suspiciousBaseOffsetZ = 0.012f;
     [SerializeField] private float suspiciousMoveAmountX = 0.014f;
     [SerializeField] private float suspiciousMoveAmountY = 0.010f;
+    [SerializeField] private float suspiciousMoveAmountZ = 0.008f;
     [SerializeField] private float suspiciousMoveSpeed = 0.95f;
     [SerializeField] private float suspiciousNoiseSpeed = 1.6f;
     [SerializeField] private float suspiciousNoiseAmountX = 0.007f;
     [SerializeField] private float suspiciousNoiseAmountY = 0.005f;
+    [SerializeField] private float suspiciousNoiseAmountZ = 0.004f;
     [SerializeField] private Vector3 suspiciousRotation = new Vector3(0f, 0f, -4f);
     [SerializeField] private float suspiciousLerpSpeed = 5.5f;
 
@@ -102,15 +105,12 @@ public class AIHandEmotionController : MonoBehaviour
             case EnemyHeadCalmController.EmotionState.Calm:
                 currentState = AIHandState.Calm;
                 break;
-
             case EnemyHeadCalmController.EmotionState.Panic:
                 currentState = AIHandState.Panic;
                 break;
-
             case EnemyHeadCalmController.EmotionState.Focus:
                 currentState = AIHandState.Focus;
                 break;
-
             case EnemyHeadCalmController.EmotionState.Suspicious:
                 currentState = AIHandState.Suspicious;
                 break;
@@ -124,15 +124,12 @@ public class AIHandEmotionController : MonoBehaviour
             case AIHandState.Calm:
                 ApplyCalmPose();
                 break;
-
             case AIHandState.Panic:
                 ApplyPanicPose();
                 break;
-
             case AIHandState.Focus:
                 ApplyFocusPose();
                 break;
-
             case AIHandState.Suspicious:
                 ApplySuspiciousPose();
                 break;
@@ -188,6 +185,7 @@ public class AIHandEmotionController : MonoBehaviour
 
         float waveX = Mathf.Sin(t * suspiciousMoveSpeed) * suspiciousMoveAmountX;
         float waveY = Mathf.Sin(t * suspiciousMoveSpeed * 0.83f) * suspiciousMoveAmountY;
+        float waveZ = Mathf.Sin(t * suspiciousMoveSpeed * 1.19f) * suspiciousMoveAmountZ;
 
         float noiseX =
             (Mathf.PerlinNoise(t * suspiciousNoiseSpeed, 0.23f) - 0.5f) * 2f * suspiciousNoiseAmountX;
@@ -195,10 +193,13 @@ public class AIHandEmotionController : MonoBehaviour
         float noiseY =
             (Mathf.PerlinNoise(0.61f, t * suspiciousNoiseSpeed) - 0.5f) * 2f * suspiciousNoiseAmountY;
 
+        float noiseZ =
+            (Mathf.PerlinNoise(t * suspiciousNoiseSpeed, 0.87f) - 0.5f) * 2f * suspiciousNoiseAmountZ;
+
         Vector3 targetPos = baseLocalPos + new Vector3(
             suspiciousBaseOffsetX + waveX + noiseX,
             suspiciousBaseOffsetY + waveY + noiseY,
-            0f
+            suspiciousBaseOffsetZ + waveZ + noiseZ
         );
 
         Quaternion targetRot = baseLocalRot * Quaternion.Euler(suspiciousRotation);
@@ -306,6 +307,7 @@ public class AIHandEmotionController : MonoBehaviour
 
                     float waveX = Mathf.Sin(t * suspiciousMoveSpeed) * suspiciousMoveAmountX;
                     float waveY = Mathf.Sin(t * suspiciousMoveSpeed * 0.83f) * suspiciousMoveAmountY;
+                    float waveZ = Mathf.Sin(t * suspiciousMoveSpeed * 1.19f) * suspiciousMoveAmountZ;
 
                     float noiseX =
                         (Mathf.PerlinNoise(t * suspiciousNoiseSpeed, 0.23f) - 0.5f) * 2f * suspiciousNoiseAmountX;
@@ -313,10 +315,13 @@ public class AIHandEmotionController : MonoBehaviour
                     float noiseY =
                         (Mathf.PerlinNoise(0.61f, t * suspiciousNoiseSpeed) - 0.5f) * 2f * suspiciousNoiseAmountY;
 
+                    float noiseZ =
+                        (Mathf.PerlinNoise(t * suspiciousNoiseSpeed, 0.87f) - 0.5f) * 2f * suspiciousNoiseAmountZ;
+
                     return baseLocalPos + new Vector3(
                         suspiciousBaseOffsetX + waveX + noiseX,
                         suspiciousBaseOffsetY + waveY + noiseY,
-                        0f
+                        suspiciousBaseOffsetZ + waveZ + noiseZ
                     );
                 }
 
@@ -355,30 +360,11 @@ public class AIHandEmotionController : MonoBehaviour
         }
     }
 
-    public void SetStateCalm()
-    {
-        currentState = AIHandState.Calm;
-    }
-
-    public void SetStatePanic()
-    {
-        currentState = AIHandState.Panic;
-    }
-
-    public void SetStateFocus()
-    {
-        currentState = AIHandState.Focus;
-    }
-
-    public void SetStateSuspicious()
-    {
-        currentState = AIHandState.Suspicious;
-    }
-
-    public void SetState(AIHandState newState)
-    {
-        currentState = newState;
-    }
+    public void SetStateCalm() => currentState = AIHandState.Calm;
+    public void SetStatePanic() => currentState = AIHandState.Panic;
+    public void SetStateFocus() => currentState = AIHandState.Focus;
+    public void SetStateSuspicious() => currentState = AIHandState.Suspicious;
+    public void SetState(AIHandState newState) => currentState = newState;
 
     public AIHandState GetCurrentState()
     {
