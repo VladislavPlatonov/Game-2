@@ -12798,7 +12798,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1298161465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12831,6 +12831,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 647653898}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1299945646
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1299945647}
+  m_Layer: 0
+  m_Name: Focus
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1299945647
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1299945646}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.08715578, y: 0, z: 0, w: 0.9961947}
+  m_LocalPosition: {x: -9.2, y: 6.6, z: -6.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1302572969}
+  m_LocalEulerAnglesHint: {x: -10, y: 0, z: 0}
 --- !u!1 &1302572968
 GameObject:
   m_ObjectHideFlags: 0
@@ -12866,6 +12897,7 @@ Transform:
   - {fileID: 2141392119}
   - {fileID: 2085182616}
   - {fileID: 1012626585}
+  - {fileID: 1299945647}
   - {fileID: 1654571699}
   - {fileID: 1976106580}
   - {fileID: 696067562}
@@ -13111,6 +13143,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2141392119}
   m_LocalEulerAnglesHint: {x: -303.35, y: -26.462, z: -50.861}
+--- !u!1 &1344280795
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1344280796}
+  m_Layer: 0
+  m_Name: Focus
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1344280796
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344280795}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.49110225, y: -0.11286723, z: 0.10718179, w: -0.8570832}
+  m_LocalPosition: {x: -0.17333984, y: 4.268, z: 9.442}
+  m_LocalScale: {x: 0.10000001, y: 0.100000024, z: 0.10000001}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2141392119}
+  m_LocalEulerAnglesHint: {x: -300, y: 10.16, z: -8.38}
 --- !u!1 &1362305621
 GameObject:
   m_ObjectHideFlags: 0
@@ -21087,6 +21150,7 @@ Transform:
   m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1344280796}
   - {fileID: 1516162836}
   - {fileID: 1321279276}
   - {fileID: 1518938902}
@@ -21104,28 +21168,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b900c62161c1cff47b8bbbf89380c5a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIHandEmotionController
-  soulManager: {fileID: 615967841}
+  headController: {fileID: 919132148488708840}
   handVisual: {fileID: 0}
-  useAutoStateFromAIHp: 1
-  maxHp: 100
-  stressedHpThreshold: 75
-  panicHpThreshold: 40
   currentState: 0
-  calmAmplitudeY: 0.0015
-  calmAmplitudeX: 0.0004
-  calmAmplitudeZ: 0.0002
+  syncStateFromHead: 1
+  calmFollowAmountY: 3.5
+  calmFollowAmountX: 0.0025
+  calmFollowSpeed: 0.55
   calmRotZ: 0.08
-  calmSpeed: 3
-  stressedAmplitudeY: 0.003
-  stressedAmplitudeX: 0.0007
-  stressedAmplitudeZ: 0.0003
-  stressedRotZ: 0.18
-  stressedSpeed: 28
-  panicAmplitudeY: 0.006
-  panicAmplitudeX: 0.0012
-  panicAmplitudeZ: 0.0005
-  panicRotZ: 0.6
-  panicSpeed: 11
+  calmRotSpeed: 0.45
+  calmLerpSpeed: 5
+  panicNoiseSpeed: 26
+  panicNoiseAmountX: 1.2
+  panicNoiseAmountY: 1.19
+  panicLerpSpeed: 16
+  focusOffsetX: 0.05
+  focusOffsetY: 0.025
+  focusOffsetZ: -60
+  focusRotation: {x: 0, y: 0, z: -9}
+  focusLerpSpeed: 7
   hiddenLocalOffset: {x: 0, y: -0.7, z: 0}
   dealPushOffset: {x: 0.02, y: -0.03, z: 0.01}
   appearDuration: 0.18
@@ -21895,6 +21956,8 @@ MonoBehaviour:
   headMotionPivot: {fileID: 543450652227926109}
   leftEye: {fileID: 8890077616425150684}
   rightEye: {fileID: 1537359021886673234}
+  focusTableTarget: {fileID: 1299945647}
+  focusCardsTarget: {fileID: 1344280796}
   currentState: 0
   stateBlendSpeed: 3
   calmMoveAmountY: 0.2
@@ -21907,18 +21970,29 @@ MonoBehaviour:
   rightEyeAxis: 2
   leftEyeClockwise: 1
   rightEyeClockwise: 1
-  nervousMotionMultiplier: 1.35
-  nervousEyeMultiplier: 1.35
-  panicMoveAmountX: 0.22
-  panicMoveAmountY: 0.22
-  panicMoveSpeed: 0
-  panicRotAmountZ: 0
-  panicRotSpeed: 0
   panicNoiseSpeed: 28
   panicNoiseAmountX: 0.08
   panicNoiseAmountY: 0.07
-  panicNoiseRotZ: 0
   panicEyeSpinSpeed: 225
+  focusHeadMoveLerpSpeed: 6
+  focusHeadRotLerpSpeed: 6
+  focusLookSwitchSpeed: 1.4
+  focusLookBias: 0.5
+  focusHeadOffsetX: 0.02
+  focusHeadOffsetY: -0.015
+  focusHeadPositionInfluenceX: 0.03
+  focusHeadPositionInfluenceY: 0.03
+  focusMaxHeadOffsetX: 0.04
+  focusMaxHeadOffsetY: 0.04
+  focusPitchMultiplier: 0.7
+  focusYawMultiplier: 0.45
+  focusRollMultiplier: 0.08
+  focusEyeLookLerpSpeed: 10
+  focusEyeVerticalScale: 0.72
+  focusEyeHorizontalScale: 1.02
+  focusEyeScaleLerpSpeed: 8
+  focusEyeYawMultiplier: 1
+  focusEyePitchMultiplier: 1
   eyeRotationLerpSpeed: 12
 --- !u!4 &942106402581890228
 Transform:
@@ -22737,7 +22811,7 @@ Transform:
   m_GameObject: {fileID: 8390215873463932895}
   serializedVersion: 2
   m_LocalRotation: {x: 0.17842479, y: -0.00000011729641, z: -0.000000021269894, w: 0.9839536}
-  m_LocalPosition: {x: 0.006229654, y: -0.0043415832, z: 0.011365605}
+  m_LocalPosition: {x: 0.0068, y: -0.0043415832, z: 0.011365605}
   m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -24151,7 +24225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1798864511631477571}
   m_Layer: 0
-  m_Name: Armature.002
+  m_Name: EyeBones
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25846,7 +25920,7 @@ Transform:
   m_GameObject: {fileID: 4350058534676423566}
   serializedVersion: 2
   m_LocalRotation: {x: -0.69974935, y: -0.0000000654068, z: -0.101985164, w: 0.7070714}
-  m_LocalPosition: {x: -4.249159e-10, y: 0.005590316, z: 8.018105e-11}
+  m_LocalPosition: {x: 0.0003, y: 0.0056, z: 0.0001}
   m_LocalScale: {x: 1, y: 1, z: 0.99999994}
   m_ConstrainProportionsScale: 0
   m_Children:

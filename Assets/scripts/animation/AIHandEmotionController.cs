@@ -1,49 +1,43 @@
 using System.Collections;
 using UnityEngine;
-using Poker;
 
 public class AIHandEmotionController : MonoBehaviour
 {
     public enum AIHandState
     {
         Calm,
-        Stressed,
-        Panic
+        Panic,
+        Focus
     }
 
     [Header("Refs")]
-    [SerializeField] private SoulManager soulManager;
+    [SerializeField] private EnemyHeadCalmController headController;
     [SerializeField] private Transform handVisual;
 
-    [Header("Auto state from AI HP")]
-    [SerializeField] private bool useAutoStateFromAIHp = true;
-    [SerializeField] private int maxHp = 100;
-    [SerializeField] private int stressedHpThreshold = 75;
-    [SerializeField] private int panicHpThreshold = 40;
-
-    [Header("Manual / future AI emotion input")]
+    [Header("State Control")]
     [SerializeField] private AIHandState currentState = AIHandState.Calm;
+    [SerializeField] private bool syncStateFromHead = false;
 
-    [Header("Calm Tremor")]
-    [SerializeField] private float calmAmplitudeY = 0.0015f;
-    [SerializeField] private float calmAmplitudeX = 0.0004f;
-    [SerializeField] private float calmAmplitudeZ = 0.0002f;
-    [SerializeField] private float calmRotZ = 0.08f;
-    [SerializeField] private float calmSpeed = 18f;
+    [Header("Calm Motion")]
+    [SerializeField] private float calmFollowAmountY = 0.018f;
+    [SerializeField] private float calmFollowAmountX = 0.0025f;
+    [SerializeField] private float calmFollowSpeed = 0.55f;
+    [SerializeField] private float calmRotZ = 0.6f;
+    [SerializeField] private float calmRotSpeed = 0.45f;
+    [SerializeField] private float calmLerpSpeed = 5f;
 
-    [Header("Stressed Tremor")]
-    [SerializeField] private float stressedAmplitudeY = 0.003f;
-    [SerializeField] private float stressedAmplitudeX = 0.0007f;
-    [SerializeField] private float stressedAmplitudeZ = 0.0003f;
-    [SerializeField] private float stressedRotZ = 0.18f;
-    [SerializeField] private float stressedSpeed = 28f;
+    [Header("Panic Motion")]
+    [SerializeField] private float panicNoiseSpeed = 26f;
+    [SerializeField] private float panicNoiseAmountX = 0.010f;
+    [SerializeField] private float panicNoiseAmountY = 0.014f;
+    [SerializeField] private float panicLerpSpeed = 16f;
 
-    [Header("Panic Tremor")]
-    [SerializeField] private float panicAmplitudeY = 0.006f;
-    [SerializeField] private float panicAmplitudeX = 0.0012f;
-    [SerializeField] private float panicAmplitudeZ = 0.0005f;
-    [SerializeField] private float panicRotZ = 0.35f;
-    [SerializeField] private float panicSpeed = 42f;
+    [Header("Focus Pose")]
+    [SerializeField] private float focusOffsetX = 0.05f;
+    [SerializeField] private float focusOffsetY = 0.025f;
+    [SerializeField] private float focusOffsetZ = 0f;
+    [SerializeField] private Vector3 focusRotation = new Vector3(0f, 0f, -9f);
+    [SerializeField] private float focusLerpSpeed = 7f;
 
     [Header("Deal / Grab Animation")]
     [SerializeField] private Vector3 hiddenLocalOffset = new Vector3(0f, -0.7f, 0f);
@@ -64,8 +58,8 @@ public class AIHandEmotionController : MonoBehaviour
 
     private void Awake()
     {
-        if (soulManager == null)
-            soulManager = SoulManager.Instance != null ? SoulManager.Instance : FindFirstObjectByType<SoulManager>();
+        if (headController == null)
+            headController = FindFirstObjectByType<EnemyHeadCalmController>();
 
         if (handVisual == null)
             handVisual = transform;
@@ -75,81 +69,96 @@ public class AIHandEmotionController : MonoBehaviour
         baseLocalScale = transform.localScale;
     }
 
-    private void LateUpdate()
+    private void Update()
     {
-        if (isPlayingGrab) return;
-        ApplyIdleTremor();
+        SyncStateFromHeadIfNeeded();
+
+        if (isPlayingGrab)
+            return;
+
+        ApplyCurrentStatePose();
     }
 
-    private void ApplyIdleTremor()
+    private void SyncStateFromHeadIfNeeded()
     {
-        AIHandState stateToUse = currentState;
+        if (!syncStateFromHead || headController == null)
+            return;
 
-        if (useAutoStateFromAIHp && soulManager != null)
+        switch (headController.GetCurrentEmotion())
         {
-            int hp = Mathf.Clamp(soulManager.GetAISouls(), 0, maxHp);
+            case EnemyHeadCalmController.EmotionState.Calm:
+                currentState = AIHandState.Calm;
+                break;
 
-            if (hp > stressedHpThreshold)
-                stateToUse = AIHandState.Calm;
-            else if (hp > panicHpThreshold)
-                stateToUse = AIHandState.Stressed;
-            else
-                stateToUse = AIHandState.Panic;
+            case EnemyHeadCalmController.EmotionState.Panic:
+                currentState = AIHandState.Panic;
+                break;
+
+            case EnemyHeadCalmController.EmotionState.Focus:
+                currentState = AIHandState.Focus;
+                break;
         }
+    }
 
-        float ampY;
-        float ampX;
-        float ampZ;
-        float rotZ;
-        float speed;
-
-        switch (stateToUse)
+    private void ApplyCurrentStatePose()
+    {
+        switch (currentState)
         {
-            case AIHandState.Stressed:
-                ampY = stressedAmplitudeY;
-                ampX = stressedAmplitudeX;
-                ampZ = stressedAmplitudeZ;
-                rotZ = stressedRotZ;
-                speed = stressedSpeed;
+            case AIHandState.Calm:
+                ApplyCalmPose();
                 break;
 
             case AIHandState.Panic:
-                ampY = panicAmplitudeY;
-                ampX = panicAmplitudeX;
-                ampZ = panicAmplitudeZ;
-                rotZ = panicRotZ;
-                speed = panicSpeed;
+                ApplyPanicPose();
                 break;
 
-            default:
-                ampY = calmAmplitudeY;
-                ampX = calmAmplitudeX;
-                ampZ = calmAmplitudeZ;
-                rotZ = calmRotZ;
-                speed = calmSpeed;
+            case AIHandState.Focus:
+                ApplyFocusPose();
                 break;
         }
+    }
 
-        float t = Time.time * speed;
+    private void ApplyCalmPose()
+    {
+        float t = Time.time;
 
-        // Главное — вертикальная дрожь
-        float shakeY =
-            (Mathf.PerlinNoise(t, 0.21f) - 0.5f) * 2f * ampY +
-            Mathf.Sin(t * 1.7f) * ampY * 0.25f;
+        float moveY = Mathf.Sin(t * calmFollowSpeed) * calmFollowAmountY;
+        float moveX = Mathf.Sin(t * calmFollowSpeed * 0.7f) * calmFollowAmountX;
+        float rotZ = Mathf.Sin(t * calmRotSpeed) * calmRotZ;
 
-        // Очень слабое горизонтальное движение
-        float shakeX =
-            (Mathf.PerlinNoise(0.37f, t) - 0.5f) * 2f * ampX;
+        Vector3 targetPos = baseLocalPos + new Vector3(moveX, moveY, 0f);
+        Quaternion targetRot = baseLocalRot * Quaternion.Euler(0f, 0f, rotZ);
 
-        // Совсем легкое смещение по Z
-        float shakeZ =
-            (Mathf.PerlinNoise(t, 0.73f) - 0.5f) * 2f * ampZ;
+        transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * calmLerpSpeed);
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRot, Time.deltaTime * calmLerpSpeed);
+        transform.localScale = Vector3.Lerp(transform.localScale, baseLocalScale, Time.deltaTime * calmLerpSpeed);
+    }
 
-        float z =
-            (Mathf.PerlinNoise(t, 0.91f) - 0.5f) * 2f * rotZ;
+    private void ApplyPanicPose()
+    {
+        float t = Time.time;
 
-        transform.localPosition = baseLocalPos + new Vector3(shakeX, shakeY, shakeZ);
-        transform.localRotation = baseLocalRot * Quaternion.Euler(0f, 0f, z);
+        float vibeX =
+            (Mathf.PerlinNoise(t * panicNoiseSpeed, 0.17f) - 0.5f) * 2f * panicNoiseAmountX;
+
+        float vibeY =
+            (Mathf.PerlinNoise(0.41f, t * panicNoiseSpeed * 1.11f) - 0.5f) * 2f * panicNoiseAmountY;
+
+        Vector3 targetPos = baseLocalPos + new Vector3(vibeX, vibeY, 0f);
+
+        transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * panicLerpSpeed);
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, baseLocalRot, Time.deltaTime * panicLerpSpeed);
+        transform.localScale = Vector3.Lerp(transform.localScale, baseLocalScale, Time.deltaTime * panicLerpSpeed);
+    }
+
+    private void ApplyFocusPose()
+    {
+        Vector3 targetPos = baseLocalPos + new Vector3(focusOffsetX, focusOffsetY, focusOffsetZ);
+        Quaternion targetRot = baseLocalRot * Quaternion.Euler(focusRotation);
+
+        transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * focusLerpSpeed);
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRot, Time.deltaTime * focusLerpSpeed);
+        transform.localScale = Vector3.Lerp(transform.localScale, baseLocalScale, Time.deltaTime * focusLerpSpeed);
     }
 
     public void PlayDealGrab()
@@ -160,32 +169,30 @@ public class AIHandEmotionController : MonoBehaviour
         grabRoutine = StartCoroutine(DealGrabRoutine());
     }
 
-    public void SnapToIdle()
+    public void SnapToCurrentState()
     {
         if (grabRoutine != null)
             StopCoroutine(grabRoutine);
 
         isPlayingGrab = false;
-        transform.localPosition = baseLocalPos;
-        transform.localRotation = baseLocalRot;
-        transform.localScale = baseLocalScale;
+        grabRoutine = null;
+        ApplyCurrentStatePose();
     }
 
     private IEnumerator DealGrabRoutine()
     {
         isPlayingGrab = true;
 
-        Vector3 idlePos = baseLocalPos;
-        Quaternion idleRot = baseLocalRot;
-        Vector3 idleScale = baseLocalScale;
+        Vector3 idlePos = transform.localPosition;
+        Quaternion idleRot = transform.localRotation;
+        Vector3 idleScale = transform.localScale;
 
-        Vector3 hiddenPos = idlePos + hiddenLocalOffset;
+        Vector3 hiddenPos = baseLocalPos + hiddenLocalOffset;
         Vector3 pushedPos = idlePos + dealPushOffset;
 
         Quaternion pushedRot = idleRot * Quaternion.Euler(0f, 0f, grabTiltAngle);
         Vector3 pushedScale = idleScale * grabScaleMultiplier;
 
-        // 1. Появление / подача руки
         transform.localPosition = hiddenPos;
         transform.localRotation = idleRot;
         transform.localScale = idleScale;
@@ -200,7 +207,6 @@ public class AIHandEmotionController : MonoBehaviour
 
         transform.localPosition = idlePos;
 
-        // 2. Подхват карт
         t = 0f;
         while (t < 1f)
         {
@@ -215,26 +221,68 @@ public class AIHandEmotionController : MonoBehaviour
         transform.localRotation = pushedRot;
         transform.localScale = pushedScale;
 
-        // 3. Короткая пауза
         yield return new WaitForSeconds(grabHoldDuration);
 
-        // 4. Возврат обратно
         t = 0f;
+
+        Vector3 stateTargetPos = GetStateTargetPosition();
+        Quaternion stateTargetRot = GetStateTargetRotation();
+        Vector3 stateTargetScale = baseLocalScale;
+
         while (t < 1f)
         {
             t += Time.deltaTime / grabBackDuration;
-            transform.localPosition = Vector3.Lerp(pushedPos, idlePos, t);
-            transform.localRotation = Quaternion.Lerp(pushedRot, idleRot, t);
-            transform.localScale = Vector3.Lerp(pushedScale, idleScale, t);
+            transform.localPosition = Vector3.Lerp(pushedPos, stateTargetPos, t);
+            transform.localRotation = Quaternion.Lerp(pushedRot, stateTargetRot, t);
+            transform.localScale = Vector3.Lerp(pushedScale, stateTargetScale, t);
             yield return null;
         }
 
-        transform.localPosition = idlePos;
-        transform.localRotation = idleRot;
-        transform.localScale = idleScale;
+        transform.localPosition = stateTargetPos;
+        transform.localRotation = stateTargetRot;
+        transform.localScale = stateTargetScale;
 
         isPlayingGrab = false;
         grabRoutine = null;
+    }
+
+    private Vector3 GetStateTargetPosition()
+    {
+        switch (currentState)
+        {
+            case AIHandState.Focus:
+                return baseLocalPos + new Vector3(focusOffsetX, focusOffsetY, focusOffsetZ);
+
+            case AIHandState.Panic:
+                return transform.localPosition;
+
+            default:
+                {
+                    float t = Time.time;
+                    float moveY = Mathf.Sin(t * calmFollowSpeed) * calmFollowAmountY;
+                    float moveX = Mathf.Sin(t * calmFollowSpeed * 0.7f) * calmFollowAmountX;
+                    return baseLocalPos + new Vector3(moveX, moveY, 0f);
+                }
+        }
+    }
+
+    private Quaternion GetStateTargetRotation()
+    {
+        switch (currentState)
+        {
+            case AIHandState.Focus:
+                return baseLocalRot * Quaternion.Euler(focusRotation);
+
+            case AIHandState.Panic:
+                return baseLocalRot;
+
+            default:
+                {
+                    float t = Time.time;
+                    float rotZ = Mathf.Sin(t * calmRotSpeed) * calmRotZ;
+                    return baseLocalRot * Quaternion.Euler(0f, 0f, rotZ);
+                }
+        }
     }
 
     public void SetStateCalm()
@@ -242,14 +290,14 @@ public class AIHandEmotionController : MonoBehaviour
         currentState = AIHandState.Calm;
     }
 
-    public void SetStateStressed()
-    {
-        currentState = AIHandState.Stressed;
-    }
-
     public void SetStatePanic()
     {
         currentState = AIHandState.Panic;
+    }
+
+    public void SetStateFocus()
+    {
+        currentState = AIHandState.Focus;
     }
 
     public void SetState(AIHandState newState)
@@ -257,15 +305,8 @@ public class AIHandEmotionController : MonoBehaviour
         currentState = newState;
     }
 
-    public void SetExternalStress01(float stress01)
+    public AIHandState GetCurrentState()
     {
-        stress01 = Mathf.Clamp01(stress01);
-
-        if (stress01 < 0.33f)
-            currentState = AIHandState.Calm;
-        else if (stress01 < 0.66f)
-            currentState = AIHandState.Stressed;
-        else
-            currentState = AIHandState.Panic;
+        return currentState;
     }
 }

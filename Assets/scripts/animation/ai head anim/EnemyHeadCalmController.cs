@@ -5,8 +5,8 @@ public class EnemyHeadCalmController : MonoBehaviour
     public enum EmotionState
     {
         Calm,
-        Nervous,
-        Panic
+        Panic,
+        Focus
     }
 
     public enum EyeSpinAxis
@@ -20,6 +20,10 @@ public class EnemyHeadCalmController : MonoBehaviour
     [SerializeField] private Transform headMotionPivot;
     [SerializeField] private Transform leftEye;
     [SerializeField] private Transform rightEye;
+
+    [Header("Focus Look Targets")]
+    [SerializeField] private Transform focusTableTarget;
+    [SerializeField] private Transform focusCardsTarget;
 
     [Header("Current State")]
     [SerializeField] private EmotionState currentState = EmotionState.Calm;
@@ -41,23 +45,36 @@ public class EnemyHeadCalmController : MonoBehaviour
     [SerializeField] private bool leftEyeClockwise = true;
     [SerializeField] private bool rightEyeClockwise = true;
 
-    [Header("Nervous Multipliers")]
-    [SerializeField] private float nervousMotionMultiplier = 1.35f;
-    [SerializeField] private float nervousEyeMultiplier = 1.35f;
-
     [Header("Panic Head Motion")]
-    [SerializeField] private float panicMoveAmountX = 0.02f;
-    [SerializeField] private float panicMoveAmountY = 0.03f;
-    [SerializeField] private float panicMoveSpeed = 8f;
-    [SerializeField] private float panicRotAmountZ = 4f;
-    [SerializeField] private float panicRotSpeed = 10f;
-    [SerializeField] private float panicNoiseSpeed = 18f;
-    [SerializeField] private float panicNoiseAmountX = 0.015f;
-    [SerializeField] private float panicNoiseAmountY = 0.012f;
-    [SerializeField] private float panicNoiseRotZ = 2.5f;
+    [SerializeField] private float panicNoiseSpeed = 28f;
+    [SerializeField] private float panicNoiseAmountX = 0.018f;
+    [SerializeField] private float panicNoiseAmountY = 0.014f;
 
     [Header("Panic Eye Spin")]
     [SerializeField] private float panicEyeSpinSpeed = 75f;
+
+    [Header("Focus Head")]
+    [SerializeField] private float focusHeadMoveLerpSpeed = 6f;
+    [SerializeField] private float focusHeadRotLerpSpeed = 6f;
+    [SerializeField] private float focusLookSwitchSpeed = 1.4f;
+    [SerializeField] private float focusLookBias = 0.5f;
+    [SerializeField] private float focusHeadOffsetX = 0.02f;
+    [SerializeField] private float focusHeadOffsetY = -0.015f;
+    [SerializeField] private float focusHeadPositionInfluenceX = 0.03f;
+    [SerializeField] private float focusHeadPositionInfluenceY = 0.03f;
+    [SerializeField] private float focusMaxHeadOffsetX = 0.04f;
+    [SerializeField] private float focusMaxHeadOffsetY = 0.04f;
+    [SerializeField] private float focusPitchMultiplier = 0.7f;
+    [SerializeField] private float focusYawMultiplier = 0.45f;
+    [SerializeField] private float focusRollMultiplier = 0.08f;
+
+    [Header("Focus Eyes")]
+    [SerializeField] private float focusEyeLookLerpSpeed = 10f;
+    [SerializeField] private float focusEyeVerticalScale = 0.72f;
+    [SerializeField] private float focusEyeHorizontalScale = 1.02f;
+    [SerializeField] private float focusEyeScaleLerpSpeed = 8f;
+    [SerializeField] private float focusEyeYawMultiplier = 1.0f;
+    [SerializeField] private float focusEyePitchMultiplier = 1.0f;
 
     [Header("Smoothing")]
     [SerializeField] private float eyeRotationLerpSpeed = 12f;
@@ -68,12 +85,15 @@ public class EnemyHeadCalmController : MonoBehaviour
     private Quaternion leftEyeBaseRot;
     private Quaternion rightEyeBaseRot;
 
+    private Vector3 leftEyeBaseScale;
+    private Vector3 rightEyeBaseScale;
+
     private float leftEyeAngle;
     private float rightEyeAngle;
 
     private float calmWeight = 1f;
-    private float nervousWeight = 0f;
     private float panicWeight = 0f;
+    private float focusWeight = 0f;
 
     private void Awake()
     {
@@ -84,10 +104,16 @@ public class EnemyHeadCalmController : MonoBehaviour
         headBaseLocalRot = headMotionPivot.localRotation;
 
         if (leftEye != null)
+        {
             leftEyeBaseRot = leftEye.localRotation;
+            leftEyeBaseScale = leftEye.localScale;
+        }
 
         if (rightEye != null)
+        {
             rightEyeBaseRot = rightEye.localRotation;
+            rightEyeBaseScale = rightEye.localScale;
+        }
     }
 
     private void Update()
@@ -100,19 +126,19 @@ public class EnemyHeadCalmController : MonoBehaviour
     private void UpdateStateWeights()
     {
         float targetCalm = currentState == EmotionState.Calm ? 1f : 0f;
-        float targetNervous = currentState == EmotionState.Nervous ? 1f : 0f;
         float targetPanic = currentState == EmotionState.Panic ? 1f : 0f;
+        float targetFocus = currentState == EmotionState.Focus ? 1f : 0f;
 
         calmWeight = Mathf.Lerp(calmWeight, targetCalm, Time.deltaTime * stateBlendSpeed);
-        nervousWeight = Mathf.Lerp(nervousWeight, targetNervous, Time.deltaTime * stateBlendSpeed);
         panicWeight = Mathf.Lerp(panicWeight, targetPanic, Time.deltaTime * stateBlendSpeed);
+        focusWeight = Mathf.Lerp(focusWeight, targetFocus, Time.deltaTime * stateBlendSpeed);
 
-        float total = calmWeight + nervousWeight + panicWeight;
+        float total = calmWeight + panicWeight + focusWeight;
         if (total > 0.0001f)
         {
             calmWeight /= total;
-            nervousWeight /= total;
             panicWeight /= total;
+            focusWeight /= total;
         }
     }
 
@@ -120,107 +146,174 @@ public class EnemyHeadCalmController : MonoBehaviour
     {
         float t = Time.time;
 
-        // -----------------------------
-        // CALM / NERVOUS BASE
-        // -----------------------------
-        float calmStateMultiplier =
-            1f +
-            nervousWeight * (nervousMotionMultiplier - 1f);
-
         float calmMoveY =
-            Mathf.Sin(t * calmMoveSpeed * calmStateMultiplier) *
-            calmMoveAmountY *
-            calmStateMultiplier;
+            Mathf.Sin(t * calmMoveSpeed) *
+            calmMoveAmountY;
 
         float calmMoveX =
-            Mathf.Sin(t * calmMoveSpeed * 0.7f * calmStateMultiplier) *
-            calmMoveAmountX *
-            calmStateMultiplier;
+            Mathf.Sin(t * calmMoveSpeed * 0.7f) *
+            calmMoveAmountX;
 
         float calmRotZ =
-            Mathf.Sin(t * calmRotSpeed * calmStateMultiplier) *
-            calmRotAmountZ *
-            calmStateMultiplier;
+            Mathf.Sin(t * calmRotSpeed) *
+            calmRotAmountZ;
 
-        // -----------------------------
-        // PANIC = PURE VIBRATION
-        // -----------------------------
         float panicVibeX =
             (Mathf.PerlinNoise(t * panicNoiseSpeed, 0.17f) - 0.5f) * 2f * panicNoiseAmountX;
 
         float panicVibeY =
             (Mathf.PerlinNoise(0.41f, t * panicNoiseSpeed * 1.11f) - 0.5f) * 2f * panicNoiseAmountY;
 
-        // Никакого rotation по Z в panic
-        float panicRotZ = 0f;
+        Vector3 focusOffsetPos = Vector3.zero;
+        Quaternion focusOffsetRot = Quaternion.identity;
 
-        // -----------------------------
-        // BLEND
-        // -----------------------------
-        float finalMoveX =
-            calmMoveX * calmWeight +
-            calmMoveX * nervousWeight +
-            panicVibeX * panicWeight;
+        Transform activeFocusTarget = GetCurrentFocusTarget();
+        if (activeFocusTarget != null)
+        {
+            Vector3 toTargetWorld = activeFocusTarget.position - headMotionPivot.position;
+            Vector3 toTargetLocal = headMotionPivot.parent != null
+                ? headMotionPivot.parent.InverseTransformDirection(toTargetWorld.normalized)
+                : transform.InverseTransformDirection(toTargetWorld.normalized);
 
-        float finalMoveY =
-            calmMoveY * calmWeight +
-            calmMoveY * nervousWeight +
-            panicVibeY * panicWeight;
+            float posX = focusHeadOffsetX + Mathf.Clamp(
+                toTargetLocal.x * focusHeadPositionInfluenceX,
+                -focusMaxHeadOffsetX,
+                focusMaxHeadOffsetX
+            );
 
-        float finalRotZ =
-            calmRotZ * calmWeight +
-            calmRotZ * nervousWeight +
-            panicRotZ * panicWeight;
+            float posY = focusHeadOffsetY + Mathf.Clamp(
+                toTargetLocal.y * focusHeadPositionInfluenceY,
+                -focusMaxHeadOffsetY,
+                focusMaxHeadOffsetY
+            );
 
-        headMotionPivot.localPosition = headBaseLocalPos + new Vector3(finalMoveX, finalMoveY, 0f);
-        headMotionPivot.localRotation = headBaseLocalRot * Quaternion.Euler(0f, 0f, finalRotZ);
+            float pitch = -toTargetLocal.y * 35f * focusPitchMultiplier;
+            float yaw = toTargetLocal.x * 30f * focusYawMultiplier;
+            float roll = -toTargetLocal.x * 10f * focusRollMultiplier;
+
+            focusOffsetPos = new Vector3(posX, posY, 0f);
+            focusOffsetRot = Quaternion.Euler(pitch, yaw, roll);
+        }
+        else
+        {
+            focusOffsetPos = new Vector3(focusHeadOffsetX, focusHeadOffsetY, 0f);
+        }
+
+        Vector3 blendedPos =
+            new Vector3(calmMoveX, calmMoveY, 0f) * calmWeight +
+            new Vector3(panicVibeX, panicVibeY, 0f) * panicWeight +
+            focusOffsetPos * focusWeight;
+
+        float blendedRotZ = calmRotZ * calmWeight;
+
+        Vector3 targetPos = headBaseLocalPos + blendedPos;
+        Quaternion targetRot =
+            headBaseLocalRot *
+            Quaternion.Euler(0f, 0f, blendedRotZ) *
+            Quaternion.Slerp(Quaternion.identity, focusOffsetRot, focusWeight);
+
+        headMotionPivot.localPosition = Vector3.Lerp(
+            headMotionPivot.localPosition,
+            targetPos,
+            Time.deltaTime * Mathf.Lerp(8f, focusHeadMoveLerpSpeed, focusWeight)
+        );
+
+        headMotionPivot.localRotation = Quaternion.Slerp(
+            headMotionPivot.localRotation,
+            targetRot,
+            Time.deltaTime * Mathf.Lerp(8f, focusHeadRotLerpSpeed, focusWeight)
+        );
     }
 
     private void AnimateEyes()
     {
-        if (leftEye != null)
+        AnimateSingleEye(leftEye, leftEyeBaseRot, leftEyeBaseScale, leftEyeAxis, leftEyeClockwise, ref leftEyeAngle);
+        AnimateSingleEye(rightEye, rightEyeBaseRot, rightEyeBaseScale, rightEyeAxis, rightEyeClockwise, ref rightEyeAngle);
+    }
+
+    private void AnimateSingleEye(
+        Transform eye,
+        Quaternion baseRot,
+        Vector3 baseScale,
+        EyeSpinAxis axis,
+        bool clockwise,
+        ref float eyeAngle)
+    {
+        if (eye == null)
+            return;
+
+        Quaternion targetRot = baseRot;
+        Vector3 targetScale = baseScale;
+
+        float spinWeight = calmWeight + panicWeight;
+
+        if (spinWeight > 0.0001f)
         {
             float speed = GetCurrentEyeSpeed();
-            float dir = leftEyeClockwise ? -1f : 1f;
+            float dir = clockwise ? -1f : 1f;
 
-            leftEyeAngle += speed * dir * Time.deltaTime;
+            eyeAngle += speed * dir * Time.deltaTime;
 
-            Quaternion offset = MakeAxisRotation(leftEyeAngle, leftEyeAxis);
-            Quaternion targetRot = leftEyeBaseRot * offset;
+            Quaternion spinOffset = MakeAxisRotation(eyeAngle, axis);
+            Quaternion spinTarget = baseRot * spinOffset;
 
-            leftEye.localRotation = Quaternion.Slerp(
-                leftEye.localRotation,
-                targetRot,
-                Time.deltaTime * eyeRotationLerpSpeed
+            targetRot = Quaternion.Slerp(targetRot, spinTarget, spinWeight);
+        }
+
+        Transform activeFocusTarget = GetCurrentFocusTarget();
+        if (activeFocusTarget != null && focusWeight > 0.0001f)
+        {
+            Vector3 toTargetWorld = activeFocusTarget.position - eye.position;
+            Vector3 toTargetLocal = eye.parent != null
+                ? eye.parent.InverseTransformDirection(toTargetWorld.normalized)
+                : transform.InverseTransformDirection(toTargetWorld.normalized);
+
+            float pitch = -toTargetLocal.y * 35f * focusEyePitchMultiplier;
+            float yaw = toTargetLocal.x * 35f * focusEyeYawMultiplier;
+
+            Quaternion focusRot = baseRot * Quaternion.Euler(pitch, yaw, 0f);
+            targetRot = Quaternion.Slerp(targetRot, focusRot, focusWeight);
+
+            targetScale = new Vector3(
+                baseScale.x * focusEyeHorizontalScale,
+                baseScale.y * focusEyeVerticalScale,
+                baseScale.z
             );
         }
 
-        if (rightEye != null)
+        eye.localRotation = Quaternion.Slerp(
+            eye.localRotation,
+            targetRot,
+            Time.deltaTime * Mathf.Lerp(eyeRotationLerpSpeed, focusEyeLookLerpSpeed, focusWeight)
+        );
+
+        eye.localScale = Vector3.Lerp(
+            eye.localScale,
+            targetScale,
+            Time.deltaTime * Mathf.Lerp(eyeRotationLerpSpeed, focusEyeScaleLerpSpeed, focusWeight)
+        );
+    }
+
+    private Transform GetCurrentFocusTarget()
+    {
+        if (focusTableTarget == null && focusCardsTarget == null)
+            return null;
+
+        if (focusTableTarget != null && focusCardsTarget != null)
         {
-            float speed = GetCurrentEyeSpeed();
-            float dir = rightEyeClockwise ? -1f : 1f;
-
-            rightEyeAngle += speed * dir * Time.deltaTime;
-
-            Quaternion offset = MakeAxisRotation(rightEyeAngle, rightEyeAxis);
-            Quaternion targetRot = rightEyeBaseRot * offset;
-
-            rightEye.localRotation = Quaternion.Slerp(
-                rightEye.localRotation,
-                targetRot,
-                Time.deltaTime * eyeRotationLerpSpeed
-            );
+            float wave = Mathf.Sin(Time.time * focusLookSwitchSpeed) * 0.5f + 0.5f;
+            return wave > focusLookBias ? focusTableTarget : focusCardsTarget;
         }
+
+        if (focusTableTarget != null)
+            return focusTableTarget;
+
+        return focusCardsTarget;
     }
 
     private float GetCurrentEyeSpeed()
     {
-        float speed =
-            calmEyeSpinSpeed * calmWeight +
-            (calmEyeSpinSpeed * nervousEyeMultiplier) * nervousWeight +
-            panicEyeSpinSpeed * panicWeight;
-
-        return speed;
+        return calmEyeSpinSpeed * calmWeight + panicEyeSpinSpeed * panicWeight;
     }
 
     private Quaternion MakeAxisRotation(float angle, EyeSpinAxis axis)
@@ -236,21 +329,19 @@ public class EnemyHeadCalmController : MonoBehaviour
         }
     }
 
-    // ---- Public API for AI / neural logic ----
-
     public void SetCalm()
     {
         currentState = EmotionState.Calm;
     }
 
-    public void SetNervous()
-    {
-        currentState = EmotionState.Nervous;
-    }
-
     public void SetPanic()
     {
         currentState = EmotionState.Panic;
+    }
+
+    public void SetFocus()
+    {
+        currentState = EmotionState.Focus;
     }
 
     public void SetEmotion(EmotionState newState)

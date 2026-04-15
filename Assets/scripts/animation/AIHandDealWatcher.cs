@@ -6,8 +6,9 @@ public class AIHandDealWatcher : MonoBehaviour
     [SerializeField] private PokerGame game;
     [SerializeField] private AIHandEmotionController handController;
 
-    private int lastAICardCount = -1;
+    private GameState lastState;
     private bool initialized;
+    private bool dealPlayedThisPreflop;
 
     private void Awake()
     {
@@ -22,8 +23,8 @@ public class AIHandDealWatcher : MonoBehaviour
     {
         if (game == null) return;
 
-        game.OnCardsChanged += HandleCardsChanged;
-        game.OnGameStateChanged += HandleCardsChanged;
+        game.OnCardsChanged += HandleStateOrCardsChanged;
+        game.OnGameStateChanged += HandleStateOrCardsChanged;
 
         InitializeSnapshot();
     }
@@ -32,24 +33,23 @@ public class AIHandDealWatcher : MonoBehaviour
     {
         if (game == null) return;
 
-        game.OnCardsChanged -= HandleCardsChanged;
-        game.OnGameStateChanged -= HandleCardsChanged;
+        game.OnCardsChanged -= HandleStateOrCardsChanged;
+        game.OnGameStateChanged -= HandleStateOrCardsChanged;
     }
 
     private void InitializeSnapshot()
     {
         if (game == null) return;
 
-        lastAICardCount = game.GetAIHand().Count;
+        lastState = game.GetCurrentState();
+        dealPlayedThisPreflop = false;
         initialized = true;
     }
 
-    private void HandleCardsChanged()
+    private void HandleStateOrCardsChanged()
     {
         if (game == null || handController == null)
             return;
-
-        int currentAICardCount = game.GetAIHand().Count;
 
         if (!initialized)
         {
@@ -57,11 +57,22 @@ public class AIHandDealWatcher : MonoBehaviour
             return;
         }
 
-        if (currentAICardCount > lastAICardCount)
+        GameState currentState = game.GetCurrentState();
+        int currentAICardCount = game.GetAIHand().Count;
+
+        // Новый префлоп = готовимся к новой анимации раздачи
+        if (currentState == GameState.Preflop && lastState != GameState.Preflop)
         {
-            handController.PlayDealGrab();
+            dealPlayedThisPreflop = false;
         }
 
-        lastAICardCount = currentAICardCount;
+        // Как только в новом префлопе у AI уже есть карты — играем подбор
+        if (currentState == GameState.Preflop && !dealPlayedThisPreflop && currentAICardCount >= 2)
+        {
+            handController.PlayDealGrab();
+            dealPlayedThisPreflop = true;
+        }
+
+        lastState = currentState;
     }
 }
