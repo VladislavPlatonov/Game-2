@@ -6,7 +6,8 @@ public class EnemyHeadCalmController : MonoBehaviour
     {
         Calm,
         Panic,
-        Focus
+        Focus,
+        Suspicious
     }
 
     public enum EyeSpinAxis
@@ -76,6 +77,26 @@ public class EnemyHeadCalmController : MonoBehaviour
     [SerializeField] private float focusEyeYawMultiplier = 1.0f;
     [SerializeField] private float focusEyePitchMultiplier = 1.0f;
 
+    [Header("Suspicious Head")]
+    [SerializeField] private float suspiciousOffsetX = 0.018f;
+    [SerializeField] private float suspiciousOffsetY = 0.012f;
+    [SerializeField] private float suspiciousHeadMoveAmountX = 0.010f;
+    [SerializeField] private float suspiciousHeadMoveAmountY = 0.006f;
+    [SerializeField] private float suspiciousHeadMoveSpeed = 0.85f;
+    [SerializeField] private float suspiciousTiltAmountZ = 5.5f;
+    [SerializeField] private float suspiciousTiltSpeed = 0.70f;
+    [SerializeField] private float suspiciousYaw = 10f;
+    [SerializeField] private float suspiciousPitch = -8f;
+    [SerializeField] private float suspiciousHeadLerpSpeed = 5f;
+
+    [Header("Suspicious Eyes")]
+    [SerializeField] private float suspiciousEyeYaw = 12f;
+    [SerializeField] private float suspiciousEyePitch = -8f;
+    [SerializeField] private float suspiciousEyeSpinSpeed = 8f;
+    [SerializeField] private float suspiciousEyeVerticalScale = 0.92f;
+    [SerializeField] private float suspiciousEyeHorizontalScale = 1.0f;
+    [SerializeField] private float suspiciousEyeLerpSpeed = 7f;
+
     [Header("Smoothing")]
     [SerializeField] private float eyeRotationLerpSpeed = 12f;
 
@@ -94,6 +115,7 @@ public class EnemyHeadCalmController : MonoBehaviour
     private float calmWeight = 1f;
     private float panicWeight = 0f;
     private float focusWeight = 0f;
+    private float suspiciousWeight = 0f;
 
     private void Awake()
     {
@@ -128,17 +150,20 @@ public class EnemyHeadCalmController : MonoBehaviour
         float targetCalm = currentState == EmotionState.Calm ? 1f : 0f;
         float targetPanic = currentState == EmotionState.Panic ? 1f : 0f;
         float targetFocus = currentState == EmotionState.Focus ? 1f : 0f;
+        float targetSuspicious = currentState == EmotionState.Suspicious ? 1f : 0f;
 
         calmWeight = Mathf.Lerp(calmWeight, targetCalm, Time.deltaTime * stateBlendSpeed);
         panicWeight = Mathf.Lerp(panicWeight, targetPanic, Time.deltaTime * stateBlendSpeed);
         focusWeight = Mathf.Lerp(focusWeight, targetFocus, Time.deltaTime * stateBlendSpeed);
+        suspiciousWeight = Mathf.Lerp(suspiciousWeight, targetSuspicious, Time.deltaTime * stateBlendSpeed);
 
-        float total = calmWeight + panicWeight + focusWeight;
+        float total = calmWeight + panicWeight + focusWeight + suspiciousWeight;
         if (total > 0.0001f)
         {
             calmWeight /= total;
             panicWeight /= total;
             focusWeight /= total;
+            suspiciousWeight /= total;
         }
     }
 
@@ -146,17 +171,9 @@ public class EnemyHeadCalmController : MonoBehaviour
     {
         float t = Time.time;
 
-        float calmMoveY =
-            Mathf.Sin(t * calmMoveSpeed) *
-            calmMoveAmountY;
-
-        float calmMoveX =
-            Mathf.Sin(t * calmMoveSpeed * 0.7f) *
-            calmMoveAmountX;
-
-        float calmRotZ =
-            Mathf.Sin(t * calmRotSpeed) *
-            calmRotAmountZ;
+        float calmMoveY = Mathf.Sin(t * calmMoveSpeed) * calmMoveAmountY;
+        float calmMoveX = Mathf.Sin(t * calmMoveSpeed * 0.7f) * calmMoveAmountX;
+        float calmRotZ = Mathf.Sin(t * calmRotSpeed) * calmRotAmountZ;
 
         float panicVibeX =
             (Mathf.PerlinNoise(t * panicNoiseSpeed, 0.17f) - 0.5f) * 2f * panicNoiseAmountX;
@@ -199,29 +216,55 @@ public class EnemyHeadCalmController : MonoBehaviour
             focusOffsetPos = new Vector3(focusHeadOffsetX, focusHeadOffsetY, 0f);
         }
 
+        float suspiciousMoveX =
+            suspiciousOffsetX +
+            Mathf.Sin(t * suspiciousHeadMoveSpeed) * suspiciousHeadMoveAmountX;
+
+        float suspiciousMoveY =
+            suspiciousOffsetY +
+            Mathf.Sin(t * suspiciousHeadMoveSpeed * 0.77f) * suspiciousHeadMoveAmountY;
+
+        float suspiciousRotZ =
+            Mathf.Sin(t * suspiciousTiltSpeed) * suspiciousTiltAmountZ;
+
+        Quaternion suspiciousOffsetRot = Quaternion.Euler(
+            suspiciousPitch,
+            suspiciousYaw,
+            suspiciousRotZ
+        );
+
         Vector3 blendedPos =
             new Vector3(calmMoveX, calmMoveY, 0f) * calmWeight +
             new Vector3(panicVibeX, panicVibeY, 0f) * panicWeight +
-            focusOffsetPos * focusWeight;
+            focusOffsetPos * focusWeight +
+            new Vector3(suspiciousMoveX, suspiciousMoveY, 0f) * suspiciousWeight;
 
         float blendedRotZ = calmRotZ * calmWeight;
 
         Vector3 targetPos = headBaseLocalPos + blendedPos;
+
         Quaternion targetRot =
             headBaseLocalRot *
             Quaternion.Euler(0f, 0f, blendedRotZ) *
-            Quaternion.Slerp(Quaternion.identity, focusOffsetRot, focusWeight);
+            Quaternion.Slerp(Quaternion.identity, focusOffsetRot, focusWeight) *
+            Quaternion.Slerp(Quaternion.identity, suspiciousOffsetRot, suspiciousWeight);
+
+        float posLerpSpeed = Mathf.Lerp(8f, focusHeadMoveLerpSpeed, focusWeight);
+        posLerpSpeed = Mathf.Lerp(posLerpSpeed, suspiciousHeadLerpSpeed, suspiciousWeight);
+
+        float rotLerpSpeed = Mathf.Lerp(8f, focusHeadRotLerpSpeed, focusWeight);
+        rotLerpSpeed = Mathf.Lerp(rotLerpSpeed, suspiciousHeadLerpSpeed, suspiciousWeight);
 
         headMotionPivot.localPosition = Vector3.Lerp(
             headMotionPivot.localPosition,
             targetPos,
-            Time.deltaTime * Mathf.Lerp(8f, focusHeadMoveLerpSpeed, focusWeight)
+            Time.deltaTime * posLerpSpeed
         );
 
         headMotionPivot.localRotation = Quaternion.Slerp(
             headMotionPivot.localRotation,
             targetRot,
-            Time.deltaTime * Mathf.Lerp(8f, focusHeadRotLerpSpeed, focusWeight)
+            Time.deltaTime * rotLerpSpeed
         );
     }
 
@@ -281,16 +324,47 @@ public class EnemyHeadCalmController : MonoBehaviour
             );
         }
 
+        if (suspiciousWeight > 0.0001f)
+        {
+            float dir = clockwise ? -1f : 1f;
+            eyeAngle += suspiciousEyeSpinSpeed * dir * Time.deltaTime;
+
+            Quaternion suspiciousSpinOffset = MakeAxisRotation(eyeAngle, axis);
+            Quaternion suspiciousLookRot = baseRot * Quaternion.Euler(
+                suspiciousEyePitch,
+                suspiciousEyeYaw,
+                0f
+            );
+
+            Quaternion suspiciousTarget = suspiciousLookRot * suspiciousSpinOffset;
+
+            targetRot = Quaternion.Slerp(targetRot, suspiciousTarget, suspiciousWeight);
+
+            Vector3 suspiciousScale = new Vector3(
+                baseScale.x * suspiciousEyeHorizontalScale,
+                baseScale.y * suspiciousEyeVerticalScale,
+                baseScale.z
+            );
+
+            targetScale = Vector3.Lerp(targetScale, suspiciousScale, suspiciousWeight);
+        }
+
+        float rotSpeed = Mathf.Lerp(eyeRotationLerpSpeed, focusEyeLookLerpSpeed, focusWeight);
+        rotSpeed = Mathf.Lerp(rotSpeed, suspiciousEyeLerpSpeed, suspiciousWeight);
+
+        float scaleSpeed = Mathf.Lerp(eyeRotationLerpSpeed, focusEyeScaleLerpSpeed, focusWeight);
+        scaleSpeed = Mathf.Lerp(scaleSpeed, suspiciousEyeLerpSpeed, suspiciousWeight);
+
         eye.localRotation = Quaternion.Slerp(
             eye.localRotation,
             targetRot,
-            Time.deltaTime * Mathf.Lerp(eyeRotationLerpSpeed, focusEyeLookLerpSpeed, focusWeight)
+            Time.deltaTime * rotSpeed
         );
 
         eye.localScale = Vector3.Lerp(
             eye.localScale,
             targetScale,
-            Time.deltaTime * Mathf.Lerp(eyeRotationLerpSpeed, focusEyeScaleLerpSpeed, focusWeight)
+            Time.deltaTime * scaleSpeed
         );
     }
 
@@ -344,6 +418,11 @@ public class EnemyHeadCalmController : MonoBehaviour
         currentState = EmotionState.Focus;
     }
 
+    public void SetSuspicious()
+    {
+        currentState = EmotionState.Suspicious;
+    }
+
     public void SetEmotion(EmotionState newState)
     {
         currentState = newState;
@@ -351,7 +430,7 @@ public class EnemyHeadCalmController : MonoBehaviour
 
     public void SetEmotionByIndex(int index)
     {
-        if (index < 0 || index > 2) return;
+        if (index < 0 || index > 3) return;
         currentState = (EmotionState)index;
     }
 

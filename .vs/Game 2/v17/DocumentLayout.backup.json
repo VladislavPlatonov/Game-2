@@ -3,12 +3,48 @@
   "WorkspaceRootPath": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|c:\\users\\kolanus\\desktop\\game 2\\game 2\\assets\\scripts\\m\\pausesettingsmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\m\\pausesettingsmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\animation\\ai head anim\\enemyheadcalmcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animation\\ai head anim\\enemyheadcalmcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\gamehudcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\animation\\handheldcardfollower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animation\\handheldcardfollower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\animation\\aihandemotioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animation\\aihandemotioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\animation\\aihanddealwatcher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animation\\aihanddealwatcher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\animation\\playerhandbalatrocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animation\\playerhandbalatrocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\animation\\playerhanddealwatcher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animation\\playerhanddealwatcher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|c:\\users\\kolanus\\desktop\\game 2\\game 2\\assets\\scripts\\gamehudcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamehudcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\animatedhptext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animatedhptext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Library\\PackageCache\\com.unity.ugui@a73b706e285a\\Runtime\\TMP\\TextMeshProUGUI.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library\\PackageCache\\com.unity.ugui@a73b706e285a\\Runtime\\TMP\\TextMeshProUGUI.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Library\\PackageCache\\com.unity.ugui@a73b706e285a\\Runtime\\TMP\\TextMeshPro.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library\\PackageCache\\com.unity.ugui@a73b706e285a\\Runtime\\TMP\\TextMeshPro.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\m\\pausesettingsmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\m\\pausesettingsmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\m\\uibuttonfx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -95,24 +131,8 @@
       "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mm\\3d_menu\\menu3dbutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\animation\\ai head anim\\enemyheadcalmcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animation\\ai head anim\\enemyheadcalmcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\mm\\3d_menu\\mainmenu3dcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mm\\3d_menu\\mainmenu3dcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\animation\\aihanddealwatcher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animation\\aihanddealwatcher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\animation\\aihandemotioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animation\\aihandemotioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\animation\\playerhandbalatrocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animation\\playerhandbalatrocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\cardpresenter3d_auto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -137,18 +157,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\fullopaquefire\\script\\vfx_firecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\fullopaquefire\\script\\vfx_firecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\animation\\handheldcardfollower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animation\\handheldcardfollower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\animation\\playerhanddealwatcher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animation\\playerhanddealwatcher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\animatedhptext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animatedhptext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\mm\\saveslotui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -237,60 +245,89 @@
       "DocumentGroups": [
         {
           "DockedHeight": 285,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "UIButtonFX.cs",
-              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\m\\UIButtonFX.cs",
-              "RelativeDocumentMoniker": "Assets\\scripts\\m\\UIButtonFX.cs",
-              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\m\\UIButtonFX.cs",
-              "RelativeToolTip": "Assets\\scripts\\m\\UIButtonFX.cs",
-              "ViewState": "AgIAADoAAAAAAAAAAAAowF0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-14T03:52:51.693Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "PauseSettingsMenu.cs",
-              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\m\\PauseSettingsMenu.cs",
-              "RelativeDocumentMoniker": "Assets\\scripts\\m\\PauseSettingsMenu.cs",
-              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\m\\PauseSettingsMenu.cs",
-              "RelativeToolTip": "Assets\\scripts\\m\\PauseSettingsMenu.cs",
-              "ViewState": "AgIAAJgAAAAAAAAAAAAowKoAAAAAAAAAAAAAAA==",
+              "Title": "EnemyHeadCalmController.cs",
+              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\ai head anim\\EnemyHeadCalmController.cs",
+              "RelativeDocumentMoniker": "Assets\\scripts\\animation\\ai head anim\\EnemyHeadCalmController.cs",
+              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\ai head anim\\EnemyHeadCalmController.cs",
+              "RelativeToolTip": "Assets\\scripts\\animation\\ai head anim\\EnemyHeadCalmController.cs",
+              "ViewState": "AgIAAEcBAAAAAAAAAAAowFIBAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-14T02:05:02.623Z",
+              "WhenOpened": "2026-04-07T07:06:54.704Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "PokerGame.cs",
-              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\PokerGame.cs",
-              "RelativeDocumentMoniker": "Assets\\scripts\\PokerGame.cs",
-              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\PokerGame.cs",
-              "RelativeToolTip": "Assets\\scripts\\PokerGame.cs",
-              "ViewState": "AgIAAMkAAAAAAAAAAAAIwFQCAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "HandHeldCardFollower.cs",
+              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\HandHeldCardFollower.cs",
+              "RelativeDocumentMoniker": "Assets\\scripts\\animation\\HandHeldCardFollower.cs",
+              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\HandHeldCardFollower.cs",
+              "RelativeToolTip": "Assets\\scripts\\animation\\HandHeldCardFollower.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-28T07:12:07.116Z"
+              "WhenOpened": "2026-03-30T05:09:00.791Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "PauseMenuSaveLoadController.cs",
-              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\m\\PauseMenuSaveLoadController.cs",
-              "RelativeDocumentMoniker": "Assets\\scripts\\m\\PauseMenuSaveLoadController.cs",
-              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\m\\PauseMenuSaveLoadController.cs",
-              "RelativeToolTip": "Assets\\scripts\\m\\PauseMenuSaveLoadController.cs",
-              "ViewState": "AgIAAAMBAAAAAAAAAAAowCYBAAAAAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "AIHandEmotionController.cs",
+              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\AIHandEmotionController.cs",
+              "RelativeDocumentMoniker": "Assets\\scripts\\animation\\AIHandEmotionController.cs",
+              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\AIHandEmotionController.cs",
+              "RelativeToolTip": "Assets\\scripts\\animation\\AIHandEmotionController.cs",
+              "ViewState": "AgIAABUBAAAAAAAAAAAowDgBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-31T04:18:44.327Z"
+              "WhenOpened": "2026-04-02T01:36:25.061Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 3,
+              "Title": "AIHandDealWatcher.cs",
+              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\AIHandDealWatcher.cs",
+              "RelativeDocumentMoniker": "Assets\\scripts\\animation\\AIHandDealWatcher.cs",
+              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\AIHandDealWatcher.cs",
+              "RelativeToolTip": "Assets\\scripts\\animation\\AIHandDealWatcher.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAowE4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-02T02:00:36.587Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PlayerHandBalatroController.cs",
+              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\PlayerHandBalatroController.cs",
+              "RelativeDocumentMoniker": "Assets\\scripts\\animation\\PlayerHandBalatroController.cs",
+              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\PlayerHandBalatroController.cs",
+              "RelativeToolTip": "Assets\\scripts\\animation\\PlayerHandBalatroController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-30T04:58:10.345Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PlayerHandDealWatcher.cs",
+              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\PlayerHandDealWatcher.cs",
+              "RelativeDocumentMoniker": "Assets\\scripts\\animation\\PlayerHandDealWatcher.cs",
+              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\PlayerHandDealWatcher.cs",
+              "RelativeToolTip": "Assets\\scripts\\animation\\PlayerHandDealWatcher.cs",
+              "ViewState": "AgIAADIAAAAAAAAAAAAowFUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-30T05:00:45.342Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
               "Title": "PauseSaveSlotUI.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\m\\PauseSaveSlotUI.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\m\\PauseSaveSlotUI.cs",
@@ -302,7 +339,68 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "UIButtonFX.cs",
+              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\m\\UIButtonFX.cs",
+              "RelativeDocumentMoniker": "Assets\\scripts\\m\\UIButtonFX.cs",
+              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\m\\UIButtonFX.cs",
+              "RelativeToolTip": "Assets\\scripts\\m\\UIButtonFX.cs",
+              "ViewState": "AgIAADoAAAAAAAAAAAAowF0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-14T03:52:51.693Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "PokerGame.cs",
+              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\PokerGame.cs",
+              "RelativeDocumentMoniker": "Assets\\scripts\\PokerGame.cs",
+              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\PokerGame.cs",
+              "RelativeToolTip": "Assets\\scripts\\PokerGame.cs",
+              "ViewState": "AgIAAMkAAAAAAAAAAAAIwFQCAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-28T07:12:07.116Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "PauseMenuSaveLoadController.cs",
+              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\m\\PauseMenuSaveLoadController.cs",
+              "RelativeDocumentMoniker": "Assets\\scripts\\m\\PauseMenuSaveLoadController.cs",
+              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\m\\PauseMenuSaveLoadController.cs",
+              "RelativeToolTip": "Assets\\scripts\\m\\PauseMenuSaveLoadController.cs",
+              "ViewState": "AgIAAAMBAAAAAAAAAAAowCYBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-31T04:18:44.327Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "GameHUDController.cs",
+              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\GameHUDController.cs",
+              "RelativeDocumentMoniker": "Assets\\scripts\\GameHUDController.cs",
+              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\GameHUDController.cs",
+              "RelativeToolTip": "Assets\\scripts\\GameHUDController.cs",
+              "ViewState": "AgIAAMYBAAAAAAAAAIBJwMkBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-25T06:25:30.069Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 7,
+              "Title": "AnimatedHpText.cs",
+              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\AnimatedHpText.cs",
+              "RelativeDocumentMoniker": "Assets\\scripts\\AnimatedHpText.cs",
+              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\AnimatedHpText.cs",
+              "RelativeToolTip": "Assets\\scripts\\AnimatedHpText.cs",
+              "ViewState": "AgIAAIwAAAAAAAAAAAAowJYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-30T03:26:41.992Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
               "Title": "PauseMenuButtonFX.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\m\\PauseMenuButtonFX.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\m\\PauseMenuButtonFX.cs",
@@ -314,7 +412,43 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 10,
+              "Title": "PauseSettingsMenu.cs",
+              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\m\\PauseSettingsMenu.cs",
+              "RelativeDocumentMoniker": "Assets\\scripts\\m\\PauseSettingsMenu.cs",
+              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\m\\PauseSettingsMenu.cs",
+              "RelativeToolTip": "Assets\\scripts\\m\\PauseSettingsMenu.cs",
+              "ViewState": "AgIAAJgAAAAAAAAAAAAowKoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-14T02:05:02.623Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "TextMeshPro.cs",
+              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Library\\PackageCache\\com.unity.ugui@a73b706e285a\\Runtime\\TMP\\TextMeshPro.cs",
+              "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.ugui@a73b706e285a\\Runtime\\TMP\\TextMeshPro.cs",
+              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Library\\PackageCache\\com.unity.ugui@a73b706e285a\\Runtime\\TMP\\TextMeshPro.cs",
+              "RelativeToolTip": "Library\\PackageCache\\com.unity.ugui@a73b706e285a\\Runtime\\TMP\\TextMeshPro.cs",
+              "ViewState": "AgIAADUIAAAAAAAAAAAtwEcIAABwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-14T06:56:26.545Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "TextMeshProUGUI.cs",
+              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Library\\PackageCache\\com.unity.ugui@a73b706e285a\\Runtime\\TMP\\TextMeshProUGUI.cs",
+              "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.ugui@a73b706e285a\\Runtime\\TMP\\TextMeshProUGUI.cs",
+              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Library\\PackageCache\\com.unity.ugui@a73b706e285a\\Runtime\\TMP\\TextMeshProUGUI.cs",
+              "RelativeToolTip": "Library\\PackageCache\\com.unity.ugui@a73b706e285a\\Runtime\\TMP\\TextMeshProUGUI.cs",
+              "ViewState": "AgIAAJ8JAAAAAAAAAAAtwLEJAAB0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-14T07:03:58.745Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
               "Title": "PauseMenuPanelFX.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\m\\PauseMenuPanelFX.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\m\\PauseMenuPanelFX.cs",
@@ -326,19 +460,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "GameHUDController.cs",
-              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\GameHUDController.cs",
-              "RelativeDocumentMoniker": "Assets\\scripts\\GameHUDController.cs",
-              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\GameHUDController.cs",
-              "RelativeToolTip": "Assets\\scripts\\GameHUDController.cs",
-              "ViewState": "AgIAAD8BAAAAAAAAAAAowGIBAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-25T06:25:30.069Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 12,
               "Title": "BottomActiveButtonFX.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\m\\BottomActiveButtonFX.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\m\\BottomActiveButtonFX.cs",
@@ -350,7 +472,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 15,
               "Title": "PauseMenuController.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\PauseMenuController.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\PauseMenuController.cs",
@@ -362,7 +484,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 13,
               "Title": "LoadPanel3D.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\mm\\3D_Menu\\LoadPanel3D.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\mm\\3D_Menu\\LoadPanel3D.cs",
@@ -374,7 +496,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 20,
               "Title": "PokerUnifiedSaveData.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\m\\PokerUnifiedSaveData.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\m\\PokerUnifiedSaveData.cs",
@@ -386,7 +508,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 21,
               "Title": "PendingSaveLoader.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\m\\PendingSaveLoader.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\m\\PendingSaveLoader.cs",
@@ -398,7 +520,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 28,
               "Title": "ResolutionDropdown3D.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\mm\\3D_Menu\\ResolutionDropdown3D.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\mm\\3D_Menu\\ResolutionDropdown3D.cs",
@@ -410,7 +532,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 29,
               "Title": "ResolutionDropdownToggle3D.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\mm\\3D_Menu\\ResolutionDropdownToggle3D.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\mm\\3D_Menu\\ResolutionDropdownToggle3D.cs",
@@ -422,7 +544,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 26,
               "Title": "ResolutionOption3DNoCollider.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\mm\\3D_Menu\\ResolutionOption3DNoCollider.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\mm\\3D_Menu\\ResolutionOption3DNoCollider.cs",
@@ -434,7 +556,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 27,
               "Title": "SoulManager.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\SoulManager.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\SoulManager.cs",
@@ -446,7 +568,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 22,
               "Title": "MainMenu3DManager.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\mm\\3D_Menu\\MainMenu3DManager.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\mm\\3D_Menu\\MainMenu3DManager.cs",
@@ -458,7 +580,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 25,
               "Title": "SaveMetadata.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\mm\\3D_Menu\\SaveMetadata.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\mm\\3D_Menu\\SaveMetadata.cs",
@@ -470,7 +592,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 23,
               "Title": "LoadMenuSaveSystem.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\mm\\3D_Menu\\LoadMenuSaveSystem.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\mm\\3D_Menu\\LoadMenuSaveSystem.cs",
@@ -482,7 +604,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 24,
               "Title": "SaveLoadUI.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\SaveLoadUI.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\SaveLoadUI.cs",
@@ -494,19 +616,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "EnemyHeadCalmController.cs",
-              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\ai head anim\\EnemyHeadCalmController.cs",
-              "RelativeDocumentMoniker": "Assets\\scripts\\animation\\ai head anim\\EnemyHeadCalmController.cs",
-              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\ai head anim\\EnemyHeadCalmController.cs",
-              "RelativeToolTip": "Assets\\scripts\\animation\\ai head anim\\EnemyHeadCalmController.cs",
-              "ViewState": "AgIAAKoAAAAAAAAAAAAgwNEAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-07T07:06:54.704Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 31,
               "Title": "Menu3DButton.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\mm\\3D_Menu\\Menu3DButton.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\mm\\3D_Menu\\Menu3DButton.cs",
@@ -518,7 +628,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 30,
               "Title": "Menu3DActionType.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\mm\\3D_Menu\\Menu3DActionType.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\mm\\3D_Menu\\Menu3DActionType.cs",
@@ -530,7 +640,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 32,
               "Title": "MainMenu3DController.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\mm\\3D_Menu\\MainMenu3DController.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\mm\\3D_Menu\\MainMenu3DController.cs",
@@ -542,43 +652,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "AIHandDealWatcher.cs",
-              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\AIHandDealWatcher.cs",
-              "RelativeDocumentMoniker": "Assets\\scripts\\animation\\AIHandDealWatcher.cs",
-              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\AIHandDealWatcher.cs",
-              "RelativeToolTip": "Assets\\scripts\\animation\\AIHandDealWatcher.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAABQwEMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-02T02:00:36.587Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "AIHandEmotionController.cs",
-              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\AIHandEmotionController.cs",
-              "RelativeDocumentMoniker": "Assets\\scripts\\animation\\AIHandEmotionController.cs",
-              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\AIHandEmotionController.cs",
-              "RelativeToolTip": "Assets\\scripts\\animation\\AIHandEmotionController.cs",
-              "ViewState": "AgIAAPgAAAAAAAAAAAAlwA4BAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-02T01:36:25.061Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 36,
-              "Title": "AnimatedHpText.cs",
-              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\AnimatedHpText.cs",
-              "RelativeDocumentMoniker": "Assets\\scripts\\AnimatedHpText.cs",
-              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\AnimatedHpText.cs",
-              "RelativeToolTip": "Assets\\scripts\\AnimatedHpText.cs",
-              "ViewState": "AgIAAHQAAAAAAAAAAAAqwK4AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-30T03:26:41.992Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 56,
               "Title": "SaveLoadUI.cs",
               "DocumentMoniker": "D:\\Card Game\\Game 2\\Assets\\scripts\\UI\\SaveLoadUI.cs",
               "ToolTip": "D:\\Card Game\\Game 2\\Assets\\scripts\\UI\\SaveLoadUI.cs",
@@ -588,7 +662,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 57,
               "Title": "SaveSystem.cs",
               "DocumentMoniker": "D:\\Card Game\\Game 2\\Assets\\scripts\\UI\\SaveSystem.cs",
               "ToolTip": "D:\\Card Game\\Game 2\\Assets\\scripts\\UI\\SaveSystem.cs",
@@ -598,7 +672,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 58,
               "Title": "SettingsMenu.cs",
               "DocumentMoniker": "D:\\Card Game\\Game 2\\Assets\\scripts\\UI\\SettingsMenu.cs",
               "ToolTip": "D:\\Card Game\\Game 2\\Assets\\scripts\\UI\\SettingsMenu.cs",
@@ -608,7 +682,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 35,
               "Title": "DeckVisual.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\DeckVisual.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\DeckVisual.cs",
@@ -620,7 +694,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 36,
               "Title": "CardView3D.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\CardView3D.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\CardView3D.cs",
@@ -632,7 +706,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 33,
               "Title": "CardPresenter3D_Auto.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\CardPresenter3D_Auto.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\CardPresenter3D_Auto.cs",
@@ -644,31 +718,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "PlayerHandBalatroController.cs",
-              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\PlayerHandBalatroController.cs",
-              "RelativeDocumentMoniker": "Assets\\scripts\\animation\\PlayerHandBalatroController.cs",
-              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\PlayerHandBalatroController.cs",
-              "RelativeToolTip": "Assets\\scripts\\animation\\PlayerHandBalatroController.cs",
-              "ViewState": "AgIAAJ8AAAAAAAAAAAAwwL0AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-30T04:58:10.345Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 35,
-              "Title": "PlayerHandDealWatcher.cs",
-              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\PlayerHandDealWatcher.cs",
-              "RelativeDocumentMoniker": "Assets\\scripts\\animation\\PlayerHandDealWatcher.cs",
-              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\PlayerHandDealWatcher.cs",
-              "RelativeToolTip": "Assets\\scripts\\animation\\PlayerHandDealWatcher.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAqwEgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-30T05:00:45.342Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 34,
               "Title": "LowHpCameraBreath.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\Sound\\HP\\LowHpCameraBreath.cs",
               "RelativeDocumentMoniker": "Assets\\Sound\\HP\\LowHpCameraBreath.cs",
@@ -680,19 +730,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
-              "Title": "HandHeldCardFollower.cs",
-              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\HandHeldCardFollower.cs",
-              "RelativeDocumentMoniker": "Assets\\scripts\\animation\\HandHeldCardFollower.cs",
-              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\HandHeldCardFollower.cs",
-              "RelativeToolTip": "Assets\\scripts\\animation\\HandHeldCardFollower.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-30T05:09:00.791Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 37,
               "Title": "SoulFireByHP.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\soulfire\\SoulFireByHP.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\soulfire\\SoulFireByHP.cs",
@@ -704,7 +742,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 38,
               "Title": "VFX_FireController.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\FullOpaqueFire\\Script\\VFX_FireController.cs",
               "RelativeDocumentMoniker": "Assets\\FullOpaqueFire\\Script\\VFX_FireController.cs",
@@ -716,7 +754,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 43,
               "Title": "RetroPixelFeature.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\Render\\RetroPixelFeature.cs",
               "RelativeDocumentMoniker": "Assets\\Render\\RetroPixelFeature.cs",
@@ -728,7 +766,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 44,
               "Title": "VhsPixelEffect.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\VhsPixelEffect.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\VhsPixelEffect.cs",
@@ -740,7 +778,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 45,
               "Title": "HPJarUI.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\HPJarUI.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\HPJarUI.cs",
@@ -752,7 +790,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 54,
               "Title": "GameHUDController.cs",
               "DocumentMoniker": "D:\\Card Game\\Game 2\\Assets\\scripts\\UI\\GameHUDController.cs",
               "ToolTip": "D:\\Card Game\\Game 2\\Assets\\scripts\\UI\\GameHUDController.cs",
@@ -762,7 +800,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 42,
               "Title": "PokerActionPanel.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\PokerActionPanel.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\PokerActionPanel.cs",
@@ -774,7 +812,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 41,
               "Title": "MainMenuSettingsController.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\mm\\MainMenuSettingsController.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\mm\\MainMenuSettingsController.cs",
@@ -786,7 +824,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 40,
               "Title": "SaveFileData.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\mm\\SaveFileData.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\mm\\SaveFileData.cs",
@@ -798,7 +836,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 39,
               "Title": "SaveSlotUI.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\mm\\SaveSlotUI.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\mm\\SaveSlotUI.cs",
@@ -810,7 +848,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 59,
               "Title": "RetroPixelShader.shader",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\Render\\RetroPixelShader.shader",
               "RelativeDocumentMoniker": "Assets\\Render\\RetroPixelShader.shader",
@@ -822,7 +860,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 55,
               "Title": "PauseMenuController.cs",
               "DocumentMoniker": "D:\\Card Game\\Game 2\\Assets\\scripts\\UI\\PauseMenuController.cs",
               "ToolTip": "D:\\Card Game\\Game 2\\Assets\\scripts\\UI\\PauseMenuController.cs",
@@ -832,7 +870,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 47,
               "Title": "HandEvaluator.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\HandEvaluator.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\HandEvaluator.cs",
@@ -844,7 +882,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 46,
               "Title": "CardView3DMesh.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\CardView3DMesh.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\CardView3DMesh.cs",
@@ -856,7 +894,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 51,
               "Title": "CardSpriteDatabase.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\CardSpriteDatabase.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\CardSpriteDatabase.cs",
@@ -868,7 +906,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 52,
               "Title": "PokerBootstrap.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\PokerBootstrap.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\PokerBootstrap.cs",
@@ -880,7 +918,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 48,
               "Title": "BasicPokerAI.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\BasicPokerAI.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\BasicPokerAI.cs",
@@ -892,7 +930,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 49,
               "Title": "PokerTypes.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\PokerTypes.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\PokerTypes.cs",
@@ -904,7 +942,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 50,
               "Title": "RaiseUI.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\RaiseUI.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\RaiseUI.cs",
@@ -916,7 +954,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 53,
               "Title": "PokerDeck.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\PokerDeck.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\PokerDeck.cs",
