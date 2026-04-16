@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|c:\\users\\kolanus\\desktop\\game 2\\game 2\\assets\\scripts\\animation\\ai head anim\\enemyheadcalmcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animation\\ai head anim\\enemyheadcalmcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\animation\\aihandemotioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animation\\aihandemotioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|c:\\users\\kolanus\\desktop\\game 2\\game 2\\assets\\scripts\\animation\\ai head anim\\enemyheadcalmcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animation\\ai head anim\\enemyheadcalmcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\animation\\handheldcardfollower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -245,30 +245,30 @@
       "DocumentGroups": [
         {
           "DockedHeight": 285,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "EnemyHeadCalmController.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\ai head anim\\EnemyHeadCalmController.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\animation\\ai head anim\\EnemyHeadCalmController.cs",
               "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\ai head anim\\EnemyHeadCalmController.cs",
               "RelativeToolTip": "Assets\\scripts\\animation\\ai head anim\\EnemyHeadCalmController.cs",
-              "ViewState": "AgIAAJYBAAAAAAAAAAAowLkBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAHgBAAAAAAAAAAA5wJsBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-07T07:06:54.704Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "AIHandEmotionController.cs",
               "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\AIHandEmotionController.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\animation\\AIHandEmotionController.cs",
               "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\animation\\AIHandEmotionController.cs",
               "RelativeToolTip": "Assets\\scripts\\animation\\AIHandEmotionController.cs",
-              "ViewState": "AgIAAF8AAAAAAAAAAAAYwG0AAAA8AAAAAAAAAA==",
+              "ViewState": "AgIAAFIBAAAAAAAAAAAowHUBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-02T01:36:25.061Z",
               "EditorCaption": ""

@@ -7,7 +7,8 @@ public class EnemyHeadCalmController : MonoBehaviour
         Calm,
         Panic,
         Focus,
-        Suspicious
+        Suspicious,
+        Greedy
     }
 
     public enum EyeSpinAxis
@@ -25,6 +26,9 @@ public class EnemyHeadCalmController : MonoBehaviour
     [Header("Focus Look Targets")]
     [SerializeField] private Transform focusTableTarget;
     [SerializeField] private Transform focusCardsTarget;
+
+    [Header("Greedy Look Target")]
+    [SerializeField] private Transform greedyPlayerTarget;
 
     [Header("Current State")]
     [SerializeField] private EmotionState currentState = EmotionState.Calm;
@@ -95,6 +99,24 @@ public class EnemyHeadCalmController : MonoBehaviour
     [SerializeField] private float suspiciousEyeHorizontalScale = 1.0f;
     [SerializeField] private float suspiciousEyeLerpSpeed = 7f;
 
+    [Header("Greedy Head")]
+    [SerializeField] private float greedyOffsetX = 0.0f;
+    [SerializeField] private float greedyOffsetY = 0.0f;
+    [SerializeField] private float greedyOffsetZ = 0.02f;
+    [SerializeField] private float greedyPitchMultiplier = 0.45f;
+    [SerializeField] private float greedyYawMultiplier = 0.35f;
+    [SerializeField] private float greedyRollMultiplier = 0.03f;
+    [SerializeField] private float greedyHeadMoveLerpSpeed = 6f;
+    [SerializeField] private float greedyHeadRotLerpSpeed = 6f;
+
+    [Header("Greedy Eyes")]
+    [SerializeField] private float greedyEyeYawMultiplier = 0.9f;
+    [SerializeField] private float greedyEyePitchMultiplier = 0.9f;
+    [SerializeField] private float greedyEyeSpinSpeed = 4f;
+    [SerializeField] private float greedyEyeVerticalScale = 0.96f;
+    [SerializeField] private float greedyEyeHorizontalScale = 1.0f;
+    [SerializeField] private float greedyEyeLerpSpeed = 7f;
+
     [Header("Smoothing")]
     [SerializeField] private float eyeRotationLerpSpeed = 12f;
 
@@ -114,6 +136,7 @@ public class EnemyHeadCalmController : MonoBehaviour
     private float panicWeight = 0f;
     private float focusWeight = 0f;
     private float suspiciousWeight = 0f;
+    private float greedyWeight = 0f;
 
     private void Awake()
     {
@@ -149,19 +172,22 @@ public class EnemyHeadCalmController : MonoBehaviour
         float targetPanic = currentState == EmotionState.Panic ? 1f : 0f;
         float targetFocus = currentState == EmotionState.Focus ? 1f : 0f;
         float targetSuspicious = currentState == EmotionState.Suspicious ? 1f : 0f;
+        float targetGreedy = currentState == EmotionState.Greedy ? 1f : 0f;
 
         calmWeight = Mathf.Lerp(calmWeight, targetCalm, Time.deltaTime * stateBlendSpeed);
         panicWeight = Mathf.Lerp(panicWeight, targetPanic, Time.deltaTime * stateBlendSpeed);
         focusWeight = Mathf.Lerp(focusWeight, targetFocus, Time.deltaTime * stateBlendSpeed);
         suspiciousWeight = Mathf.Lerp(suspiciousWeight, targetSuspicious, Time.deltaTime * stateBlendSpeed);
+        greedyWeight = Mathf.Lerp(greedyWeight, targetGreedy, Time.deltaTime * stateBlendSpeed);
 
-        float total = calmWeight + panicWeight + focusWeight + suspiciousWeight;
+        float total = calmWeight + panicWeight + focusWeight + suspiciousWeight + greedyWeight;
         if (total > 0.0001f)
         {
             calmWeight /= total;
             panicWeight /= total;
             focusWeight /= total;
             suspiciousWeight /= total;
+            greedyWeight /= total;
         }
     }
 
@@ -221,11 +247,33 @@ public class EnemyHeadCalmController : MonoBehaviour
             suspiciousRotZ
         );
 
+        Vector3 greedyOffsetPos = Vector3.zero;
+        Quaternion greedyOffsetRot = Quaternion.identity;
+
+        if (greedyPlayerTarget != null)
+        {
+            Vector3 toTargetWorld = greedyPlayerTarget.position - headMotionPivot.position;
+            Vector3 toTargetLocal = headMotionPivot.parent != null
+                ? headMotionPivot.parent.InverseTransformDirection(toTargetWorld.normalized)
+                : transform.InverseTransformDirection(toTargetWorld.normalized);
+
+            float pitch = -toTargetLocal.y * 35f * greedyPitchMultiplier;
+            float yaw = toTargetLocal.x * 35f * greedyYawMultiplier;
+            float roll = -toTargetLocal.x * 8f * greedyRollMultiplier;
+
+            greedyOffsetPos = new Vector3(greedyOffsetX, greedyOffsetY, greedyOffsetZ);
+            greedyOffsetRot = Quaternion.Euler(pitch, yaw, roll);
+        }
+        else
+        {
+            greedyOffsetPos = new Vector3(greedyOffsetX, greedyOffsetY, greedyOffsetZ);
+        }
+
         Vector3 blendedPos =
             new Vector3(calmMoveX, calmMoveY, 0f) * calmWeight +
             new Vector3(panicVibeX, panicVibeY, 0f) * panicWeight +
-            focusOffsetPos * focusWeight;
-        // Suspicious НЕ двигает голову по позиции
+            focusOffsetPos * focusWeight +
+            greedyOffsetPos * greedyWeight;
 
         float blendedRotZ = calmRotZ * calmWeight;
 
@@ -235,11 +283,15 @@ public class EnemyHeadCalmController : MonoBehaviour
             headBaseLocalRot *
             Quaternion.Euler(0f, 0f, blendedRotZ) *
             Quaternion.Slerp(Quaternion.identity, focusOffsetRot, focusWeight) *
-            Quaternion.Slerp(Quaternion.identity, suspiciousOffsetRot, suspiciousWeight);
+            Quaternion.Slerp(Quaternion.identity, suspiciousOffsetRot, suspiciousWeight) *
+            Quaternion.Slerp(Quaternion.identity, greedyOffsetRot, greedyWeight);
 
         float posLerpSpeed = Mathf.Lerp(8f, focusHeadMoveLerpSpeed, focusWeight);
+        posLerpSpeed = Mathf.Lerp(posLerpSpeed, greedyHeadMoveLerpSpeed, greedyWeight);
+
         float rotLerpSpeed = Mathf.Lerp(8f, focusHeadRotLerpSpeed, focusWeight);
         rotLerpSpeed = Mathf.Lerp(rotLerpSpeed, suspiciousHeadLerpSpeed, suspiciousWeight);
+        rotLerpSpeed = Mathf.Lerp(rotLerpSpeed, greedyHeadRotLerpSpeed, greedyWeight);
 
         headMotionPivot.localPosition = Vector3.Lerp(
             headMotionPivot.localPosition,
@@ -338,11 +390,41 @@ public class EnemyHeadCalmController : MonoBehaviour
             targetScale = Vector3.Lerp(targetScale, suspiciousScale, suspiciousWeight);
         }
 
+        if (greedyWeight > 0.0001f && greedyPlayerTarget != null)
+        {
+            float dir = clockwise ? -1f : 1f;
+            eyeAngle += greedyEyeSpinSpeed * dir * Time.deltaTime;
+
+            Vector3 toTargetWorld = greedyPlayerTarget.position - eye.position;
+            Vector3 toTargetLocal = eye.parent != null
+                ? eye.parent.InverseTransformDirection(toTargetWorld.normalized)
+                : transform.InverseTransformDirection(toTargetWorld.normalized);
+
+            float pitch = -toTargetLocal.y * 35f * greedyEyePitchMultiplier;
+            float yaw = toTargetLocal.x * 35f * greedyEyeYawMultiplier;
+
+            Quaternion greedyLookRot = baseRot * Quaternion.Euler(pitch, yaw, 0f);
+            Quaternion greedySpinOffset = MakeAxisRotation(eyeAngle, axis);
+            Quaternion greedyTarget = greedyLookRot * greedySpinOffset;
+
+            targetRot = Quaternion.Slerp(targetRot, greedyTarget, greedyWeight);
+
+            Vector3 greedyScale = new Vector3(
+                baseScale.x * greedyEyeHorizontalScale,
+                baseScale.y * greedyEyeVerticalScale,
+                baseScale.z
+            );
+
+            targetScale = Vector3.Lerp(targetScale, greedyScale, greedyWeight);
+        }
+
         float rotSpeed = Mathf.Lerp(eyeRotationLerpSpeed, focusEyeLookLerpSpeed, focusWeight);
         rotSpeed = Mathf.Lerp(rotSpeed, suspiciousEyeLerpSpeed, suspiciousWeight);
+        rotSpeed = Mathf.Lerp(rotSpeed, greedyEyeLerpSpeed, greedyWeight);
 
         float scaleSpeed = Mathf.Lerp(eyeRotationLerpSpeed, focusEyeScaleLerpSpeed, focusWeight);
         scaleSpeed = Mathf.Lerp(scaleSpeed, suspiciousEyeLerpSpeed, suspiciousWeight);
+        scaleSpeed = Mathf.Lerp(scaleSpeed, greedyEyeLerpSpeed, greedyWeight);
 
         eye.localRotation = Quaternion.Slerp(
             eye.localRotation,
@@ -396,11 +478,12 @@ public class EnemyHeadCalmController : MonoBehaviour
     public void SetPanic() => currentState = EmotionState.Panic;
     public void SetFocus() => currentState = EmotionState.Focus;
     public void SetSuspicious() => currentState = EmotionState.Suspicious;
+    public void SetGreedy() => currentState = EmotionState.Greedy;
     public void SetEmotion(EmotionState newState) => currentState = newState;
 
     public void SetEmotionByIndex(int index)
     {
-        if (index < 0 || index > 3) return;
+        if (index < 0 || index > 4) return;
         currentState = (EmotionState)index;
     }
 

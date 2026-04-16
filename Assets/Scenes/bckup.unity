@@ -10675,11 +10675,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1100154962}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.07656328, y: -0, z: -0, w: 0.99706477}
-  m_LocalPosition: {x: 2271.99, y: 1.2562804, z: -671.5098}
-  m_LocalScale: {x: 1.1575663, y: 1.0386, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2281.55, y: 5.45, z: -671.5098}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 543450652227926109}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1111998155
@@ -21184,19 +21185,27 @@ MonoBehaviour:
   panicLerpSpeed: 16
   focusOffsetX: 0.05
   focusOffsetY: 0.025
-  focusOffsetZ: -60
+  focusOffsetZ: -17.3
   focusRotation: {x: 0, y: 0, z: -9}
   focusLerpSpeed: 7
   suspiciousBaseOffsetX: 0.015
   suspiciousBaseOffsetY: 0.008
-  suspiciousMoveAmountX: 0.014
-  suspiciousMoveAmountY: 0.01
-  suspiciousMoveSpeed: 0.95
+  suspiciousBaseOffsetZ: 0.012
+  suspiciousMoveAmountX: 2.32
+  suspiciousMoveAmountY: 2.62
+  suspiciousMoveAmountZ: 2.65
+  suspiciousMoveSpeed: 1.8
   suspiciousNoiseSpeed: 1.6
   suspiciousNoiseAmountX: 0.007
   suspiciousNoiseAmountY: 0.005
+  suspiciousNoiseAmountZ: 0.004
   suspiciousRotation: {x: 0, y: 0, z: -4}
   suspiciousLerpSpeed: 5.5
+  greedyOffsetX: 0.008
+  greedyOffsetY: 0.004
+  greedyOffsetZ: 0.014
+  greedyRotation: {x: 0, y: 0, z: -1.5}
+  greedyLerpSpeed: 6
   hiddenLocalOffset: {x: 0, y: -0.7, z: 0}
   dealPushOffset: {x: 0.02, y: -0.03, z: 0.01}
   appearDuration: 0.18
@@ -21683,8 +21692,8 @@ Transform:
   m_GameObject: {fileID: 919132148488708839}
   serializedVersion: 2
   m_LocalRotation: {x: -0.059373032, y: -0, z: -0, w: 0.9982359}
-  m_LocalPosition: {x: 2270.2, y: 0.68181753, z: -670.76514}
-  m_LocalScale: {x: 1.3484572, y: 1.2204632, z: 1.0619}
+  m_LocalPosition: {x: -11.350098, y: -4.7681823, z: 0.74468994}
+  m_LocalScale: {x: 1.3484572, y: 1.2204633, z: 1.0619001}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1798864511631477571}
@@ -21695,7 +21704,7 @@ Transform:
   - {fileID: 8890077616425150684}
   - {fileID: 1537359021886673234}
   - {fileID: 5328482479482335355}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1100154964}
   m_LocalEulerAnglesHint: {x: -6.808, y: 0, z: 0}
 --- !u!4 &546439632511379808
 Transform:
@@ -21963,12 +21972,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23744e1f629433b4dbcb62cbcdda9084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHeadCalmController
-  headMotionPivot: {fileID: 543450652227926109}
+  headMotionPivot: {fileID: 1100154964}
   leftEye: {fileID: 8890077616425150684}
   rightEye: {fileID: 1537359021886673234}
   focusTableTarget: {fileID: 1299945647}
   focusCardsTarget: {fileID: 1344280796}
-  currentState: 3
+  greedyPlayerTarget: {fileID: 603280698}
+  currentState: 4
   stateBlendSpeed: 3
   calmMoveAmountY: 0.2
   calmMoveAmountX: 0.006
@@ -21988,37 +21998,49 @@ MonoBehaviour:
   focusHeadRotLerpSpeed: 6
   focusLookSwitchSpeed: 1.4
   focusLookBias: 0.5
-  focusHeadOffsetX: 0.02
-  focusHeadOffsetY: -0.015
+  focusHeadOffsetX: 0
+  focusHeadOffsetY: 0
   focusHeadPositionInfluenceX: 0.03
   focusHeadPositionInfluenceY: 0.03
   focusMaxHeadOffsetX: 0.04
   focusMaxHeadOffsetY: 0.04
-  focusPitchMultiplier: 0.7
-  focusYawMultiplier: 0.45
-  focusRollMultiplier: 0.08
+  focusPitchMultiplier: -0.8
+  focusYawMultiplier: -0.58
+  focusRollMultiplier: 0.47
   focusEyeLookLerpSpeed: 10
   focusEyeVerticalScale: 0.72
   focusEyeHorizontalScale: 1.02
   focusEyeScaleLerpSpeed: 8
   focusEyeYawMultiplier: 1
   focusEyePitchMultiplier: 1
-  suspiciousOffsetX: 0.018
-  suspiciousOffsetY: 0.012
-  suspiciousHeadMoveAmountX: 0.01
-  suspiciousHeadMoveAmountY: 0.006
-  suspiciousHeadMoveSpeed: 0.85
-  suspiciousTiltAmountZ: 5.5
-  suspiciousTiltSpeed: 0.7
+  suspiciousTiltAmountZ: 13.25
+  suspiciousTiltSpeed: 1.08
   suspiciousYaw: 10
   suspiciousPitch: -8
   suspiciousHeadLerpSpeed: 5
-  suspiciousEyeYaw: 12
-  suspiciousEyePitch: -8
+  suspiciousEyeBaseYaw: 10
+  suspiciousEyeBasePitch: -6
+  suspiciousEyeMoveYaw: 18
+  suspiciousEyeMovePitch: 11.9
+  suspiciousEyeMoveSpeed: 5.6
   suspiciousEyeSpinSpeed: 8
-  suspiciousEyeVerticalScale: 0.92
-  suspiciousEyeHorizontalScale: 1
+  suspiciousEyeVerticalScale: 1.06
+  suspiciousEyeHorizontalScale: 1.18
   suspiciousEyeLerpSpeed: 7
+  greedyOffsetX: 0
+  greedyOffsetY: 0
+  greedyOffsetZ: -2.32
+  greedyPitchMultiplier: 0.45
+  greedyYawMultiplier: 0.35
+  greedyRollMultiplier: 0.03
+  greedyHeadMoveLerpSpeed: 6
+  greedyHeadRotLerpSpeed: 6
+  greedyEyeYawMultiplier: 0.9
+  greedyEyePitchMultiplier: 0.9
+  greedyEyeSpinSpeed: 25
+  greedyEyeVerticalScale: 0.96
+  greedyEyeHorizontalScale: 1
+  greedyEyeLerpSpeed: 7
   eyeRotationLerpSpeed: 12
 --- !u!4 &942106402581890228
 Transform:
@@ -28210,4 +28232,3 @@ SceneRoots:
   - {fileID: 125519246}
   - {fileID: 2120890717}
   - {fileID: 1100154964}
-  - {fileID: 543450652227926109}

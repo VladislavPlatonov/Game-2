@@ -8,7 +8,8 @@ public class AIHandEmotionController : MonoBehaviour
         Calm,
         Panic,
         Focus,
-        Suspicious
+        Suspicious,
+        Greedy
     }
 
     [Header("Refs")]
@@ -54,6 +55,13 @@ public class AIHandEmotionController : MonoBehaviour
     [SerializeField] private float suspiciousNoiseAmountZ = 0.004f;
     [SerializeField] private Vector3 suspiciousRotation = new Vector3(0f, 0f, -4f);
     [SerializeField] private float suspiciousLerpSpeed = 5.5f;
+
+    [Header("Greedy Motion")]
+    [SerializeField] private float greedyOffsetX = 0.008f;
+    [SerializeField] private float greedyOffsetY = 0.004f;
+    [SerializeField] private float greedyOffsetZ = 0.014f;
+    [SerializeField] private Vector3 greedyRotation = new Vector3(0f, 0f, -1.5f);
+    [SerializeField] private float greedyLerpSpeed = 6f;
 
     [Header("Deal / Grab Animation")]
     [SerializeField] private Vector3 hiddenLocalOffset = new Vector3(0f, -0.7f, 0f);
@@ -114,6 +122,9 @@ public class AIHandEmotionController : MonoBehaviour
             case EnemyHeadCalmController.EmotionState.Suspicious:
                 currentState = AIHandState.Suspicious;
                 break;
+            case EnemyHeadCalmController.EmotionState.Greedy:
+                currentState = AIHandState.Greedy;
+                break;
         }
     }
 
@@ -132,6 +143,9 @@ public class AIHandEmotionController : MonoBehaviour
                 break;
             case AIHandState.Suspicious:
                 ApplySuspiciousPose();
+                break;
+            case AIHandState.Greedy:
+                ApplyGreedyPose();
                 break;
         }
     }
@@ -207,6 +221,16 @@ public class AIHandEmotionController : MonoBehaviour
         transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * suspiciousLerpSpeed);
         transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRot, Time.deltaTime * suspiciousLerpSpeed);
         transform.localScale = Vector3.Lerp(transform.localScale, baseLocalScale, Time.deltaTime * suspiciousLerpSpeed);
+    }
+
+    private void ApplyGreedyPose()
+    {
+        Vector3 targetPos = baseLocalPos + new Vector3(greedyOffsetX, greedyOffsetY, greedyOffsetZ);
+        Quaternion targetRot = baseLocalRot * Quaternion.Euler(greedyRotation);
+
+        transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * greedyLerpSpeed);
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRot, Time.deltaTime * greedyLerpSpeed);
+        transform.localScale = Vector3.Lerp(transform.localScale, baseLocalScale, Time.deltaTime * greedyLerpSpeed);
     }
 
     public void PlayDealGrab()
@@ -325,6 +349,9 @@ public class AIHandEmotionController : MonoBehaviour
                     );
                 }
 
+            case AIHandState.Greedy:
+                return baseLocalPos + new Vector3(greedyOffsetX, greedyOffsetY, greedyOffsetZ);
+
             case AIHandState.Panic:
                 return transform.localPosition;
 
@@ -348,6 +375,9 @@ public class AIHandEmotionController : MonoBehaviour
             case AIHandState.Suspicious:
                 return baseLocalRot * Quaternion.Euler(suspiciousRotation);
 
+            case AIHandState.Greedy:
+                return baseLocalRot * Quaternion.Euler(greedyRotation);
+
             case AIHandState.Panic:
                 return baseLocalRot;
 
@@ -364,6 +394,7 @@ public class AIHandEmotionController : MonoBehaviour
     public void SetStatePanic() => currentState = AIHandState.Panic;
     public void SetStateFocus() => currentState = AIHandState.Focus;
     public void SetStateSuspicious() => currentState = AIHandState.Suspicious;
+    public void SetStateGreedy() => currentState = AIHandState.Greedy;
     public void SetState(AIHandState newState) => currentState = newState;
 
     public AIHandState GetCurrentState()
