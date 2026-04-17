@@ -21171,7 +21171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AIHandEmotionController
   headController: {fileID: 919132148488708840}
   handVisual: {fileID: 0}
-  currentState: 3
+  currentState: 5
   syncStateFromHead: 1
   calmFollowAmountY: 3.5
   calmFollowAmountX: 0.0025
@@ -21179,10 +21179,12 @@ MonoBehaviour:
   calmRotZ: 0.08
   calmRotSpeed: 0.45
   calmLerpSpeed: 5
+  calmRotation: {x: 0, y: 0, z: 0}
   panicNoiseSpeed: 26
   panicNoiseAmountX: 1.2
   panicNoiseAmountY: 1.19
   panicLerpSpeed: 16
+  panicRotation: {x: 0, y: 0, z: 0}
   focusOffsetX: 0.05
   focusOffsetY: 0.025
   focusOffsetZ: -17.3
@@ -21203,9 +21205,24 @@ MonoBehaviour:
   suspiciousLerpSpeed: 5.5
   greedyOffsetX: 0.008
   greedyOffsetY: 0.004
-  greedyOffsetZ: 0.014
+  greedyOffsetZ: -38
   greedyRotation: {x: 0, y: 0, z: -1.5}
   greedyLerpSpeed: 6
+  aggressiveOffsetX: 0.018
+  aggressiveOffsetY: -0.01
+  aggressiveOffsetZ: 0.02
+  aggressiveMoveAmountX: 0.02
+  aggressiveMoveAmountY: 0.018
+  aggressiveMoveAmountZ: 0.016
+  aggressiveMoveSpeed: 4
+  aggressiveRotation: {x: 0, y: 0, z: -10}
+  aggressiveLerpSpeed: 11
+  slamOffset: {x: 0.05, y: -0.06, z: 0.03}
+  slamRotation: {x: 0, y: 0, z: -18}
+  slamForwardDuration: 0.07
+  slamBackDuration: 0.14
+  slamHoldDuration: 0.03
+  slamScaleMultiplier: 1.05
   hiddenLocalOffset: {x: 0, y: -0.7, z: 0}
   dealPushOffset: {x: 0.02, y: -0.03, z: 0.01}
   appearDuration: 0.18
@@ -21978,7 +21995,7 @@ MonoBehaviour:
   focusTableTarget: {fileID: 1299945647}
   focusCardsTarget: {fileID: 1344280796}
   greedyPlayerTarget: {fileID: 603280698}
-  currentState: 4
+  currentState: 5
   stateBlendSpeed: 3
   calmMoveAmountY: 0.2
   calmMoveAmountX: 0.006
@@ -21993,6 +22010,7 @@ MonoBehaviour:
   panicNoiseSpeed: 28
   panicNoiseAmountX: 0.08
   panicNoiseAmountY: 0.07
+  panicHeadBaseRotation: {x: 0, y: 0, z: 0}
   panicEyeSpinSpeed: 225
   focusHeadMoveLerpSpeed: 6
   focusHeadRotLerpSpeed: 6
@@ -22007,7 +22025,10 @@ MonoBehaviour:
   focusPitchMultiplier: -0.8
   focusYawMultiplier: -0.58
   focusRollMultiplier: 0.47
+  focusHeadBaseRotation: {x: 0, y: 0, z: 0}
   focusEyeLookLerpSpeed: 10
+  focusEyeBasePosition: {x: 0, y: 0, z: 0}
+  focusEyeBaseRotation: {x: 0, y: 0, z: 0}
   focusEyeVerticalScale: 0.72
   focusEyeHorizontalScale: 1.02
   focusEyeScaleLerpSpeed: 8
@@ -22015,11 +22036,10 @@ MonoBehaviour:
   focusEyePitchMultiplier: 1
   suspiciousTiltAmountZ: 13.25
   suspiciousTiltSpeed: 1.08
-  suspiciousYaw: 10
-  suspiciousPitch: -8
   suspiciousHeadLerpSpeed: 5
-  suspiciousEyeBaseYaw: 10
-  suspiciousEyeBasePitch: -6
+  suspiciousHeadBaseRotation: {x: -5, y: 8, z: 0}
+  suspiciousEyeBasePosition: {x: 0, y: 0, z: 0}
+  suspiciousEyeBaseRotation: {x: -6, y: 10, z: 0}
   suspiciousEyeMoveYaw: 18
   suspiciousEyeMovePitch: 11.9
   suspiciousEyeMoveSpeed: 5.6
@@ -22028,20 +22048,42 @@ MonoBehaviour:
   suspiciousEyeHorizontalScale: 1.18
   suspiciousEyeLerpSpeed: 7
   greedyOffsetX: 0
-  greedyOffsetY: 0
-  greedyOffsetZ: -2.32
+  greedyOffsetY: -0.42
+  greedyOffsetZ: -2.65
   greedyPitchMultiplier: 0.45
   greedyYawMultiplier: 0.35
   greedyRollMultiplier: 0.03
   greedyHeadMoveLerpSpeed: 6
   greedyHeadRotLerpSpeed: 6
+  greedyHeadBaseRotation: {x: -10, y: 0, z: 0}
+  greedyEyeBasePosition: {x: 0, y: 0.18, z: -0.58}
+  greedyEyeBaseRotation: {x: 0, y: 0, z: 0}
   greedyEyeYawMultiplier: 0.9
   greedyEyePitchMultiplier: 0.9
   greedyEyeSpinSpeed: 25
   greedyEyeVerticalScale: 0.96
   greedyEyeHorizontalScale: 1
   greedyEyeLerpSpeed: 7
+  aggressiveHeadBaseRotation: {x: -6, y: 0, z: 0}
+  aggressiveOffsetZ: 0.03
+  aggressivePitchMultiplier: 0.75
+  aggressiveYawMultiplier: 0.65
+  aggressiveRollMultiplier: 0.05
+  aggressiveHeadMoveLerpSpeed: 10
+  aggressiveHeadRotLerpSpeed: 12
+  aggressivePunchAngle: 8
+  aggressivePunchSpeed: 8
+  aggressivePunchAmount: 0.35
+  aggressiveEyeBasePosition: {x: 0, y: 0, z: 0}
+  aggressiveEyeBaseRotation: {x: -4, y: 0, z: 0}
+  aggressiveEyeMoveYaw: 1.5
+  aggressiveEyeMovePitch: 1
+  aggressiveEyeMoveSpeed: 1.2
+  aggressiveEyeVerticalScale: 0.86
+  aggressiveEyeHorizontalScale: 1.02
+  aggressiveEyeLerpSpeed: 12
   eyeRotationLerpSpeed: 12
+  eyePositionLerpSpeed: 12
 --- !u!4 &942106402581890228
 Transform:
   m_ObjectHideFlags: 0

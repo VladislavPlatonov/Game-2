@@ -9,7 +9,8 @@ public class AIHandEmotionController : MonoBehaviour
         Panic,
         Focus,
         Suspicious,
-        Greedy
+        Greedy,
+        Aggressive
     }
 
     [Header("Refs")]
@@ -27,12 +28,14 @@ public class AIHandEmotionController : MonoBehaviour
     [SerializeField] private float calmRotZ = 0.6f;
     [SerializeField] private float calmRotSpeed = 0.45f;
     [SerializeField] private float calmLerpSpeed = 5f;
+    [SerializeField] private Vector3 calmRotation = Vector3.zero;
 
     [Header("Panic Motion")]
     [SerializeField] private float panicNoiseSpeed = 26f;
     [SerializeField] private float panicNoiseAmountX = 0.010f;
     [SerializeField] private float panicNoiseAmountY = 0.014f;
     [SerializeField] private float panicLerpSpeed = 16f;
+    [SerializeField] private Vector3 panicRotation = Vector3.zero;
 
     [Header("Focus Pose")]
     [SerializeField] private float focusOffsetX = 0.05f;
@@ -63,6 +66,25 @@ public class AIHandEmotionController : MonoBehaviour
     [SerializeField] private Vector3 greedyRotation = new Vector3(0f, 0f, -1.5f);
     [SerializeField] private float greedyLerpSpeed = 6f;
 
+    [Header("Aggressive Motion")]
+    [SerializeField] private float aggressiveOffsetX = 0.018f;
+    [SerializeField] private float aggressiveOffsetY = -0.010f;
+    [SerializeField] private float aggressiveOffsetZ = 0.020f;
+    [SerializeField] private float aggressiveMoveAmountX = 0.020f;
+    [SerializeField] private float aggressiveMoveAmountY = 0.018f;
+    [SerializeField] private float aggressiveMoveAmountZ = 0.016f;
+    [SerializeField] private float aggressiveMoveSpeed = 4f;
+    [SerializeField] private Vector3 aggressiveRotation = new Vector3(0f, 0f, -10f);
+    [SerializeField] private float aggressiveLerpSpeed = 11f;
+
+    [Header("Table Slam")]
+    [SerializeField] private Vector3 slamOffset = new Vector3(0.05f, -0.06f, 0.03f);
+    [SerializeField] private Vector3 slamRotation = new Vector3(0f, 0f, -18f);
+    [SerializeField] private float slamForwardDuration = 0.07f;
+    [SerializeField] private float slamBackDuration = 0.14f;
+    [SerializeField] private float slamHoldDuration = 0.03f;
+    [SerializeField] private float slamScaleMultiplier = 1.05f;
+
     [Header("Deal / Grab Animation")]
     [SerializeField] private Vector3 hiddenLocalOffset = new Vector3(0f, -0.7f, 0f);
     [SerializeField] private Vector3 dealPushOffset = new Vector3(0.02f, -0.03f, 0.01f);
@@ -78,7 +100,9 @@ public class AIHandEmotionController : MonoBehaviour
     private Vector3 baseLocalScale;
 
     private Coroutine grabRoutine;
+    private Coroutine slamRoutine;
     private bool isPlayingGrab;
+    private bool isPlayingSlam;
 
     private void Awake()
     {
@@ -97,7 +121,7 @@ public class AIHandEmotionController : MonoBehaviour
     {
         SyncStateFromHeadIfNeeded();
 
-        if (isPlayingGrab)
+        if (isPlayingGrab || isPlayingSlam)
             return;
 
         ApplyCurrentStatePose();
@@ -125,6 +149,9 @@ public class AIHandEmotionController : MonoBehaviour
             case EnemyHeadCalmController.EmotionState.Greedy:
                 currentState = AIHandState.Greedy;
                 break;
+            case EnemyHeadCalmController.EmotionState.Aggressive:
+                currentState = AIHandState.Aggressive;
+                break;
         }
     }
 
@@ -147,6 +174,9 @@ public class AIHandEmotionController : MonoBehaviour
             case AIHandState.Greedy:
                 ApplyGreedyPose();
                 break;
+            case AIHandState.Aggressive:
+                ApplyAggressivePose();
+                break;
         }
     }
 
@@ -159,7 +189,7 @@ public class AIHandEmotionController : MonoBehaviour
         float rotZ = Mathf.Sin(t * calmRotSpeed) * calmRotZ;
 
         Vector3 targetPos = baseLocalPos + new Vector3(moveX, moveY, 0f);
-        Quaternion targetRot = baseLocalRot * Quaternion.Euler(0f, 0f, rotZ);
+        Quaternion targetRot = baseLocalRot * Quaternion.Euler(calmRotation + new Vector3(0f, 0f, rotZ));
 
         transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * calmLerpSpeed);
         transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRot, Time.deltaTime * calmLerpSpeed);
@@ -177,9 +207,10 @@ public class AIHandEmotionController : MonoBehaviour
             (Mathf.PerlinNoise(0.41f, t * panicNoiseSpeed * 1.11f) - 0.5f) * 2f * panicNoiseAmountY;
 
         Vector3 targetPos = baseLocalPos + new Vector3(vibeX, vibeY, 0f);
+        Quaternion targetRot = baseLocalRot * Quaternion.Euler(panicRotation);
 
         transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * panicLerpSpeed);
-        transform.localRotation = Quaternion.Slerp(transform.localRotation, baseLocalRot, Time.deltaTime * panicLerpSpeed);
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRot, Time.deltaTime * panicLerpSpeed);
         transform.localScale = Vector3.Lerp(transform.localScale, baseLocalScale, Time.deltaTime * panicLerpSpeed);
     }
 
@@ -233,6 +264,27 @@ public class AIHandEmotionController : MonoBehaviour
         transform.localScale = Vector3.Lerp(transform.localScale, baseLocalScale, Time.deltaTime * greedyLerpSpeed);
     }
 
+    private void ApplyAggressivePose()
+    {
+        float t = Time.time;
+
+        float punchX = Mathf.Sin(t * aggressiveMoveSpeed) * aggressiveMoveAmountX;
+        float punchY = Mathf.Sin(t * aggressiveMoveSpeed * 1.21f) * aggressiveMoveAmountY;
+        float punchZ = Mathf.Sin(t * aggressiveMoveSpeed * 0.93f) * aggressiveMoveAmountZ;
+
+        Vector3 targetPos = baseLocalPos + new Vector3(
+            aggressiveOffsetX + punchX,
+            aggressiveOffsetY + punchY,
+            aggressiveOffsetZ + punchZ
+        );
+
+        Quaternion targetRot = baseLocalRot * Quaternion.Euler(aggressiveRotation);
+
+        transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * aggressiveLerpSpeed);
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRot, Time.deltaTime * aggressiveLerpSpeed);
+        transform.localScale = Vector3.Lerp(transform.localScale, baseLocalScale, Time.deltaTime * aggressiveLerpSpeed);
+    }
+
     public void PlayDealGrab()
     {
         if (grabRoutine != null)
@@ -241,14 +293,77 @@ public class AIHandEmotionController : MonoBehaviour
         grabRoutine = StartCoroutine(DealGrabRoutine());
     }
 
+    public void PlayTableSlam()
+    {
+        if (slamRoutine != null)
+            StopCoroutine(slamRoutine);
+
+        slamRoutine = StartCoroutine(TableSlamRoutine());
+    }
+
     public void SnapToCurrentState()
     {
         if (grabRoutine != null)
             StopCoroutine(grabRoutine);
 
+        if (slamRoutine != null)
+            StopCoroutine(slamRoutine);
+
         isPlayingGrab = false;
+        isPlayingSlam = false;
         grabRoutine = null;
+        slamRoutine = null;
         ApplyCurrentStatePose();
+    }
+
+    private IEnumerator TableSlamRoutine()
+    {
+        isPlayingSlam = true;
+
+        Vector3 startPos = transform.localPosition;
+        Quaternion startRot = transform.localRotation;
+        Vector3 startScale = transform.localScale;
+
+        Vector3 slamPos = startPos + slamOffset;
+        Quaternion slamRot = startRot * Quaternion.Euler(slamRotation);
+        Vector3 slamScale = startScale * slamScaleMultiplier;
+
+        float t = 0f;
+        while (t < 1f)
+        {
+            t += Time.deltaTime / slamForwardDuration;
+            transform.localPosition = Vector3.Lerp(startPos, slamPos, t);
+            transform.localRotation = Quaternion.Lerp(startRot, slamRot, t);
+            transform.localScale = Vector3.Lerp(startScale, slamScale, t);
+            yield return null;
+        }
+
+        transform.localPosition = slamPos;
+        transform.localRotation = slamRot;
+        transform.localScale = slamScale;
+
+        yield return new WaitForSeconds(slamHoldDuration);
+
+        Vector3 stateTargetPos = GetStateTargetPosition();
+        Quaternion stateTargetRot = GetStateTargetRotation();
+        Vector3 stateTargetScale = baseLocalScale;
+
+        t = 0f;
+        while (t < 1f)
+        {
+            t += Time.deltaTime / slamBackDuration;
+            transform.localPosition = Vector3.Lerp(slamPos, stateTargetPos, t);
+            transform.localRotation = Quaternion.Lerp(slamRot, stateTargetRot, t);
+            transform.localScale = Vector3.Lerp(slamScale, stateTargetScale, t);
+            yield return null;
+        }
+
+        transform.localPosition = stateTargetPos;
+        transform.localRotation = stateTargetRot;
+        transform.localScale = stateTargetScale;
+
+        isPlayingSlam = false;
+        slamRoutine = null;
     }
 
     private IEnumerator DealGrabRoutine()
@@ -352,6 +467,20 @@ public class AIHandEmotionController : MonoBehaviour
             case AIHandState.Greedy:
                 return baseLocalPos + new Vector3(greedyOffsetX, greedyOffsetY, greedyOffsetZ);
 
+            case AIHandState.Aggressive:
+                {
+                    float t = Time.time;
+                    float punchX = Mathf.Sin(t * aggressiveMoveSpeed) * aggressiveMoveAmountX;
+                    float punchY = Mathf.Sin(t * aggressiveMoveSpeed * 1.21f) * aggressiveMoveAmountY;
+                    float punchZ = Mathf.Sin(t * aggressiveMoveSpeed * 0.93f) * aggressiveMoveAmountZ;
+
+                    return baseLocalPos + new Vector3(
+                        aggressiveOffsetX + punchX,
+                        aggressiveOffsetY + punchY,
+                        aggressiveOffsetZ + punchZ
+                    );
+                }
+
             case AIHandState.Panic:
                 return transform.localPosition;
 
@@ -378,14 +507,17 @@ public class AIHandEmotionController : MonoBehaviour
             case AIHandState.Greedy:
                 return baseLocalRot * Quaternion.Euler(greedyRotation);
 
+            case AIHandState.Aggressive:
+                return baseLocalRot * Quaternion.Euler(aggressiveRotation);
+
             case AIHandState.Panic:
-                return baseLocalRot;
+                return baseLocalRot * Quaternion.Euler(panicRotation);
 
             default:
                 {
                     float t = Time.time;
                     float rotZ = Mathf.Sin(t * calmRotSpeed) * calmRotZ;
-                    return baseLocalRot * Quaternion.Euler(0f, 0f, rotZ);
+                    return baseLocalRot * Quaternion.Euler(calmRotation + new Vector3(0f, 0f, rotZ));
                 }
         }
     }
@@ -395,6 +527,7 @@ public class AIHandEmotionController : MonoBehaviour
     public void SetStateFocus() => currentState = AIHandState.Focus;
     public void SetStateSuspicious() => currentState = AIHandState.Suspicious;
     public void SetStateGreedy() => currentState = AIHandState.Greedy;
+    public void SetStateAggressive() => currentState = AIHandState.Aggressive;
     public void SetState(AIHandState newState) => currentState = newState;
 
     public AIHandState GetCurrentState()
