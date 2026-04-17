@@ -21170,7 +21170,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIHandEmotionController
   headController: {fileID: 919132148488708840}
-  handVisual: {fileID: 0}
+  handVisual: {fileID: 2141392119}
+  unhingedKnifeTarget: {fileID: 0}
   currentState: 5
   syncStateFromHead: 1
   calmFollowAmountY: 3.5
@@ -21180,6 +21181,19 @@ MonoBehaviour:
   calmRotSpeed: 0.45
   calmLerpSpeed: 5
   calmRotation: {x: 0, y: 0, z: 0}
+  nervousBaseOffsetX: 0.01
+  nervousBaseOffsetY: -0.003
+  nervousBaseOffsetZ: 0.008
+  nervousShakeSpeed: 9
+  nervousShakeAmountX: 0.004
+  nervousShakeAmountY: 0.006
+  nervousShakeAmountZ: 0.0025
+  nervousNoiseSpeed: 4.8
+  nervousNoiseAmountX: 0.003
+  nervousNoiseAmountY: 0.004
+  nervousNoiseAmountZ: 0.002
+  nervousRotation: {x: 0, y: 0, z: -2.5}
+  nervousLerpSpeed: 10
   panicNoiseSpeed: 26
   panicNoiseAmountX: 1.2
   panicNoiseAmountY: 1.19
@@ -21208,15 +21222,58 @@ MonoBehaviour:
   greedyOffsetZ: -38
   greedyRotation: {x: 0, y: 0, z: -1.5}
   greedyLerpSpeed: 6
-  aggressiveOffsetX: 0.018
-  aggressiveOffsetY: -0.01
-  aggressiveOffsetZ: 0.02
+  aggressiveBaseOffsetX: 0.018
+  aggressiveBaseOffsetY: -0.01
+  aggressiveBaseOffsetZ: 0.02
   aggressiveMoveAmountX: 0.02
-  aggressiveMoveAmountY: 0.018
+  aggressiveMoveAmountY: 7
   aggressiveMoveAmountZ: 0.016
-  aggressiveMoveSpeed: 4
+  aggressiveMoveSpeed: 4.5
+  aggressiveNoiseSpeed: 2.8
+  aggressiveNoiseAmountX: 0.006
+  aggressiveNoiseAmountY: 0.008
+  aggressiveNoiseAmountZ: 0.004
   aggressiveRotation: {x: 0, y: 0, z: -10}
   aggressiveLerpSpeed: 11
+  bluffCalmBaseOffsetX: 0.01
+  bluffCalmBaseOffsetY: -0.002
+  bluffCalmBaseOffsetZ: 0.01
+  bluffCalmNoiseSpeed: 1.8
+  bluffCalmNoiseAmountX: 0.0025
+  bluffCalmNoiseAmountY: 0.0035
+  bluffCalmNoiseAmountZ: 0.002
+  bluffCalmMicroWaveSpeed: 1.25
+  bluffCalmMicroWaveAmountX: 0.0015
+  bluffCalmMicroWaveAmountY: 0.002
+  bluffCalmRotation: {x: 0, y: 0, z: -2.5}
+  bluffCalmLerpSpeed: 8
+  bluffNervousBaseOffsetX: 0.014
+  bluffNervousBaseOffsetY: -0.004
+  bluffNervousBaseOffsetZ: 0.012
+  bluffNervousShakeSpeed: 12
+  bluffNervousShakeAmountX: 0.0045
+  bluffNervousShakeAmountY: 0.006
+  bluffNervousShakeAmountZ: 0.0035
+  bluffNervousNoiseSpeed: 6
+  bluffNervousNoiseAmountX: 0.004
+  bluffNervousNoiseAmountY: 0.005
+  bluffNervousNoiseAmountZ: 0.003
+  bluffNervousRotation: {x: 0, y: 0, z: -3.5}
+  bluffNervousLerpSpeed: 13
+  unhingedBaseOffsetX: 0.012
+  unhingedBaseOffsetY: -0.006
+  unhingedBaseOffsetZ: 0.014
+  unhingedNoiseSpeed: 3.8
+  unhingedNoiseAmountX: 0.004
+  unhingedNoiseAmountY: 0.0045
+  unhingedNoiseAmountZ: 0.003
+  unhingedWaveSpeed: 2.2
+  unhingedWaveAmountX: 0.002
+  unhingedWaveAmountY: 0.003
+  unhingedRotation: {x: 0, y: 0, z: -5}
+  unhingedLerpSpeed: 11
+  unhingedKnifeReachAmount: 0.032
+  unhingedKnifeReachRotZ: -10
   slamOffset: {x: 0.05, y: -0.06, z: 0.03}
   slamRotation: {x: 0, y: 0, z: -18}
   slamForwardDuration: 0.07
@@ -21995,7 +22052,8 @@ MonoBehaviour:
   focusTableTarget: {fileID: 1299945647}
   focusCardsTarget: {fileID: 1344280796}
   greedyPlayerTarget: {fileID: 603280698}
-  currentState: 5
+  unhingedKnifeTarget: {fileID: 920501101}
+  currentState: 9
   stateBlendSpeed: 3
   calmMoveAmountY: 0.2
   calmMoveAmountX: 0.006
@@ -22007,6 +22065,34 @@ MonoBehaviour:
   rightEyeAxis: 2
   leftEyeClockwise: 1
   rightEyeClockwise: 1
+  nervousHeadBaseRotation: {x: -2, y: 0, z: 0}
+  nervousOffsetX: 0.002
+  nervousOffsetY: -0.004
+  nervousOffsetZ: 0.01
+  nervousShakeSpeed: 5
+  nervousShakeAmountX: 0.0025
+  nervousShakeAmountY: 0.003
+  nervousNoiseSpeed: 3
+  nervousRotNoiseZ: 0.6
+  nervousHeadMoveLerpSpeed: 8
+  nervousHeadRotLerpSpeed: 9
+  nervousJerkIntervalMin: 5
+  nervousJerkIntervalMax: 6
+  nervousJerkDuration: 0.14
+  nervousJerkRotation: {x: -8, y: 5, z: 3}
+  nervousEyeBasePosition: {x: 0, y: 0, z: 0}
+  nervousEyeBaseRotation: {x: -1.5, y: 0, z: 0}
+  nervousEyeMoveAmountX: 0.008
+  nervousEyeMoveAmountY: 0.006
+  nervousEyeMoveSpeed: 9
+  nervousEyeSpinSpeed: 6
+  nervousEyeVerticalScale: 0.91
+  nervousEyeHorizontalScale: 1
+  nervousEyeLerpSpeed: 11
+  nervousEyeYawJitter: 1.1
+  nervousEyePitchJitter: 0.8
+  nervousEyeTargetYawMultiplier: 0.8
+  nervousEyeTargetPitchMultiplier: 0.8
   panicNoiseSpeed: 28
   panicNoiseAmountX: 0.08
   panicNoiseAmountY: 0.07
@@ -22072,16 +22158,84 @@ MonoBehaviour:
   aggressiveHeadMoveLerpSpeed: 10
   aggressiveHeadRotLerpSpeed: 12
   aggressivePunchAngle: 8
-  aggressivePunchSpeed: 8
+  aggressivePunchSpeed: 5
   aggressivePunchAmount: 0.35
   aggressiveEyeBasePosition: {x: 0, y: 0, z: 0}
   aggressiveEyeBaseRotation: {x: -4, y: 0, z: 0}
-  aggressiveEyeMoveYaw: 1.5
-  aggressiveEyeMovePitch: 1
-  aggressiveEyeMoveSpeed: 1.2
+  aggressiveEyeMoveYaw: 23
+  aggressiveEyeMovePitch: 23
+  aggressiveEyeMoveSpeed: 9
   aggressiveEyeVerticalScale: 0.86
   aggressiveEyeHorizontalScale: 1.02
-  aggressiveEyeLerpSpeed: 12
+  aggressiveEyeLerpSpeed: 4.5
+  bluffCalmHeadBaseRotation: {x: -2, y: 0, z: 0}
+  bluffCalmOffsetX: 0
+  bluffCalmOffsetY: -0.003
+  bluffCalmOffsetZ: 0.012
+  bluffCalmNoiseSpeed: 1.8
+  bluffCalmNoiseAmountX: 0.0025
+  bluffCalmNoiseAmountY: 0.003
+  bluffCalmNoiseRotZ: 0.8
+  bluffCalmHeadMoveLerpSpeed: 8
+  bluffCalmHeadRotLerpSpeed: 9
+  bluffCalmEyeBasePosition: {x: 0, y: 0, z: 0}
+  bluffCalmEyeBaseRotation: {x: -1, y: 0, z: 0}
+  bluffCalmEyeSpinSpeed: 18
+  bluffCalmEyeVerticalScale: 0.9
+  bluffCalmEyeHorizontalScale: 1.01
+  bluffCalmEyeLerpSpeed: 9
+  bluffCalmEyeMicroYaw: 0.8
+  bluffCalmEyeMicroPitch: 0.5
+  bluffCalmEyeMicroSpeed: 0.9
+  bluffNervousHeadBaseRotation: {x: -1.5, y: 1.5, z: 0}
+  bluffNervousOffsetX: 0.002
+  bluffNervousOffsetY: -0.004
+  bluffNervousOffsetZ: 0.016
+  bluffNervousShakeSpeed: 10
+  bluffNervousShakeAmountX: 0.004
+  bluffNervousShakeAmountY: 0.005
+  bluffNervousRotNoiseSpeed: 7
+  bluffNervousRotNoiseZ: 1.4
+  bluffNervousHeadMoveLerpSpeed: 12
+  bluffNervousHeadRotLerpSpeed: 13
+  bluffNervousEyeBasePosition: {x: 0, y: 0, z: 0}
+  bluffNervousEyeBaseRotation: {x: -2, y: 0, z: 0}
+  bluffNervousEyeMoveAmountX: 0.018
+  bluffNervousEyeMoveAmountY: 0.014
+  bluffNervousEyeMoveSpeed: 16
+  bluffNervousEyeSpinSpeed: 8
+  bluffNervousEyeVerticalScale: 0.88
+  bluffNervousEyeHorizontalScale: 1.02
+  bluffNervousEyeLerpSpeed: 16
+  bluffNervousEyeYaw: 2
+  bluffNervousEyePitch: 1.2
+  unhingedHeadBaseRotation: {x: -3, y: 0, z: 0}
+  unhingedOffsetX: 0.003
+  unhingedOffsetY: -0.002
+  unhingedOffsetZ: 0.02
+  unhingedHeadMoveLerpSpeed: 11
+  unhingedHeadRotLerpSpeed: 13
+  unhingedPitchMultiplier: 0.9
+  unhingedYawMultiplier: 0.9
+  unhingedRollMultiplier: 0.12
+  unhingedNoiseSpeed: 2.4
+  unhingedNoiseAmountX: 0.002
+  unhingedNoiseAmountY: 0.003
+  unhingedNoiseRotZ: 1.2
+  unhingedKnifeLookIntervalMin: 30
+  unhingedKnifeLookIntervalMax: 60
+  unhingedKnifeLookDuration: 0.45
+  unhingedEyeBasePosition: {x: 0, y: 0, z: 0}
+  unhingedEyeBaseRotation: {x: -2, y: 0, z: 0}
+  unhingedEyeMoveAmountX: 0.012
+  unhingedEyeMoveAmountY: 0.008
+  unhingedEyeMoveSpeed: 6.5
+  unhingedEyeSpinSpeed: 3
+  unhingedEyeVerticalScale: 1
+  unhingedEyeHorizontalScale: 1.03
+  unhingedEyeLerpSpeed: 14
+  unhingedEyeYawMultiplier: 1.05
+  unhingedEyePitchMultiplier: 1.05
   eyeRotationLerpSpeed: 12
   eyePositionLerpSpeed: 12
 --- !u!4 &942106402581890228
