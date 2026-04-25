@@ -4365,7 +4365,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 122018831a92b5f49a92b2094a4062d0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 80.9
+      value: 69.74
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 122018831a92b5f49a92b2094a4062d0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -22222,8 +22222,8 @@ MonoBehaviour:
   unhingedNoiseAmountX: 0.002
   unhingedNoiseAmountY: 0.003
   unhingedNoiseRotZ: 1.2
-  unhingedKnifeLookIntervalMin: 30
-  unhingedKnifeLookIntervalMax: 60
+  unhingedKnifeLookIntervalMin: 10
+  unhingedKnifeLookIntervalMax: 20
   unhingedKnifeLookDuration: 0.45
   unhingedEyeBasePosition: {x: 0, y: 0, z: 0}
   unhingedEyeBaseRotation: {x: -2, y: 0, z: 0}
