@@ -54,7 +54,8 @@ namespace Poker
         [SerializeField] private float rightScaleFrom = 0.94f;
         [SerializeField] private float rightScaleTo = 1.04f;
 
-        private PokerGame game;
+        [Header("Refs")]
+        [SerializeField] private PokerGame game;
 
         private int lastPot = -1;
         private string lastStateLabel = string.Empty;
@@ -79,7 +80,8 @@ namespace Poker
 
         private void Awake()
         {
-            game = FindFirstObjectByType<PokerGame>();
+            if (game == null)
+                game = FindFirstObjectByType<PokerGame>();
 
             if (potText != null)
             {

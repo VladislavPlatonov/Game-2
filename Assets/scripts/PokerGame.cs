@@ -15,6 +15,7 @@ namespace Poker
 
         [Header("Refs")]
         [SerializeField] private BasicPokerAI ai;
+        [SerializeField] private NPCHybridBrainController hybridBrain;
 
         public event Action OnCardsChanged;
         public event Action OnGameStateChanged;
@@ -51,6 +52,11 @@ namespace Poker
 
             if (ai == null)
                 ai = FindFirstObjectByType<BasicPokerAI>();
+
+            if (hybridBrain == null)
+                hybridBrain = FindFirstObjectByType<NPCHybridBrainController>();
+
+            
         }
 
         private void Start()
@@ -110,6 +116,8 @@ namespace Poker
 
         public void PlayerCheck()
         {
+            
+
             if (!CanPlayerAct()) return;
             if (GetToCallForPlayer() != 0) return;
 
@@ -123,6 +131,8 @@ namespace Poker
 
         public void PlayerCall()
         {
+            
+
             if (!CanPlayerAct()) return;
 
             int toCall = GetToCallForPlayer();
@@ -145,6 +155,8 @@ namespace Poker
 
         public void PlayerRaise(int amount)
         {
+            
+
             if (!CanPlayerAct()) return;
 
             int toCall = GetToCallForPlayer();
@@ -285,15 +297,52 @@ namespace Poker
 
         private IEnumerator AITurnThenAdvance()
         {
+            
+
             yield return new WaitForSecondsRealtime(aiThinkDelay);
 
-            if (!handInProgress) yield break;
-            if (playerFolded || aiFolded) yield break;
+            
+
+            if (!handInProgress)
+            {
+                Debug.LogWarning("[PokerGame] AI остановлен: handInProgress == false");
+                yield break;
+            }
+
+            if (playerFolded || aiFolded)
+            {
+                Debug.LogWarning("[PokerGame] AI остановлен: кто-то уже сбросил");
+                yield break;
+            }
 
             int toCall = GetToCallForAI();
             int aiHp = GetAIHP();
 
-            var decision = ai != null ? ai.Decide(toCall, aiHp) : PlayerActionType.Call;
+            
+
+            NPCHybridBrainResult brainResult;
+
+            if (hybridBrain != null)
+            {
+                
+                brainResult = hybridBrain.Decide(toCall, aiHp, bigBlind);
+            }
+            else
+            {
+                
+
+                brainResult = new NPCHybridBrainResult
+                {
+                    action = ai != null ? ai.Decide(toCall, aiHp) : PlayerActionType.Call,
+                    raiseTo = 0,
+                    emotion = EnemyHeadCalmController.EmotionState.Calm,
+                    dialogueIntent = NPCDialogueIntent.None,
+                    confidence = 1f,
+                    dialogueChance = 0f
+                };
+            }
+
+            var decision = brainResult.action;
 
             if (decision == PlayerActionType.Fold && toCall > 0)
             {
@@ -317,7 +366,9 @@ namespace Poker
             }
             else if (decision == PlayerActionType.Raise)
             {
-                int raiseTo = ai.GetRaiseAmount(toCall, aiHp, bigBlind);
+                int raiseTo = brainResult.raiseTo > 0
+                    ? brainResult.raiseTo
+                    : ai.GetRaiseAmount(toCall, aiHp, bigBlind);
 
                 int paid = 0;
 

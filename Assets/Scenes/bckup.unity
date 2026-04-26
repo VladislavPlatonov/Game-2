@@ -10387,6 +10387,7 @@ MonoBehaviour:
   aiThinkDelay: 1.5
   nextHandDelay: 1.2
   ai: {fileID: 852245517}
+  hybridBrain: {fileID: 1874587413}
 --- !u!4 &1065298763
 Transform:
   m_ObjectHideFlags: 0
@@ -18303,6 +18304,89 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1833767309}
   m_CullTransparentMesh: 1
+--- !u!1 &1874587409
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1874587410}
+  - component: {fileID: 1874587413}
+  - component: {fileID: 1874587412}
+  - component: {fileID: 1874587411}
+  m_Layer: 0
+  m_Name: NPC Hybrid Brain
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1874587410
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874587409}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2283.3596, y: 4.60925, z: -676.04156}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1874587411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874587409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8ef270ed3e46e42aa43924e95c08c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Poker.NPCDialogueController
+  dialoguePanel: {fileID: 0}
+  dialogueText: {fileID: 0}
+  showDuration: 2.5
+--- !u!114 &1874587412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874587409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db1fc25fdab3a594ab91f353ef64435d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Poker.NPCEmotionBridge
+  headController: {fileID: 919132148488708840}
+  handController: {fileID: 2141392120}
+  minEmotionDuration: 1.5
+--- !u!114 &1874587413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874587409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59bedf191a536ce4a8872feb37e63723, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Poker.NPCHybridBrainController
+  game: {fileID: 1065298762}
+  emotionBridge: {fileID: 1874587412}
+  dialogueController: {fileID: 1874587411}
+  aggression: 0.35
+  bluffChance: 0.25
+  weirdness: 0.08
+  debugLogBrain: 1
 --- !u!1 &1875473414
 GameObject:
   m_ObjectHideFlags: 0
@@ -22053,7 +22137,7 @@ MonoBehaviour:
   focusCardsTarget: {fileID: 1344280796}
   greedyPlayerTarget: {fileID: 603280698}
   unhingedKnifeTarget: {fileID: 920501101}
-  currentState: 9
+  currentState: 0
   stateBlendSpeed: 3
   calmMoveAmountY: 0.2
   calmMoveAmountX: 0.006
@@ -28428,3 +28512,4 @@ SceneRoots:
   - {fileID: 125519246}
   - {fileID: 2120890717}
   - {fileID: 1100154964}
+  - {fileID: 1874587410}
