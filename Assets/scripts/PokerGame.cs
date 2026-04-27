@@ -13,6 +13,9 @@ namespace Poker
         [SerializeField] private float aiThinkDelay = 1.0f;
         [SerializeField] private float nextHandDelay = 1.2f;
 
+        [Header("New Game")]
+        [SerializeField] private bool resetSoulsOnFreshStart = true;
+
         [Header("Refs")]
         [SerializeField] private BasicPokerAI ai;
         [SerializeField] private NPCHybridBrainController hybridBrain;
@@ -20,7 +23,6 @@ namespace Poker
         public event Action OnCardsChanged;
         public event Action OnGameStateChanged;
         public event Action OnPotUpdated;
-
         public event Action<string> OnActionLog;
         public event Action<bool> OnTurnChanged;
 
@@ -43,6 +45,7 @@ namespace Poker
         private bool playerIsDealer = true;
 
         private GameState state = GameState.None;
+        private string gameOverMessage = "";
 
         private PokerUnifiedSaveData pendingLoadedSave;
 
@@ -55,8 +58,6 @@ namespace Poker
 
             if (hybridBrain == null)
                 hybridBrain = FindFirstObjectByType<NPCHybridBrainController>();
-
-            
         }
 
         private void Start()
@@ -68,6 +69,9 @@ namespace Poker
                 return;
             }
 
+            if (resetSoulsOnFreshStart && SoulManager.Instance != null)
+                SoulManager.Instance.NewGameReset();
+
             StartNewHand();
         }
 
@@ -76,17 +80,12 @@ namespace Poker
             pendingLoadedSave = data;
         }
 
-        // =========================
-        // PUBLIC API
-        // =========================
-
         public IReadOnlyList<Card> GetPlayerHand() => playerHand;
         public IReadOnlyList<Card> GetAIHand() => aiHand;
         public IReadOnlyList<Card> GetCommunityCards() => community;
 
         public GameState GetCurrentState() => state;
         public int GetCurrentPot() => pot;
-
         public int GetCurrentBet() => currentBet;
         public int GetPlayerBetThisRound() => playerBetThisRound;
         public int GetAIBetThisRound() => aiBetThisRound;
@@ -96,6 +95,11 @@ namespace Poker
         public int GetPlayerHP() => SoulManager.Instance != null ? SoulManager.Instance.GetPlayerSouls() : 0;
         public int GetAIHP() => SoulManager.Instance != null ? SoulManager.Instance.GetAISouls() : 0;
         public bool GetPlayerIsDealer() => playerIsDealer;
+
+        public string GetGameOverMessage()
+        {
+            return gameOverMessage;
+        }
 
         // =========================
         // PLAYER ACTIONS
@@ -116,8 +120,6 @@ namespace Poker
 
         public void PlayerCheck()
         {
-            
-
             if (!CanPlayerAct()) return;
             if (GetToCallForPlayer() != 0) return;
 
@@ -131,11 +133,10 @@ namespace Poker
 
         public void PlayerCall()
         {
-            
-
             if (!CanPlayerAct()) return;
 
             int toCall = GetToCallForPlayer();
+
             if (toCall <= 0)
             {
                 PlayerCheck();
@@ -150,13 +151,13 @@ namespace Poker
             LogAction($"Игрок: колл {paid} HP");
 
             OnPotUpdated?.Invoke();
+            OnGameStateChanged?.Invoke();
+
             StartCoroutine(AITurnThenAdvance());
         }
 
         public void PlayerRaise(int amount)
         {
-            
-
             if (!CanPlayerAct()) return;
 
             int toCall = GetToCallForPlayer();
@@ -171,6 +172,7 @@ namespace Poker
                 paidTotal += PayPlayer(toCall);
 
             int extraNeeded = amount - playerBetThisRound;
+
             if (extraNeeded > 0)
                 paidTotal += PayPlayer(extraNeeded);
 
@@ -222,9 +224,7 @@ namespace Poker
 
             if (GetPlayerHP() <= 0 || GetAIHP() <= 0)
             {
-                state = GameState.GameOver;
-                OnGameStateChanged?.Invoke();
-                LogAction("Игра окончена");
+                CheckGameOverByHP();
                 return;
             }
 
@@ -245,6 +245,9 @@ namespace Poker
             aiFolded = false;
 
             handInProgress = true;
+            waitingForPlayer = false;
+            gameOverMessage = "";
+
             state = GameState.Preflop;
 
             playerHand.Add(deck.Draw());
@@ -260,9 +263,18 @@ namespace Poker
                 LogAction(playerIsDealer
                     ? $"Игрок: малый блайнд {smallBlind} HP"
                     : $"Противник: малый блайнд {smallBlind} HP");
+
                 LogAction(playerIsDealer
                     ? $"Противник: большой блайнд {bigBlind} HP"
                     : $"Игрок: большой блайнд {bigBlind} HP");
+
+                OnPotUpdated?.Invoke();
+
+                if (GetPlayerHP() <= 0 || GetAIHP() <= 0)
+                {
+                    ResolveShowdown();
+                    return;
+                }
             }
             else
             {
@@ -297,40 +309,22 @@ namespace Poker
 
         private IEnumerator AITurnThenAdvance()
         {
-            
-
             yield return new WaitForSecondsRealtime(aiThinkDelay);
 
-            
-
-            if (!handInProgress)
-            {
-                Debug.LogWarning("[PokerGame] AI остановлен: handInProgress == false");
-                yield break;
-            }
-
-            if (playerFolded || aiFolded)
-            {
-                Debug.LogWarning("[PokerGame] AI остановлен: кто-то уже сбросил");
-                yield break;
-            }
+            if (!handInProgress) yield break;
+            if (playerFolded || aiFolded) yield break;
 
             int toCall = GetToCallForAI();
             int aiHp = GetAIHP();
-
-            
 
             NPCHybridBrainResult brainResult;
 
             if (hybridBrain != null)
             {
-                
                 brainResult = hybridBrain.Decide(toCall, aiHp, bigBlind);
             }
             else
             {
-                
-
                 brainResult = new NPCHybridBrainResult
                 {
                     action = ai != null ? ai.Decide(toCall, aiHp) : PlayerActionType.Call,
@@ -342,7 +336,7 @@ namespace Poker
                 };
             }
 
-            var decision = brainResult.action;
+            PlayerActionType decision = brainResult.action;
 
             if (decision == PlayerActionType.Fold && toCall > 0)
             {
@@ -359,16 +353,20 @@ namespace Poker
             else if (decision == PlayerActionType.Call || (decision == PlayerActionType.Check && toCall > 0))
             {
                 int paid = 0;
+
                 if (toCall > 0)
                     paid = PayAI(toCall);
 
                 LogAction(paid > 0 ? $"Противник: колл {paid} HP" : "Противник: чек");
+
+                OnPotUpdated?.Invoke();
+                OnGameStateChanged?.Invoke();
             }
             else if (decision == PlayerActionType.Raise)
             {
                 int raiseTo = brainResult.raiseTo > 0
                     ? brainResult.raiseTo
-                    : ai.GetRaiseAmount(toCall, aiHp, bigBlind);
+                    : GetFallbackRaiseAmount(toCall, aiHp);
 
                 int paid = 0;
 
@@ -376,20 +374,23 @@ namespace Poker
                     paid += PayAI(toCall);
 
                 int extra = raiseTo - aiBetThisRound;
+
                 if (extra > 0)
                     paid += PayAI(extra);
 
                 currentBet = Mathf.Max(currentBet, aiBetThisRound);
 
-                waitingForPlayer = true;
-
                 LogAction($"Противник: повысил до {currentBet} HP");
-                LogPlayerResponseHint();
 
                 OnPotUpdated?.Invoke();
                 OnCardsChanged?.Invoke();
                 OnGameStateChanged?.Invoke();
+
+                waitingForPlayer = true;
+
+                LogPlayerResponseHint();
                 OnTurnChanged?.Invoke(true);
+
                 yield break;
             }
 
@@ -407,6 +408,12 @@ namespace Poker
                 return;
             }
 
+            if (GetPlayerHP() <= 0 || GetAIHP() <= 0)
+            {
+                ResolveShowdown();
+                return;
+            }
+
             playerBetThisRound = 0;
             aiBetThisRound = 0;
             currentBet = 0;
@@ -416,6 +423,7 @@ namespace Poker
                 community.Add(deck.Draw());
                 community.Add(deck.Draw());
                 community.Add(deck.Draw());
+
                 state = GameState.Flop;
                 waitingForPlayer = true;
 
@@ -426,6 +434,7 @@ namespace Poker
             else if (state == GameState.Flop)
             {
                 community.Add(deck.Draw());
+
                 state = GameState.Turn;
                 waitingForPlayer = true;
 
@@ -436,6 +445,7 @@ namespace Poker
             else if (state == GameState.Turn)
             {
                 community.Add(deck.Draw());
+
                 state = GameState.River;
                 waitingForPlayer = true;
 
@@ -484,19 +494,25 @@ namespace Poker
             OnCardsChanged?.Invoke();
             OnTurnChanged?.Invoke(false);
 
+            if (CheckGameOverByHP())
+                return;
+
             StartCoroutine(NextHandAfterDelay());
         }
 
         private void ResolveShowdown()
         {
-            var player7 = new List<Card>(playerHand);
+            while (community.Count < 5)
+                community.Add(deck.Draw());
+
+            List<Card> player7 = new List<Card>(playerHand);
             player7.AddRange(community);
 
-            var ai7 = new List<Card>(aiHand);
+            List<Card> ai7 = new List<Card>(aiHand);
             ai7.AddRange(community);
 
-            var pVal = HandEvaluator.Evaluate7(player7);
-            var aVal = HandEvaluator.Evaluate7(ai7);
+            HandValue pVal = HandEvaluator.Evaluate7(player7);
+            HandValue aVal = HandEvaluator.Evaluate7(ai7);
 
             int cmp = pVal.CompareTo(aVal);
 
@@ -514,8 +530,10 @@ namespace Poker
             {
                 int p = pot / 2;
                 int a = pot - p;
+
                 SoulManager.Instance.AwardPot(p, true);
                 SoulManager.Instance.AwardPot(a, false);
+
                 LogAction("Ничья — банк поделен");
             }
 
@@ -528,6 +546,9 @@ namespace Poker
             OnCardsChanged?.Invoke();
             OnTurnChanged?.Invoke(false);
 
+            if (CheckGameOverByHP())
+                return;
+
             StartCoroutine(NextHandAfterDelay());
         }
 
@@ -539,7 +560,51 @@ namespace Poker
             OnPotUpdated?.Invoke();
 
             playerIsDealer = !playerIsDealer;
+
             StartNewHand();
+        }
+
+        // =========================
+        // GAME OVER
+        // =========================
+
+        private bool CheckGameOverByHP()
+        {
+            if (SoulManager.Instance == null)
+                return false;
+
+            if (GetPlayerHP() > 0 && GetAIHP() > 0)
+                return false;
+
+            handInProgress = false;
+            waitingForPlayer = false;
+            playerFolded = false;
+            aiFolded = false;
+
+            state = GameState.GameOver;
+
+            if (GetPlayerHP() <= 0 && GetAIHP() <= 0)
+            {
+                gameOverMessage = "НИЧЬЯ";
+                LogAction("Игра окончена: ничья");
+            }
+            else if (GetPlayerHP() <= 0)
+            {
+                gameOverMessage = "ВЫ ПРОИГРАЛИ";
+                LogAction("Игра окончена: вы проиграли");
+            }
+            else
+            {
+                gameOverMessage = "ВЫ ПОБЕДИЛИ";
+                LogAction("Игра окончена: вы победили");
+            }
+
+            OnPotUpdated?.Invoke();
+            OnCardsChanged?.Invoke();
+            OnGameStateChanged?.Invoke();
+            OnTurnChanged?.Invoke(false);
+
+            return true;
         }
 
         // =========================
@@ -552,11 +617,19 @@ namespace Poker
             if (!waitingForPlayer) return false;
             if (state == GameState.Showdown || state == GameState.HandOver || state == GameState.GameOver) return false;
             if (playerFolded || aiFolded) return false;
+
             return true;
         }
 
-        private int GetToCallForPlayer() => Mathf.Max(0, currentBet - playerBetThisRound);
-        private int GetToCallForAI() => Mathf.Max(0, currentBet - aiBetThisRound);
+        private int GetToCallForPlayer()
+        {
+            return Mathf.Max(0, currentBet - playerBetThisRound);
+        }
+
+        private int GetToCallForAI()
+        {
+            return Mathf.Max(0, currentBet - aiBetThisRound);
+        }
 
         private int PayPlayer(int amount)
         {
@@ -572,6 +645,20 @@ namespace Poker
             aiBetThisRound += paid;
             pot += paid;
             return paid;
+        }
+
+        private int GetFallbackRaiseAmount(int toCall, int aiHp)
+        {
+            if (ai != null)
+                return ai.GetRaiseAmount(toCall, aiHp, bigBlind);
+
+            int min = Mathf.Min(aiHp, toCall + bigBlind);
+            int max = aiHp;
+
+            if (min >= max)
+                return aiHp;
+
+            return Mathf.Clamp(min + bigBlind, min, max);
         }
 
         private void LogAction(string text)
@@ -633,8 +720,10 @@ namespace Poker
             playerFolded = false;
             aiFolded = false;
 
+            gameOverMessage = "";
             handInProgress = true;
             waitingForPlayer = true;
+
             state = GameState.Preflop;
 
             OnCardsChanged?.Invoke();
@@ -645,6 +734,5 @@ namespace Poker
             LogAction("Сейв загружен");
             LogPlayerResponseHint();
         }
-
     }
 }

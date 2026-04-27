@@ -10386,6 +10386,7 @@ MonoBehaviour:
   bigBlind: 4
   aiThinkDelay: 1.5
   nextHandDelay: 1.2
+  resetSoulsOnFreshStart: 1
   ai: {fileID: 852245517}
   hybridBrain: {fileID: 1874587413}
 --- !u!4 &1065298763
@@ -19090,6 +19091,7 @@ MonoBehaviour:
   rightFadeDuration: 0.5
   rightScaleFrom: 0.94
   rightScaleTo: 1.04
+  game: {fileID: 0}
 --- !u!1001 &1924640310
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19328,6 +19330,7 @@ MonoBehaviour:
   rightFadeDuration: 0.08
   rightScaleFrom: 0.94
   rightScaleTo: 1.04
+  game: {fileID: 0}
 --- !u!1 &1945947068
 GameObject:
   m_ObjectHideFlags: 0

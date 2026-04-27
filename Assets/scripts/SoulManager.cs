@@ -10,7 +10,7 @@ namespace Poker
         [SerializeField] private int startingPlayerSouls = 100;
         [SerializeField] private int startingAISouls = 100;
 
-        [Header("Debug")]
+        [Header("Scene Lifetime")]
         [SerializeField] private bool dontDestroyOnLoad = true;
 
         private int playerSouls;
@@ -18,10 +18,6 @@ namespace Poker
 
         public System.Action<int> OnPlayerSoulsChanged;
         public System.Action<int> OnAISoulsChanged;
-
-        // --------------------------------------------------
-        // INIT
-        // --------------------------------------------------
 
         private void Awake()
         {
@@ -39,10 +35,6 @@ namespace Poker
             ResetSouls();
         }
 
-        // --------------------------------------------------
-        // GETTERS
-        // --------------------------------------------------
-
         public int GetPlayerSouls()
         {
             return playerSouls;
@@ -53,16 +45,17 @@ namespace Poker
             return aiSouls;
         }
 
-        // --------------------------------------------------
-        // CORE METHODS
-        // --------------------------------------------------
-
         public void ResetSouls()
         {
-            playerSouls = startingPlayerSouls;
-            aiSouls = startingAISouls;
+            playerSouls = Mathf.Max(0, startingPlayerSouls);
+            aiSouls = Mathf.Max(0, startingAISouls);
 
             Notify();
+        }
+
+        public void NewGameReset()
+        {
+            ResetSouls();
         }
 
         public void SetSouls(int player, int ai)
@@ -109,19 +102,15 @@ namespace Poker
         {
             if (playerWinner)
             {
-                playerSouls += pot;
+                playerSouls = Mathf.Max(0, playerSouls + pot);
                 OnPlayerSoulsChanged?.Invoke(playerSouls);
             }
             else
             {
-                aiSouls += pot;
+                aiSouls = Mathf.Max(0, aiSouls + pot);
                 OnAISoulsChanged?.Invoke(aiSouls);
             }
         }
-
-        // --------------------------------------------------
-        // SAVE / LOAD SUPPORT
-        // --------------------------------------------------
 
         public SaveData GetSaveData()
         {
@@ -139,7 +128,6 @@ namespace Poker
             SetSouls(data.playerSouls, data.aiSouls);
         }
 
-        // дополнительные методы для простого сейва
         public void SetPlayerSouls(int value)
         {
             playerSouls = Mathf.Max(0, value);
@@ -151,11 +139,6 @@ namespace Poker
             aiSouls = Mathf.Max(0, value);
             OnAISoulsChanged?.Invoke(aiSouls);
         }
-
-
-        // --------------------------------------------------
-        // INTERNAL
-        // --------------------------------------------------
 
         private void Notify()
         {

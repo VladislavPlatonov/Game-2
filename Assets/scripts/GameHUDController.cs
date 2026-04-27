@@ -420,7 +420,7 @@ namespace Poker
                 GameState.River => "ÐÈÂÅÐ",
                 GameState.Showdown => "ØÎÓÄÀÓÍ",
                 GameState.HandOver => "ÐÀÇÄÀ×À ÇÀÂÅÐØÅÍÀ",
-                GameState.GameOver => "ÊÎÍÅÖ ÈÃÐÛ",
+                GameState.GameOver => game != null ? game.GetGameOverMessage() : "ÊÎÍÅÖ ÈÃÐÛ",
                 _ => ""
             };
         }
