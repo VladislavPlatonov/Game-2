@@ -8677,6 +8677,52 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5bc1dd11c6f2254390d709ebc8d40b5, type: 3}
+--- !u!1 &834111248
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 834111250}
+  - component: {fileID: 834111249}
+  m_Layer: 0
+  m_Name: NPC ONNX Runner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &834111249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 834111248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 873ebed93fcb15348ad02225d740291c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCHybridONNXRunner
+  modelAsset: {fileID: 5022602860645237092, guid: 0b038c2e6b95e894bb3c64ce47a4dd3e, type: 3}
+  backendType: 512
+--- !u!4 &834111250
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 834111248}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2283.3596, y: 4.60925, z: -676.04156}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &839350452
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18384,6 +18430,8 @@ MonoBehaviour:
   game: {fileID: 1065298762}
   emotionBridge: {fileID: 1874587412}
   dialogueController: {fileID: 1874587411}
+  useONNX: 1
+  onnxRunner: {fileID: 834111249}
   aggression: 0.35
   bluffChance: 0.25
   weirdness: 0.08
@@ -28516,3 +28564,4 @@ SceneRoots:
   - {fileID: 2120890717}
   - {fileID: 1100154964}
   - {fileID: 1874587410}
+  - {fileID: 834111250}

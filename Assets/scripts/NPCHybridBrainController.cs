@@ -10,6 +10,10 @@ namespace Poker
         [SerializeField] private NPCEmotionBridge emotionBridge;
         [SerializeField] private NPCDialogueController dialogueController;
 
+        [Header("Neural Network")]
+        [SerializeField] private bool useONNX = true;
+        [SerializeField] private NPCHybridONNXRunner onnxRunner;
+
         [Header("AI Personality")]
         [Range(0f, 1f)][SerializeField] private float aggression = 0.35f;
         [Range(0f, 1f)][SerializeField] private float bluffChance = 0.25f;
@@ -28,6 +32,9 @@ namespace Poker
 
             if (dialogueController == null)
                 dialogueController = FindFirstObjectByType<NPCDialogueController>();
+
+            if (onnxRunner == null)
+                onnxRunner = FindFirstObjectByType<NPCHybridONNXRunner>();
         }
 
         private void Start()
@@ -41,7 +48,16 @@ namespace Poker
 
             NPCHybridBrainInput input = BuildInput(toCall, aiHp, bigBlind);
 
-            NPCHybridBrainResult result = PredictHybrid(input);
+            NPCHybridBrainResult result;
+
+            if (useONNX && onnxRunner != null)
+            {
+                result = onnxRunner.Predict(input);
+            }
+            else
+            {
+                result = PredictHybrid(input);
+            }
 
             result.action = ValidateAction(result.action, input);
 
