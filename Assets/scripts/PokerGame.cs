@@ -13,6 +13,9 @@ namespace Poker
         [SerializeField] private float aiThinkDelay = 1.0f;
         [SerializeField] private float nextHandDelay = 1.2f;
 
+        [Header("Game Over")]
+        [SerializeField] private int winHpTarget = 200;
+
         [Header("New Game")]
         [SerializeField] private bool resetSoulsOnFreshStart = true;
 
@@ -222,11 +225,8 @@ namespace Poker
                 return;
             }
 
-            if (GetPlayerHP() <= 0 || GetAIHP() <= 0)
-            {
-                CheckGameOverByHP();
+            if (CheckGameOverByHP())
                 return;
-            }
 
             StopAllCoroutines();
 
@@ -269,12 +269,6 @@ namespace Poker
                     : $"Игрок: большой блайнд {bigBlind} HP");
 
                 OnPotUpdated?.Invoke();
-
-                if (GetPlayerHP() <= 0 || GetAIHP() <= 0)
-                {
-                    ResolveShowdown();
-                    return;
-                }
             }
             else
             {
@@ -405,12 +399,6 @@ namespace Poker
                 OnTurnChanged?.Invoke(true);
                 LogPlayerResponseHint();
                 OnGameStateChanged?.Invoke();
-                return;
-            }
-
-            if (GetPlayerHP() <= 0 || GetAIHP() <= 0)
-            {
-                ResolveShowdown();
                 return;
             }
 
@@ -567,14 +555,21 @@ namespace Poker
         // =========================
         // GAME OVER
         // =========================
+       
+
 
         private bool CheckGameOverByHP()
         {
             if (SoulManager.Instance == null)
                 return false;
 
-            if (GetPlayerHP() > 0 && GetAIHP() > 0)
+            bool playerWon = GetPlayerHP() >= winHpTarget;
+            bool aiWon = GetAIHP() >= winHpTarget;
+
+            if (!playerWon && !aiWon)
                 return false;
+
+            StopAllCoroutines();
 
             handInProgress = false;
             waitingForPlayer = false;
@@ -583,27 +578,27 @@ namespace Poker
 
             state = GameState.GameOver;
 
-            if (GetPlayerHP() <= 0 && GetAIHP() <= 0)
+            if (playerWon && aiWon)
             {
                 gameOverMessage = "НИЧЬЯ";
                 LogAction("Игра окончена: ничья");
             }
-            else if (GetPlayerHP() <= 0)
+            else if (playerWon)
             {
-                gameOverMessage = "ВЫ ПРОИГРАЛИ";
-                LogAction("Игра окончена: вы проиграли");
+                gameOverMessage = "ВЫ ВЫИГРАЛИ";
+                LogAction("Игра окончена: вы выиграли");
             }
             else
             {
-                gameOverMessage = "ВЫ ПОБЕДИЛИ";
-                LogAction("Игра окончена: вы победили");
+                gameOverMessage = "ВЫ ПРОИГРАЛИ";
+                LogAction("Игра окончена: вы проиграли");
             }
 
             OnPotUpdated?.Invoke();
             OnCardsChanged?.Invoke();
             OnGameStateChanged?.Invoke();
             OnTurnChanged?.Invoke(false);
-
+            
             return true;
         }
 
@@ -733,6 +728,8 @@ namespace Poker
 
             LogAction("Сейв загружен");
             LogPlayerResponseHint();
+
+            CheckGameOverByHP();
         }
     }
 }
