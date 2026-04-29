@@ -7,7 +7,7 @@
       "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\m\\pokergameoverui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|c:\\users\\kolanus\\desktop\\game 2\\game 2\\assets\\scripts\\pokergame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\assets\\scripts\\pokergame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{575DF0BD-09F2-7250-E878-9D0927FC924D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\pokergame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -271,9 +271,22 @@
               "RelativeDocumentMoniker": "Assets\\scripts\\m\\PokerGameOverUI.cs",
               "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\m\\PokerGameOverUI.cs",
               "RelativeToolTip": "Assets\\scripts\\m\\PokerGameOverUI.cs",
-              "ViewState": "AgIAAGkAAAAAAAAAAAAmwHgAAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAALoAAAAAAAAAAAAmwNgAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-29T03:25:57.093Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PokerGame.cs",
+              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\PokerGame.cs",
+              "RelativeDocumentMoniker": "Assets\\scripts\\PokerGame.cs",
+              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\PokerGame.cs",
+              "RelativeToolTip": "Assets\\scripts\\PokerGame.cs",
+              "ViewState": "AgIAAEUCAAAAAAAAAAAmwFgCAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-28T07:12:07.116Z",
               "EditorCaption": ""
             },
             {
@@ -334,21 +347,7 @@
               "RelativeToolTip": "Assets\\scripts\\SoulManager.cs",
               "ViewState": "AgIAAHQAAAAAAAAAAAAqwI4AAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-28T07:11:25.735Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "PokerGame.cs",
-              "DocumentMoniker": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\PokerGame.cs",
-              "RelativeDocumentMoniker": "Assets\\scripts\\PokerGame.cs",
-              "ToolTip": "C:\\Users\\kolAnus\\Desktop\\Game 2\\Game 2\\Assets\\scripts\\PokerGame.cs",
-              "RelativeToolTip": "Assets\\scripts\\PokerGame.cs",
-              "ViewState": "AgIAAEUCAAAAAAAAAAAmwFgCAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-28T07:12:07.116Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-28T07:11:25.735Z"
             },
             {
               "$type": "Document",
@@ -504,8 +503,7 @@
               "RelativeToolTip": "Library\\PackageCache\\com.unity.ugui@a73b706e285a\\Runtime\\TMP\\TextMeshPro.cs",
               "ViewState": "AgIAADUIAAAAAAAAAAAtwEcIAABwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-14T06:56:26.545Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-14T06:56:26.545Z"
             },
             {
               "$type": "Document",
@@ -517,8 +515,7 @@
               "RelativeToolTip": "Library\\PackageCache\\com.unity.ugui@a73b706e285a\\Runtime\\TMP\\TextMeshProUGUI.cs",
               "ViewState": "AgIAAJ8JAAAAAAAAAAAtwLEJAAB0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-14T07:03:58.745Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-14T07:03:58.745Z"
             },
             {
               "$type": "Document",
@@ -720,8 +717,7 @@
               "ToolTip": "D:\\Card Game\\Game 2\\Assets\\scripts\\UI\\SaveLoadUI.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAcwCAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-28T14:32:44.907Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-28T14:32:44.907Z"
             },
             {
               "$type": "Document",
@@ -731,8 +727,7 @@
               "ToolTip": "D:\\Card Game\\Game 2\\Assets\\scripts\\UI\\SaveSystem.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-28T14:32:06.051Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-28T14:32:06.051Z"
             },
             {
               "$type": "Document",
@@ -742,8 +737,7 @@
               "ToolTip": "D:\\Card Game\\Game 2\\Assets\\scripts\\UI\\SettingsMenu.cs",
               "ViewState": "AgIAAEMAAAAAAAAAAAAgwFwAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-28T14:33:13.343Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-28T14:33:13.343Z"
             },
             {
               "$type": "Document",
@@ -827,8 +821,7 @@
               "RelativeToolTip": "Assets\\Render\\RetroPixelFeature.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAG0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-24T04:06:29.54Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-24T04:06:29.54Z"
             },
             {
               "$type": "Document",
@@ -862,8 +855,7 @@
               "ToolTip": "D:\\Card Game\\Game 2\\Assets\\scripts\\UI\\GameHUDController.cs",
               "ViewState": "AgIAAC0AAAAAAAAAAAAQwGsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-01T03:57:59.874Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-01T03:57:59.874Z"
             },
             {
               "$type": "Document",
@@ -923,8 +915,7 @@
               "RelativeToolTip": "Assets\\Render\\RetroPixelShader.shader",
               "ViewState": "AgIAAAoAAAAAAAAAAAAiwGUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002777|",
-              "WhenOpened": "2026-03-24T04:02:50.206Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-24T04:02:50.206Z"
             },
             {
               "$type": "Document",
@@ -934,8 +925,7 @@
               "ToolTip": "D:\\Card Game\\Game 2\\Assets\\scripts\\UI\\PauseMenuController.cs",
               "ViewState": "AgIAAJIAAAAAAAAAAADwv8wAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-28T14:31:23.081Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-28T14:31:23.081Z"
             },
             {
               "$type": "Document",

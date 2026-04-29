@@ -26,6 +26,12 @@ namespace Poker
         [SerializeField] private float loseShakeDuration = 0.45f;
         [SerializeField] private float loseShakeAmount = 18f;
 
+        [Header("Sounds")]
+        [SerializeField] private AudioSource audioSource;
+        [SerializeField] private AudioClip winSound;
+        [SerializeField] private AudioClip loseSound;
+        [SerializeField] private float soundVolume = 0.8f;
+
         private CanvasGroup canvasGroup;
 
         private Vector3 winBaseScale;
@@ -53,6 +59,9 @@ namespace Poker
 
             if (winText != null)
                 winBaseScale = winText.transform.localScale;
+
+            if (audioSource == null)
+                audioSource = GetComponent<AudioSource>();
 
             if (loseText != null)
             {
@@ -87,6 +96,7 @@ namespace Poker
 
             bool isWin = message.Contains("¬€ ¬€»√–¿À»");
             bool isLose = message.Contains("¬€ œ–Œ»√–¿À»");
+            PlayGameOverSound(isWin, isLose);
 
             if (winText != null)
                 winText.gameObject.SetActive(isWin);
@@ -186,6 +196,24 @@ namespace Poker
             float c3 = c1 + 1f;
 
             return 1f + c3 * Mathf.Pow(x - 1f, 3f) + c1 * Mathf.Pow(x - 1f, 2f);
+        }
+
+        private void PlayGameOverSound(bool isWin, bool isLose)
+        {
+            if (audioSource == null)
+                return;
+
+            AudioClip clip = null;
+
+            if (isWin)
+                clip = winSound;
+            else if (isLose)
+                clip = loseSound;
+
+            if (clip == null)
+                return;
+
+            audioSource.PlayOneShot(clip, soundVolume);
         }
     }
 }
