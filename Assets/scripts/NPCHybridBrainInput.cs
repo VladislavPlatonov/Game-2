@@ -30,5 +30,7 @@ namespace Poker
         public int aiHp;
         public int currentPot;
         public int bigBlind;
+
+        public float bluffFactor;
     }
 }

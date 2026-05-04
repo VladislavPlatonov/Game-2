@@ -1,43 +1,55 @@
 ﻿using UnityEngine;
-using Unity.InferenceEngine; // пакет для запуска нейросети
+using Unity.InferenceEngine; // библиотека для ONNX
 
 namespace Poker
 {
     public class NPCHybridONNXRunner : MonoBehaviour
     {
+        // ================================
+        // НАСТРОЙКИ В ИНСПЕКТОРЕ
+        // ================================
+
         [Header("Model")]
-        [SerializeField] private ModelAsset modelAsset; // сюда перетаскиваем .onnx
-        [SerializeField] private BackendType backendType = BackendType.CPU; // CPU или GPU
+        [SerializeField] private ModelAsset modelAsset;
+        [SerializeField] private BackendType backendType = BackendType.CPU;
 
-        private Worker worker; // исполнитель модели
-        private Model runtimeModel; // загруженная модель
+        // ================================
+        // ВНУТРЕННИЕ ПЕРЕМЕННЫЕ
+        // ================================
 
-        private const int FeatureCount = 18; // столько входных параметров
+        private Worker worker;
+        private Model runtimeModel;
+
+        // 🔥 ВАЖНО: теперь 6 (как в train_model.py)
+        private const int FeatureCount = 7;
+
+        // ================================
+        // ИНИЦИАЛИЗАЦИЯ
+        // ================================
 
         private void Awake()
         {
-            // Проверяем, что модель назначена
             if (modelAsset == null)
             {
-                Debug.LogError("[ONNX Runner] ModelAsset не назначен.");
+                Debug.LogError("[ONNX Runner] ❌ ModelAsset не назначен!");
                 return;
             }
 
-            // Загружаем модель из .onnx
             runtimeModel = ModelLoader.Load(modelAsset);
-
-            // Создаём worker (движок выполнения)
             worker = new Worker(runtimeModel, backendType);
 
-            Debug.Log("[ONNX Runner] Модель загружена.");
+            Debug.Log("[ONNX Runner] ✅ Модель загружена");
         }
+
+        // ================================
+        // ОСНОВНОЙ МЕТОД
+        // ================================
 
         public NPCHybridBrainResult Predict(NPCHybridBrainInput input)
         {
-            // Если модель не загрузилась — возвращаем fallback
             if (worker == null)
             {
-                Debug.LogWarning("[ONNX Runner] Worker не создан.");
+                Debug.LogWarning("[ONNX Runner] Worker не создан!");
 
                 return new NPCHybridBrainResult
                 {
@@ -47,68 +59,162 @@ namespace Poker
                 };
             }
 
-            // Превращаем входные данные в массив float
+            // ============================
+            // СОБИРАЕМ ФИЧИ
+            // ============================
+
             float[] features = BuildFeatures(input);
 
-            // Создаём тензор (формат для нейросети)
+            Debug.Log("FEATURE COUNT: " + features.Length);
+
+            // ============================
+            // СОЗДАЁМ TENSOR
+            // ============================
+
             using Tensor<float> inputTensor =
                 new Tensor<float>(new TensorShape(1, FeatureCount), features);
 
-            // Запускаем модель
+            // ============================
+            // ЗАПУСК МОДЕЛИ
+            // ============================
+
             worker.Schedule(inputTensor);
 
-            // Получаем выходы
-            Tensor<float> actionTensor = worker.PeekOutput("action_logits") as Tensor<float>;
+            // 🔥 берём именно эмоции из модели
             Tensor<float> emotionTensor = worker.PeekOutput("emotion_logits") as Tensor<float>;
-            Tensor<float> dialogueTensor = worker.PeekOutput("dialogue_logits") as Tensor<float>;
 
-            // Переводим в массивы
-            float[] action = actionTensor.DownloadToArray();
-            float[] emotion = emotionTensor.DownloadToArray();
-            float[] dialogue = dialogueTensor.DownloadToArray();
+            // читаем данные (обязательно!)
+            var readable = emotionTensor.ReadbackAndClone();
 
-            // Берём максимальные значения (самый вероятный класс)
-            int actionIndex = ArgMax(action);
-            int emotionIndex = ArgMax(emotion);
-            int dialogueIndex = ArgMax(dialogue);
+            // создаём массив
+            float[] output = new float[readable.shape.length];
+
+            // копируем значения
+            for (int i = 0; i < output.Length; i++)
+            {
+                output[i] = readable[i];
+            }
+
+            // DEBUG
+            Debug.Log("OUTPUT SIZE: " + output.Length);
+
+            // ============================
+            // DEBUG ВЫХОДА
+            // ============================
+
+            string debug = "MODEL OUTPUT: ";
+
+            for (int i = 0; i < output.Length; i++)
+            {
+                debug += $"[{i}:{output[i]:F2}] ";
+            }
+
+            Debug.Log(debug);
+
+            // ============================
+            // ВЫБОР ЭМОЦИИ
+            // ============================
+
+            int emotionIndex = SampleFromSoftmax(output);
+
+            // ======================================
+            // 🧠 КОРРЕКЦИЯ ЭМОЦИЙ (ЛОГИКА ПОВЕРХ ИИ)
+            // ======================================
+
+            // 🔹 Если рука сильная и риск низкий — НЕ может быть Nervous
+            if (input.aiHandStrength > 0.65f && input.riskLevel < 0.3f)
+            {
+                if (emotionIndex == (int)EnemyHeadCalmController.EmotionState.Nervous)
+                {
+                    emotionIndex = (int)EnemyHeadCalmController.EmotionState.Focus;
+                    Debug.Log("🛠 Nervous → Focus (сильная рука, низкий риск)");
+                }
+            }
+
+            // 🔹 Если рука слабая и риск высокий — НЕ может быть Calm
+            if (input.aiHandStrength < 0.35f && input.riskLevel > 0.7f)
+            {
+                if (emotionIndex == (int)EnemyHeadCalmController.EmotionState.Calm)
+                {
+                    emotionIndex = (int)EnemyHeadCalmController.EmotionState.Panic;
+                    Debug.Log("🛠 Calm → Panic (слабая рука, высокий риск)");
+                }
+            }
+
+            // 🔹 Если сильная рука — не должно быть Panic
+            if (input.aiHandStrength > 0.7f)
+            {
+                if (emotionIndex == (int)EnemyHeadCalmController.EmotionState.Panic)
+                {
+                    emotionIndex = (int)EnemyHeadCalmController.EmotionState.Greedy;
+                    Debug.Log("🛠 Panic → Greedy (сильная рука)");
+                }
+            }
+
+            // 🔹 Greedy нельзя при слабой руке
+            if (input.aiHandStrength < 0.6f)
+            {
+                if (emotionIndex == (int)EnemyHeadCalmController.EmotionState.Greedy)
+                {
+                    emotionIndex = (int)EnemyHeadCalmController.EmotionState.Suspicious;
+                    Debug.Log("🛠 Greedy → Suspicious (слабая рука)");
+                }
+            }
+
+            // 🔹 Если высокий bluff — усиливаем шанс блефа
+            if (input.bluffFactor > 0.7f && input.aiHandStrength < 0.5f)
+            {
+                if (UnityEngine.Random.value < 0.5f)
+                {
+                    emotionIndex = (int)EnemyHeadCalmController.EmotionState.BluffCalm;
+                    Debug.Log("🎭 Принудительный BluffCalm");
+                }
+            }
+
+            Debug.Log("🎯 Emotion index: " + emotionIndex);
+            Debug.Log("🧠 Emotion: " + ((EnemyHeadCalmController.EmotionState)emotionIndex));
+
+            // ============================
+            // РЕЗУЛЬТАТ
+            // ============================
 
             return new NPCHybridBrainResult
             {
-                action = (PlayerActionType)actionIndex,
+                action = PlayerActionType.Call,
+
                 emotion = (EnemyHeadCalmController.EmotionState)emotionIndex,
-                dialogueIntent = (NPCDialogueIntent)dialogueIndex,
-                confidence = SoftmaxConfidence(action, actionIndex),
-                dialogueChance = 0.35f
+
+                dialogueIntent = MapEmotionToDialogue(emotionIndex),
+
+                confidence = 0.8f,
+                dialogueChance = 0.5f
             };
         }
 
-        // Превращаем input → float[]
+        // ================================
+        // ФИЧИ (САМОЕ ВАЖНОЕ)
+        // ================================
+
         private float[] BuildFeatures(NPCHybridBrainInput i)
         {
+            // 🔥 ДОЛЖНО СОВПАДАТЬ С train_model.py
+
             return new float[]
             {
-                i.aiHandStrength,
-                i.riskLevel,
-                i.potPressure,
-                i.callPressure,
-                i.aiHpNormalized,
-                i.playerHpNormalized,
-                i.playerAggression,
-                i.playerSuspicion,
-                i.isPreflop,
-                i.isFlop,
-                i.isTurn,
-                i.isRiver,
-                i.canCheck,
-                i.canCall,
-                i.canRaise,
-                i.canFold,
-                i.knifeAvailable,
-                i.randomMood
+                i.aiHandStrength,       // 1
+                i.riskLevel,            // 2
+                i.potPressure,          // 3
+                i.playerAggression,     // 4
+                i.aiHpNormalized,       // 5 🔥
+                i.playerHpNormalized,    // 6 🔥
+                i.bluffFactor // 🔥 ОБЯЗАТЕЛЬНО
             };
         }
 
-        // Поиск максимального значения
+        // ================================
+        // ARGMAX
+        // ================================
+
         private int ArgMax(float[] values)
         {
             int index = 0;
@@ -126,26 +232,73 @@ namespace Poker
             return index;
         }
 
-        // Уверенность (softmax)
-        private float SoftmaxConfidence(float[] logits, int index)
+        private int SampleFromSoftmax(float[] logits)
         {
+            // 🔥 находим максимум (для стабильности)
             float max = logits[0];
-
             for (int i = 1; i < logits.Length; i++)
                 if (logits[i] > max)
                     max = logits[i];
 
+            // 🔥 считаем softmax
             float sum = 0f;
+            float[] probs = new float[logits.Length];
 
             for (int i = 0; i < logits.Length; i++)
-                sum += Mathf.Exp(logits[i] - max);
+            {
+                float temperature = 0.4f; // 🔥 ключ
+                probs[i] = Mathf.Exp((logits[i] - max) / temperature);
+                sum += probs[i];
+            }
 
-            return Mathf.Exp(logits[index] - max) / sum;
+            // нормализация
+            for (int i = 0; i < probs.Length; i++)
+                probs[i] /= sum;
+
+            // 🔥 случайный выбор
+            float r = UnityEngine.Random.value;
+            float cumulative = 0f;
+
+            for (int i = 0; i < probs.Length; i++)
+            {
+                cumulative += probs[i];
+                if (r <= cumulative)
+                    return i;
+            }
+
+            return probs.Length - 1;
+        }
+
+        // ================================
+        // ЭМОЦИЯ → ДИАЛОГ
+        // ================================
+
+        private NPCDialogueIntent MapEmotionToDialogue(int emotion)
+        {
+            switch (emotion)
+            {
+                case 1: return NPCDialogueIntent.NervousLie;
+                case 2: return NPCDialogueIntent.NervousLie;
+
+                case 3: return NPCDialogueIntent.CalmComment;
+
+                case 4: return NPCDialogueIntent.SuspiciousQuestion;
+
+                case 5: return NPCDialogueIntent.ConfidentTaunt;
+                case 6: return NPCDialogueIntent.AggressiveThreat;
+
+                case 7: return NPCDialogueIntent.CalmComment;
+                case 8: return NPCDialogueIntent.NervousLie;
+
+                case 9: return NPCDialogueIntent.KnifeRemark;
+
+                default: return NPCDialogueIntent.CalmComment;
+            }
         }
 
         private void OnDestroy()
         {
-            worker?.Dispose(); // освобождаем память
+            worker?.Dispose();
         }
     }
 }

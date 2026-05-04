@@ -8,6 +8,8 @@ namespace Poker
         ConfidentTaunt,
         SuspiciousQuestion,
         AggressiveThreat,
-        KnifeRemark
+        KnifeRemark,
+        BluffCalm,
+        BluffNervous
     }
 }
