@@ -55,6 +55,9 @@ namespace Poker
             if (emotionBridge != null)
                 emotionBridge.SetEmotion(result.emotion);
 
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.SetTensionState(MapEmotion(result.emotion));
+
             if (dialogueController != null)
                 dialogueController.TryShow(
                     result.dialogueIntent,
@@ -65,6 +68,43 @@ namespace Poker
             return result;
         }
 
+        private AudioManager.TensionState MapEmotion(EnemyHeadCalmController.EmotionState emotion)
+        {
+            switch (emotion)
+            {
+                case EnemyHeadCalmController.EmotionState.Calm:
+                    return AudioManager.TensionState.Calm;
+
+                case EnemyHeadCalmController.EmotionState.Nervous:
+                    return AudioManager.TensionState.Nervous;
+
+                case EnemyHeadCalmController.EmotionState.Panic:
+                    return AudioManager.TensionState.Panic;
+
+                case EnemyHeadCalmController.EmotionState.Focus:
+                    return AudioManager.TensionState.Focus;
+
+                case EnemyHeadCalmController.EmotionState.Suspicious:
+                    return AudioManager.TensionState.Suspicious;
+
+                case EnemyHeadCalmController.EmotionState.Greedy:
+                    return AudioManager.TensionState.Greedy;
+
+                case EnemyHeadCalmController.EmotionState.Aggressive:
+                    return AudioManager.TensionState.Aggressive;
+
+                case EnemyHeadCalmController.EmotionState.BluffCalm:
+                    return AudioManager.TensionState.BluffCalm;
+
+                case EnemyHeadCalmController.EmotionState.BluffNervous:
+                    return AudioManager.TensionState.BluffNervous;
+
+                case EnemyHeadCalmController.EmotionState.Unhinged:
+                    return AudioManager.TensionState.Unhinged;
+            }
+
+            return AudioManager.TensionState.Calm;
+        }
         private NPCHybridBrainResult GetFallback()
         {
             return new NPCHybridBrainResult

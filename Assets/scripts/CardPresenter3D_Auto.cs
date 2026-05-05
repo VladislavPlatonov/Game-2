@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Poker;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CardPresenter3DMesh_NoDuplicates : MonoBehaviour
@@ -106,6 +107,7 @@ public class CardPresenter3DMesh_NoDuplicates : MonoBehaviour
 
         var go = Instantiate(cardPrefab, spawnPos, spawnRot, transform);
         go.transform.localScale = cardBaseScale;
+
 
         var view = go.GetComponent<CardView3DMesh>();
         if (view == null)
@@ -369,6 +371,7 @@ public class CardPresenter3DMesh_NoDuplicates : MonoBehaviour
                     {
                         AttachToSlotKeepWorldScale(cardObj, targetSlot);
                     }
+                    AudioManager.Instance?.PlayCardDeal();
 
                     float punch = Mathf.Max(0f, landingPunchScale);
 
@@ -430,7 +433,7 @@ public class CardPresenter3DMesh_NoDuplicates : MonoBehaviour
                     cardObj.transform.position = endPos;
                     cardObj.transform.rotation = endRot;
                     cardObj.transform.localScale = cardBaseScale;
-
+                    AudioManager.Instance?.PlayCardDiscard();
                     if (hideAfter)
                         cardObj.SetActive(false);
                 });

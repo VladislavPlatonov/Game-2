@@ -672,7 +672,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3790350081860595674}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7466864649177793563}
+        m_TargetAssemblyTypeName: Poker.UIButtonSound, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5712808760644784081
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,7 +805,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5478069293517356096}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7466864649177793563}
+        m_TargetAssemblyTypeName: Poker.UIButtonSound, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7805669918611673863
 GameObject:
   m_ObjectHideFlags: 0
@@ -1017,6 +1041,7 @@ GameObject:
   - component: {fileID: 1856657760811264964}
   - component: {fileID: 8979878763748458939}
   - component: {fileID: 125973231055268941}
+  - component: {fileID: 7466864649177793563}
   m_Layer: 5
   m_Name: SaveSlotItem
   m_TagString: Untagged
@@ -1206,3 +1231,17 @@ MonoBehaviour:
   hoverButtonColor: {r: 0.22, g: 0.34, b: 0.6, a: 0.98}
   normalButtonTextColor: {r: 1, g: 1, b: 1, a: 1}
   hoverButtonTextColor: {r: 0.72, g: 0.9, b: 1, a: 1}
+--- !u!114 &7466864649177793563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8700389119335324631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c3673e2b808b274fbc2cf9e0560941a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Poker.UIButtonSound
+  clickSound: {fileID: 8300000, guid: 3057c511bb1193d47b3c19fd463bffae, type: 3}
+  hoverSound: {fileID: 8300000, guid: 8ab82ca3c70990f48b72c02f8c2486e4, type: 3}

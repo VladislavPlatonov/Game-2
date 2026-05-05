@@ -91,7 +91,8 @@ namespace Poker
 
         private void Show(string message)
         {
-            
+
+            AudioManager.Instance.StopAll();
             shown = true;
 
             bool isWin = message.Contains("ÂÛ ÂÛÈÃĞÀËÈ");

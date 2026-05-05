@@ -1,4 +1,4 @@
-using TMPro;
+Ôªøusing TMPro;
 using UnityEngine;
 using Poker;
 
@@ -97,9 +97,11 @@ public class AnimatedHpText : MonoBehaviour
 
     private void AnimateTo(int targetHp)
     {
+
         if (textMesh == null || animatedTarget == null) return;
 
         int oldHp = displayedHp;
+
 
         LeanTween.cancel(gameObject);
         LeanTween.cancel(animatedTarget.gameObject);
@@ -149,7 +151,7 @@ public class AnimatedHpText : MonoBehaviour
     {
         if (textMesh == null) return;
 
-        textMesh.text = $"’œ: {hp}";
+        textMesh.text = $"–•–ü: {hp}";
         textMesh.color = EvaluateColor(hp);
     }
 

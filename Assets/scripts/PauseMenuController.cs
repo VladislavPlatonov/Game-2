@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Poker;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -60,23 +61,24 @@ public class PauseMenuController : MonoBehaviour
         if (Time.unscaledTime < escBlockUntil)
             return;
 
-        if (!Input.GetKeyDown(KeyCode.Escape))
-            return;
-
-        if (!isPaused)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            OpenPauseMenu();
+            if (!isPaused)
+            {
+                OpenPauseMenu();
+            }
+            else
+            {
+                ResumeGame();
+            }
+
             return;
         }
-
-        if (IsAnySubPanelOpen())
-            BackToPauseRoot();
-        else
-            ResumeGame();
     }
 
     public void OpenPauseMenu()
     {
+        AudioManager.Instance?.PauseAll();
         if (isTransitioning) return;
 
         StartCoroutine(OpenPauseMenuRoutine());
@@ -84,6 +86,7 @@ public class PauseMenuController : MonoBehaviour
 
     public void ResumeGame()
     {
+        AudioManager.Instance?.ResumeAll();
         if (isTransitioning) return;
 
         StartCoroutine(ResumeGameRoutine());

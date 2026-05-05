@@ -25,6 +25,18 @@ namespace Poker
         [SerializeField] private float showDuration = 2.5f;
         [SerializeField] private float disappearDuration = 0.35f;
 
+        [Header("Typing Sound")]
+        [SerializeField] private AudioSource typingAudioSource;
+        [SerializeField] private AudioClip[] typingClips;
+
+        [SerializeField] private float typingVolume = 0.6f;
+        [SerializeField] private float pitchMin = 0.9f;
+        [SerializeField] private float pitchMax = 1.1f;
+
+        [SerializeField] private int playSoundEveryLetters = 1; // 1 = каждая буква
+        [SerializeField] private bool skipSpaces = true;
+
+
         // =========================================================
         // 🎈 ПЛАВАЮЩИЙ ЭФФЕКТ
         // =========================================================
@@ -220,12 +232,35 @@ namespace Poker
         {
             dialogueText.text = "";
 
+            int soundCounter = 0;
+
             for (int i = 0; i < text.Length; i++)
             {
-                dialogueText.text += text[i];
+                char c = text[i];
+
+                dialogueText.text += c;
+
+                bool canPlay = true;
+
+                // ❗️ пропускаем пробелы
+                if (skipSpaces && char.IsWhiteSpace(c))
+                    canPlay = false;
+
+                if (canPlay)
+                {
+                    soundCounter++;
+
+                    if (soundCounter >= Mathf.Max(1, playSoundEveryLetters))
+                    {
+                        PlayTypingSound();
+                        soundCounter = 0;
+                    }
+                }
+
                 yield return new WaitForSeconds(typeSpeed);
             }
         }
+
 
         // =========================================================
         // 🎥 LOOK AT CAMERA
@@ -487,5 +522,19 @@ namespace Poker
 
             return 1f + c3 * Mathf.Pow(x - 1f, 3f) + c1 * Mathf.Pow(x - 1f, 2f);
         }
+        private void PlayTypingSound()
+        {
+            if (typingAudioSource == null)
+                return;
+
+            if (typingClips == null || typingClips.Length == 0)
+                return;
+
+            AudioClip clip = typingClips[Random.Range(0, typingClips.Length)];
+
+            typingAudioSource.pitch = Random.Range(pitchMin, pitchMax);
+            typingAudioSource.PlayOneShot(clip, typingVolume);
+        }
+
     }
 }
