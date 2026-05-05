@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
 public class Menu3DButton : MonoBehaviour
@@ -136,9 +136,9 @@ public class Menu3DButton : MonoBehaviour
         if (isHovered && !wasHoveredLastFrame)
         {
             hoverAnimTimer = hoverAnimDuration;
-        }
 
-        wasHoveredLastFrame = isHovered;
+
+        }
     }
 
     private void UpdateVisuals()
@@ -188,6 +188,8 @@ public class Menu3DButton : MonoBehaviour
         if (!isHovered) return;
         if (!Input.GetMouseButtonDown(0)) return;
         if (menuManager == null) return;
+
+        MenuAudioManager.Instance?.PlayClick();
 
         menuManager.ExecuteAction(actionType);
     }

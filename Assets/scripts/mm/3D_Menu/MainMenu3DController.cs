@@ -8,6 +8,8 @@ public class MainMenu3DController : MonoBehaviour
 
     public void ExecuteAction(Menu3DActionType actionType)
     {
+        MenuAudioManager.Instance?.PlayClick();
+
         switch (actionType)
         {
             case Menu3DActionType.NewGame:
