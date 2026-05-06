@@ -51,7 +51,7 @@ namespace Poker
         private void RefreshTurn(bool playerTurn)
         {
             if (turnText == null) return;
-            turnText.text = playerTurn ? "бюь унд" : "унд опнрхбмхйю";
+            turnText.text = playerTurn ? "" : "унд опнрхбмхйю";
         }
 
         private void RefreshNeedToCall()
