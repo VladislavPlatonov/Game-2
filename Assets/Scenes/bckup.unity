@@ -7288,7 +7288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Poker.SoulManager
   startingPlayerSouls: 100
   startingAISouls: 100
-  dontDestroyOnLoad: 1
+  dontDestroyOnLoad: 0
 --- !u!4 &615967842
 Transform:
   m_ObjectHideFlags: 0
@@ -10079,6 +10079,7 @@ GameObject:
   - component: {fileID: 870400861}
   - component: {fileID: 870400860}
   - component: {fileID: 870400859}
+  - component: {fileID: 870400866}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -10583,30 +10584,76 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4dceec615e18f468657e0dbb2c89e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Poker.AudioManager
-  ambientSource: {fileID: 870400863}
-  tensionSource: {fileID: 870400861}
-  sfxSource: {fileID: 870400860}
-  uiSource: {fileID: 870400859}
-  ambientVolume: 0.05
-  tensionVolume: 0.5
+  droneSource: {fileID: 870400863}
+  textureSource: {fileID: 870400862}
+  hitSource: {fileID: 870400861}
+  noiseSource: {fileID: 870400860}
+  sfxSource: {fileID: 870400859}
+  uiSource: {fileID: 870400866}
+  droneVolume: 0.18
+  textureVolume: 0.12
+  hitVolume: 0.35
+  noiseVolume: 0.08
   sfxVolume: 0.8
   uiVolume: 0.8
-  ambientLoops:
-  - {fileID: 8300000, guid: cd58a64bb57e23247966f169eab8c526, type: 3}
-  calmSounds: []
-  nervousSounds: []
-  panicSounds: []
-  focusSounds: []
-  suspiciousSounds:
-  - {fileID: 8300000, guid: 14c4f4eea5f3ce24192141f94ace1b40, type: 3}
-  greedySounds: []
-  aggressiveSounds:
-  - {fileID: 8300000, guid: fff09cd5e8dbcab4a9577918a2df1b19, type: 3}
-  bluffCalmSounds: []
-  bluffNervousSounds: []
-  unhingedSounds: []
+  calmLayer:
+    drones: []
+    textures: []
+    hits: []
+    noises: []
+  nervousLayer:
+    drones: []
+    textures: []
+    hits: []
+    noises: []
+  panicLayer:
+    drones: []
+    textures: []
+    hits: []
+    noises: []
+  focusLayer:
+    drones: []
+    textures: []
+    hits: []
+    noises: []
+  suspiciousLayer:
+    drones:
+    - {fileID: 8300000, guid: 14c4f4eea5f3ce24192141f94ace1b40, type: 3}
+    textures:
+    - {fileID: 8300000, guid: fff09cd5e8dbcab4a9577918a2df1b19, type: 3}
+    hits:
+    - {fileID: 8300000, guid: 63b8d6a6bd0d9144794dbfc7535b5649, type: 3}
+    noises:
+    - {fileID: 8300000, guid: 5fc1ee0be4780444c9cbc58d61796618, type: 3}
+  greedyLayer:
+    drones: []
+    textures: []
+    hits: []
+    noises: []
+  aggressiveLayer:
+    drones: []
+    textures: []
+    hits: []
+    noises: []
+  bluffCalmLayer:
+    drones: []
+    textures: []
+    hits: []
+    noises: []
+  bluffNervousLayer:
+    drones: []
+    textures: []
+    hits: []
+    noises: []
+  unhingedLayer:
+    drones: []
+    textures: []
+    hits: []
+    noises: []
   cardDeal: {fileID: 8300000, guid: 4dd1296d08d6c2346993622c856d1e60, type: 3}
   cardDiscard: {fileID: 8300000, guid: 424c2aba3333ca948b15d4d89b903df4, type: 3}
+  hpLose: {fileID: 0}
+  hpGain: {fileID: 0}
   buttonClick: {fileID: 8300000, guid: 3057c511bb1193d47b3c19fd463bffae, type: 3}
   buttonHover: {fileID: 8300000, guid: 8ab82ca3c70990f48b72c02f8c2486e4, type: 3}
 --- !u!4 &870400865
@@ -10624,6 +10671,103 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &870400866
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870400858}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &874057827
 GameObject:
   m_ObjectHideFlags: 0
