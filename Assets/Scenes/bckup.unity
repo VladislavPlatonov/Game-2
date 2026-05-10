@@ -10618,13 +10618,13 @@ MonoBehaviour:
     noises: []
   suspiciousLayer:
     drones:
-    - {fileID: 8300000, guid: 14c4f4eea5f3ce24192141f94ace1b40, type: 3}
+    - {fileID: 8300000, guid: 9f2c9f8e51ea0dd41857712bcc59fcba, type: 3}
     textures:
-    - {fileID: 8300000, guid: fff09cd5e8dbcab4a9577918a2df1b19, type: 3}
+    - {fileID: 8300000, guid: b3eca2dcd461f794ca6156428478076d, type: 3}
     hits:
-    - {fileID: 8300000, guid: 63b8d6a6bd0d9144794dbfc7535b5649, type: 3}
+    - {fileID: 0}
     noises:
-    - {fileID: 8300000, guid: 5fc1ee0be4780444c9cbc58d61796618, type: 3}
+    - {fileID: 0}
   greedyLayer:
     drones: []
     textures: []
@@ -10650,10 +10650,10 @@ MonoBehaviour:
     textures: []
     hits: []
     noises: []
-  cardDeal: {fileID: 8300000, guid: 4dd1296d08d6c2346993622c856d1e60, type: 3}
-  cardDiscard: {fileID: 8300000, guid: 424c2aba3333ca948b15d4d89b903df4, type: 3}
-  hpLose: {fileID: 0}
-  hpGain: {fileID: 0}
+  cardDeal: {fileID: 8300000, guid: 7a0772751af47cf4c85a9a8c8a8d86e8, type: 3}
+  cardDiscard: {fileID: 0}
+  hpLose: {fileID: 8300000, guid: 32b36d7962824f340b0bab6e44c669ed, type: 3}
+  hpGain: {fileID: 8300000, guid: 32b36d7962824f340b0bab6e44c669ed, type: 3}
   buttonClick: {fileID: 8300000, guid: 3057c511bb1193d47b3c19fd463bffae, type: 3}
   buttonHover: {fileID: 8300000, guid: 8ab82ca3c70990f48b72c02f8c2486e4, type: 3}
 --- !u!4 &870400865
@@ -12125,7 +12125,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1040229079
 MonoBehaviour:
   m_ObjectHideFlags: 0
