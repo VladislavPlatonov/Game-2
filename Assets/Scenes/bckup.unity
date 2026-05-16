@@ -10784,56 +10784,72 @@ MonoBehaviour:
   sfxVolume: 0.8
   uiVolume: 0.8
   calmLayer:
-    drones: []
-    textures: []
+    drones:
+    - {fileID: 8300000, guid: 6d31ff44802d7fa41a937bb002cedf70, type: 3}
+    textures:
+    - {fileID: 8300000, guid: 876dd2b803565fb45b5f34e289e67a63, type: 3}
     hits: []
     noises: []
   nervousLayer:
-    drones: []
-    textures: []
+    drones:
+    - {fileID: 8300000, guid: e38dcf7d5731a0148b1cfd7b6ba3c2e4, type: 3}
+    textures:
+    - {fileID: 8300000, guid: c9f3546903a13c942a748dbfee957907, type: 3}
     hits: []
     noises: []
   panicLayer:
-    drones: []
-    textures: []
+    drones:
+    - {fileID: 8300000, guid: 981fdeaecdaa32449bba89ce45f95be7, type: 3}
+    textures:
+    - {fileID: 8300000, guid: a4168d13ba66cbf48843692ac487d9ba, type: 3}
     hits: []
     noises: []
   focusLayer:
-    drones: []
-    textures: []
+    drones:
+    - {fileID: 8300000, guid: 4777909afd8181f468acfbdb763452e7, type: 3}
+    textures:
+    - {fileID: 8300000, guid: b4d84badba607574fba0e204ad72a4b0, type: 3}
     hits: []
     noises: []
   suspiciousLayer:
     drones:
     - {fileID: 8300000, guid: 9f2c9f8e51ea0dd41857712bcc59fcba, type: 3}
     textures:
-    - {fileID: 8300000, guid: b3eca2dcd461f794ca6156428478076d, type: 3}
+    - {fileID: 8300000, guid: 62bfb69ab0a3a744d93499bfd04cf121, type: 3}
     hits:
     - {fileID: 0}
     noises:
     - {fileID: 0}
   greedyLayer:
-    drones: []
-    textures: []
+    drones:
+    - {fileID: 8300000, guid: 4234893ce92df8e45998a62674e9c95d, type: 3}
+    textures:
+    - {fileID: 0}
     hits: []
     noises: []
   aggressiveLayer:
-    drones: []
-    textures: []
+    drones:
+    - {fileID: 8300000, guid: 3506baa554351984eb3aa610de24d09a, type: 3}
+    textures:
+    - {fileID: 8300000, guid: dc9c62bcc64bcd54fb136e2e38357596, type: 3}
     hits: []
     noises: []
   bluffCalmLayer:
-    drones: []
-    textures: []
+    drones:
+    - {fileID: 8300000, guid: e2834bc25358bdc45a87e1917bbb8d79, type: 3}
+    textures:
+    - {fileID: 8300000, guid: 05aba08db0b20c14a963b9fd2ffc2d07, type: 3}
     hits: []
     noises: []
   bluffNervousLayer:
     drones: []
-    textures: []
+    textures:
+    - {fileID: 8300000, guid: 99921a20b49a475488551e78194fce76, type: 3}
     hits: []
     noises: []
   unhingedLayer:
-    drones: []
+    drones:
+    - {fileID: 8300000, guid: 784cbb4cf5353c142abc6fd5b7d06822, type: 3}
     textures: []
     hits: []
     noises: []
