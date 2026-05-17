@@ -10769,10 +10769,10 @@ MonoBehaviour:
   noiseSource: {fileID: 870400860}
   sfxSource: {fileID: 870400859}
   uiSource: {fileID: 870400866}
-  droneVolume: 0.18
-  textureVolume: 0.12
+  droneVolume: 0.5
+  textureVolume: 0.5
   hitVolume: 0.35
-  noiseVolume: 0.08
+  noiseVolume: 0.45
   sfxVolume: 0.8
   uiVolume: 0.8
   calmLayer:
@@ -10780,28 +10780,35 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 6d31ff44802d7fa41a937bb002cedf70, type: 3}
     textures:
     - {fileID: 8300000, guid: 876dd2b803565fb45b5f34e289e67a63, type: 3}
-    hits: []
-    noises: []
+    hits:
+    - {fileID: 8300000, guid: aaa8cf3ab27914949972089b91e7d73b, type: 3}
+    noises:
+    - {fileID: 8300000, guid: 2e3f0d8917b5a6f418651a332a1d758f, type: 3}
   nervousLayer:
     drones:
     - {fileID: 8300000, guid: e38dcf7d5731a0148b1cfd7b6ba3c2e4, type: 3}
     textures:
     - {fileID: 8300000, guid: c9f3546903a13c942a748dbfee957907, type: 3}
-    hits: []
-    noises: []
+    hits:
+    - {fileID: 8300000, guid: 88dbf9f93a6bc7649913d29b95398d39, type: 3}
+    noises:
+    - {fileID: 8300000, guid: ee1523c7c5fcf594389fc9d8ec31e160, type: 3}
   panicLayer:
     drones:
     - {fileID: 8300000, guid: 981fdeaecdaa32449bba89ce45f95be7, type: 3}
     textures:
     - {fileID: 8300000, guid: a4168d13ba66cbf48843692ac487d9ba, type: 3}
-    hits: []
-    noises: []
+    hits:
+    - {fileID: 8300000, guid: 67ae7ccd29c58a740a6811e0c1bcef9b, type: 3}
+    noises:
+    - {fileID: 8300000, guid: 18cfc3ad266f002478aa00b18b14965d, type: 3}
   focusLayer:
     drones:
     - {fileID: 8300000, guid: 4777909afd8181f468acfbdb763452e7, type: 3}
     textures:
     - {fileID: 8300000, guid: b4d84badba607574fba0e204ad72a4b0, type: 3}
-    hits: []
+    hits:
+    - {fileID: 8300000, guid: 8ba8233a66635aa41802de1223562a61, type: 3}
     noises: []
   suspiciousLayer:
     drones:
