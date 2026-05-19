@@ -10259,6 +10259,8 @@ GameObject:
   - component: {fileID: 870400860}
   - component: {fileID: 870400859}
   - component: {fileID: 870400866}
+  - component: {fileID: 870400868}
+  - component: {fileID: 870400867}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -10763,101 +10765,165 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4dceec615e18f468657e0dbb2c89e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Poker.AudioManager
-  droneSource: {fileID: 870400863}
+  droneA: {fileID: 870400868}
+  droneB: {fileID: 870400867}
   textureSource: {fileID: 870400862}
   hitSource: {fileID: 870400861}
   noiseSource: {fileID: 870400860}
   sfxSource: {fileID: 870400859}
   uiSource: {fileID: 870400866}
-  droneVolume: 0.5
-  textureVolume: 0.5
+  droneVolume: 0.8
+  textureVolume: 0.8
+  noiseVolume: 0.6
   hitVolume: 0.35
-  noiseVolume: 0.45
   sfxVolume: 0.8
   uiVolume: 0.8
-  calmLayer:
-    drones:
-    - {fileID: 8300000, guid: 6d31ff44802d7fa41a937bb002cedf70, type: 3}
+  droneFadeTime: 1
+  calm:
+    drone: {fileID: 8300000, guid: 6d31ff44802d7fa41a937bb002cedf70, type: 3}
     textures:
     - {fileID: 8300000, guid: 876dd2b803565fb45b5f34e289e67a63, type: 3}
     hits:
     - {fileID: 8300000, guid: aaa8cf3ab27914949972089b91e7d73b, type: 3}
     noises:
     - {fileID: 8300000, guid: 2e3f0d8917b5a6f418651a332a1d758f, type: 3}
-  nervousLayer:
-    drones:
-    - {fileID: 8300000, guid: e38dcf7d5731a0148b1cfd7b6ba3c2e4, type: 3}
+    textureDelayMin: 1
+    textureDelayMax: 15
+    textureChance: 0.85
+    noiseDelayMin: 1
+    noiseDelayMax: 25
+    noiseChance: 0.85
+  nervous:
+    drone: {fileID: 8300000, guid: e38dcf7d5731a0148b1cfd7b6ba3c2e4, type: 3}
     textures:
     - {fileID: 8300000, guid: c9f3546903a13c942a748dbfee957907, type: 3}
     hits:
     - {fileID: 8300000, guid: 88dbf9f93a6bc7649913d29b95398d39, type: 3}
     noises:
     - {fileID: 8300000, guid: ee1523c7c5fcf594389fc9d8ec31e160, type: 3}
-  panicLayer:
-    drones:
-    - {fileID: 8300000, guid: 981fdeaecdaa32449bba89ce45f95be7, type: 3}
+    textureDelayMin: 1
+    textureDelayMax: 15
+    textureChance: 0.85
+    noiseDelayMin: 1
+    noiseDelayMax: 25
+    noiseChance: 0.85
+  panic:
+    drone: {fileID: 8300000, guid: 981fdeaecdaa32449bba89ce45f95be7, type: 3}
     textures:
     - {fileID: 8300000, guid: a4168d13ba66cbf48843692ac487d9ba, type: 3}
     hits:
     - {fileID: 8300000, guid: 67ae7ccd29c58a740a6811e0c1bcef9b, type: 3}
     noises:
     - {fileID: 8300000, guid: 18cfc3ad266f002478aa00b18b14965d, type: 3}
-  focusLayer:
-    drones:
-    - {fileID: 8300000, guid: 4777909afd8181f468acfbdb763452e7, type: 3}
+    textureDelayMin: 1
+    textureDelayMax: 15
+    textureChance: 0.85
+    noiseDelayMin: 1
+    noiseDelayMax: 25
+    noiseChance: 0.85
+  focus:
+    drone: {fileID: 8300000, guid: 4777909afd8181f468acfbdb763452e7, type: 3}
     textures:
     - {fileID: 8300000, guid: b4d84badba607574fba0e204ad72a4b0, type: 3}
     hits:
     - {fileID: 8300000, guid: 8ba8233a66635aa41802de1223562a61, type: 3}
-    noises: []
-  suspiciousLayer:
-    drones:
-    - {fileID: 8300000, guid: 9f2c9f8e51ea0dd41857712bcc59fcba, type: 3}
+    noises:
+    - {fileID: 8300000, guid: ff014c5b0e6cb4d41a1f75e46d8b4447, type: 3}
+    textureDelayMin: 1
+    textureDelayMax: 15
+    textureChance: 0.85
+    noiseDelayMin: 1
+    noiseDelayMax: 25
+    noiseChance: 0.85
+  suspicious:
+    drone: {fileID: 8300000, guid: edface9e2553bef43ab7aa18d4ce6f4d, type: 3}
     textures:
     - {fileID: 8300000, guid: 62bfb69ab0a3a744d93499bfd04cf121, type: 3}
     hits:
-    - {fileID: 0}
+    - {fileID: 8300000, guid: 3106c0ffa6c10a54f9c7f173d3cd9065, type: 3}
     noises:
-    - {fileID: 0}
-  greedyLayer:
-    drones:
-    - {fileID: 8300000, guid: 4234893ce92df8e45998a62674e9c95d, type: 3}
+    - {fileID: 8300000, guid: 9f2c9f8e51ea0dd41857712bcc59fcba, type: 3}
+    textureDelayMin: 1
+    textureDelayMax: 15
+    textureChance: 0.85
+    noiseDelayMin: 1
+    noiseDelayMax: 25
+    noiseChance: 0.85
+  greedy:
+    drone: {fileID: 8300000, guid: 4234893ce92df8e45998a62674e9c95d, type: 3}
     textures:
-    - {fileID: 0}
-    hits: []
-    noises: []
-  aggressiveLayer:
-    drones:
-    - {fileID: 8300000, guid: 3506baa554351984eb3aa610de24d09a, type: 3}
+    - {fileID: 8300000, guid: 8a54014890a12ba4da2dab733d7596e8, type: 3}
+    hits:
+    - {fileID: 8300000, guid: 8a54014890a12ba4da2dab733d7596e8, type: 3}
+    noises:
+    - {fileID: 8300000, guid: 8ba8233a66635aa41802de1223562a61, type: 3}
+    textureDelayMin: 8
+    textureDelayMax: 15
+    textureChance: 0.4
+    noiseDelayMin: 15
+    noiseDelayMax: 25
+    noiseChance: 0.25
+  aggressive:
+    drone: {fileID: 8300000, guid: 3506baa554351984eb3aa610de24d09a, type: 3}
     textures:
     - {fileID: 8300000, guid: dc9c62bcc64bcd54fb136e2e38357596, type: 3}
-    hits: []
-    noises: []
-  bluffCalmLayer:
-    drones:
-    - {fileID: 8300000, guid: e2834bc25358bdc45a87e1917bbb8d79, type: 3}
+    hits:
+    - {fileID: 8300000, guid: 4938bf2cdfdd22f47bdb41c3e1416ffb, type: 3}
+    noises:
+    - {fileID: 8300000, guid: 8ba8233a66635aa41802de1223562a61, type: 3}
+    textureDelayMin: 1
+    textureDelayMax: 15
+    textureChance: 0.85
+    noiseDelayMin: 1
+    noiseDelayMax: 25
+    noiseChance: 0.85
+  bluffCalm:
+    drone: {fileID: 8300000, guid: e2834bc25358bdc45a87e1917bbb8d79, type: 3}
     textures:
     - {fileID: 8300000, guid: 05aba08db0b20c14a963b9fd2ffc2d07, type: 3}
-    hits: []
-    noises: []
-  bluffNervousLayer:
-    drones: []
+    hits:
+    - {fileID: 8300000, guid: aaa8cf3ab27914949972089b91e7d73b, type: 3}
+    noises:
+    - {fileID: 8300000, guid: 97b578019b7800e4cb2c1da2c37b58bd, type: 3}
+    textureDelayMin: 8
+    textureDelayMax: 15
+    textureChance: 0.4
+    noiseDelayMin: 15
+    noiseDelayMax: 25
+    noiseChance: 0.25
+  bluffNervous:
+    drone: {fileID: 8300000, guid: e38dcf7d5731a0148b1cfd7b6ba3c2e4, type: 3}
     textures:
     - {fileID: 8300000, guid: 99921a20b49a475488551e78194fce76, type: 3}
-    hits: []
-    noises: []
-  unhingedLayer:
-    drones:
-    - {fileID: 8300000, guid: 784cbb4cf5353c142abc6fd5b7d06822, type: 3}
-    textures: []
-    hits: []
-    noises: []
+    hits:
+    - {fileID: 8300000, guid: 88dbf9f93a6bc7649913d29b95398d39, type: 3}
+    noises:
+    - {fileID: 8300000, guid: ee1523c7c5fcf594389fc9d8ec31e160, type: 3}
+    textureDelayMin: 1
+    textureDelayMax: 15
+    textureChance: 0.85
+    noiseDelayMin: 1
+    noiseDelayMax: 25
+    noiseChance: 0.85
+  unhinged:
+    drone: {fileID: 8300000, guid: 784cbb4cf5353c142abc6fd5b7d06822, type: 3}
+    textures:
+    - {fileID: 8300000, guid: c20ca9103fbc52345ac6bed82c87ad2b, type: 3}
+    hits:
+    - {fileID: 8300000, guid: 8ba8233a66635aa41802de1223562a61, type: 3}
+    noises:
+    - {fileID: 8300000, guid: 4de9bc4bf1e8f7a4aa7ff604bd17c15d, type: 3}
+    textureDelayMin: 1
+    textureDelayMax: 15
+    textureChance: 0.8
+    noiseDelayMin: 1
+    noiseDelayMax: 25
+    noiseChance: 0.85
   cardDeal: {fileID: 8300000, guid: 7a0772751af47cf4c85a9a8c8a8d86e8, type: 3}
   cardDiscard: {fileID: 0}
   hpLose: {fileID: 8300000, guid: 32b36d7962824f340b0bab6e44c669ed, type: 3}
   hpGain: {fileID: 8300000, guid: 32b36d7962824f340b0bab6e44c669ed, type: 3}
   buttonClick: {fileID: 8300000, guid: 3057c511bb1193d47b3c19fd463bffae, type: 3}
-  buttonHover: {fileID: 8300000, guid: 8ab82ca3c70990f48b72c02f8c2486e4, type: 3}
 --- !u!4 &870400865
 Transform:
   m_ObjectHideFlags: 0
@@ -10886,6 +10952,200 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &870400867
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870400858}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &870400868
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870400858}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
