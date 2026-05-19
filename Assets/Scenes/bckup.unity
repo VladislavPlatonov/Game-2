@@ -10772,11 +10772,11 @@ MonoBehaviour:
   noiseSource: {fileID: 870400860}
   sfxSource: {fileID: 870400859}
   uiSource: {fileID: 870400866}
-  droneVolume: 0.8
-  textureVolume: 0.8
-  noiseVolume: 0.6
-  hitVolume: 0.35
-  sfxVolume: 0.8
+  droneVolume: 0.2
+  textureVolume: 0.3
+  noiseVolume: 0.3
+  hitVolume: 0.2
+  sfxVolume: 0.6
   uiVolume: 0.8
   droneFadeTime: 1
   calm:
