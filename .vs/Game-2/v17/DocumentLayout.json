@@ -3,19 +3,23 @@
   "WorkspaceRootPath": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\assets\\scripts\\mm\\3d_menu\\menu3dbutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|c:\\users\\vladp\\onedrive\\\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\github\\game-2\\assets\\scripts\\ipokergame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\ipokergame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|c:\\users\\vladp\\onedrive\\\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\github\\game-2\\assets\\scripts\\mm\\3d_menu\\menu3dbutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mm\\3d_menu\\menu3dbutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|c:\\users\\vladp\\onedrive\\\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\github\\game-2\\assets\\scripts\\mm\\3d_menu\\mainmenu3dcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\assets\\scripts\\mm\\3d_menu\\mainmenu3dcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mm\\3d_menu\\mainmenu3dcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|c:\\users\\vladp\\onedrive\\\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\github\\game-2\\assets\\scripts\\mm\\3d_menu\\mainmenu3dmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\assets\\scripts\\mm\\3d_menu\\mainmenu3dmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mm\\3d_menu\\mainmenu3dmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|c:\\users\\vladp\\onedrive\\\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\github\\game-2\\assets\\scripts\\mm\\3d_menu\\menuaudiomanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\assets\\scripts\\mm\\3d_menu\\menuaudiomanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F2219A1C-C3EB-737A-7461-02F95BC181B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mm\\3d_menu\\menuaudiomanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -62,11 +66,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
+              "Title": "IPokerGame.cs",
+              "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\IPokerGame.cs",
+              "RelativeDocumentMoniker": "Assets\\scripts\\IPokerGame.cs",
+              "ToolTip": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\IPokerGame.cs",
+              "RelativeToolTip": "Assets\\scripts\\IPokerGame.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-24T08:31:01.281Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "MainMenu3DController.cs",
               "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\mm\\3D_Menu\\MainMenu3DController.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\mm\\3D_Menu\\MainMenu3DController.cs",
@@ -74,12 +91,11 @@
               "RelativeToolTip": "Assets\\scripts\\mm\\3D_Menu\\MainMenu3DController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T11:03:19.471Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T11:03:19.471Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "MainMenu3DManager.cs",
               "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\mm\\3D_Menu\\MainMenu3DManager.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\mm\\3D_Menu\\MainMenu3DManager.cs",
@@ -87,12 +103,11 @@
               "RelativeToolTip": "Assets\\scripts\\mm\\3D_Menu\\MainMenu3DManager.cs",
               "ViewState": "AgIAAAMBAAAAAAAAAAAUwD4BAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T11:02:58.226Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T11:02:58.226Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "MenuAudioManager.cs",
               "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\mm\\3D_Menu\\MenuAudioManager.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\mm\\3D_Menu\\MenuAudioManager.cs",
@@ -100,12 +115,11 @@
               "RelativeToolTip": "Assets\\scripts\\mm\\3D_Menu\\MenuAudioManager.cs",
               "ViewState": "AgIAABEAAAAAAAAAAAAQwD0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T11:00:35.384Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T11:00:35.384Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Menu3DButton.cs",
               "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\mm\\3D_Menu\\Menu3DButton.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\mm\\3D_Menu\\Menu3DButton.cs",
@@ -118,7 +132,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "MenuSoundController.cs",
               "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\Sound\\MenuSoundController.cs",
               "RelativeDocumentMoniker": "Assets\\Sound\\MenuSoundController.cs",
@@ -129,7 +143,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "AIHandEmotionController.cs",
               "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\animation\\AIHandEmotionController.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\animation\\AIHandEmotionController.cs",
@@ -141,7 +155,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "EnemyHeadCalmController.cs",
               "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\animation\\ai head anim\\EnemyHeadCalmController.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\animation\\ai head anim\\EnemyHeadCalmController.cs",
@@ -153,7 +167,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "GameHUDController.cs",
               "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\GameHUDController.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\GameHUDController.cs",
@@ -165,7 +179,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "PauseMenuGlowButtonFX.cs",
               "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\m\\PauseMenuGlowButtonFX.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\m\\PauseMenuGlowButtonFX.cs",
@@ -177,7 +191,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "PauseMenuController.cs",
               "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\PauseMenuController.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\PauseMenuController.cs",
@@ -189,7 +203,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "ResolutionOption3DNoCollider.cs",
               "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\mm\\3D_Menu\\ResolutionOption3DNoCollider.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\mm\\3D_Menu\\ResolutionOption3DNoCollider.cs",
@@ -197,12 +211,11 @@
               "RelativeToolTip": "Assets\\scripts\\mm\\3D_Menu\\ResolutionOption3DNoCollider.cs",
               "ViewState": "AgIAAE0AAAAAAAAAAAAQwF8AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-09T11:39:32.396Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-09T11:39:32.396Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "ResolutionDropdown3D.cs",
               "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\mm\\3D_Menu\\ResolutionDropdown3D.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\mm\\3D_Menu\\ResolutionDropdown3D.cs",
@@ -214,7 +227,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "EnemyCalmAnimation.cs",
               "DocumentMoniker": "C:\\Users\\vladp\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Game-2\\Assets\\scripts\\animation\\ai head anim\\EnemyCalmAnimation.cs",
               "RelativeDocumentMoniker": "Assets\\scripts\\animation\\ai head anim\\EnemyCalmAnimation.cs",
