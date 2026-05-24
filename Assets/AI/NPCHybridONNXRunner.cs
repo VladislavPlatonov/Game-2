@@ -161,6 +161,25 @@ namespace Poker
                 }
             }
 
+            // 🔹 Если рука средняя или слабая —
+            // агрессия не должна выпадать слишком часто
+
+            if (input.aiHandStrength < 0.35f)
+            {
+                if (emotionIndex ==
+                    (int)EnemyHeadCalmController.EmotionState.Aggressive)
+                {
+                    // Вместо агрессии переключаем в Focus
+                    emotionIndex =
+                        (int)EnemyHeadCalmController.EmotionState.Focus;
+
+                    Debug.Log(
+                        "🛠 Aggressive → Focus " +
+                        "(слабая рука)"
+                    );
+                }
+            }
+
             // 🔹 Если высокий bluff — усиливаем шанс блефа
             if (input.bluffFactor > 0.7f && input.aiHandStrength < 0.5f)
             {
